@@ -20,10 +20,10 @@ function createCombos(allWords: string[]) {
         const mainLetter = sample(letters);
         const otherLetters = letters.filter(letter => letter !== mainLetter);
 
-        const wordsWithMainLetter = allWords.filter(word => word.includes(mainLetter));
+        const wordsWithMainLetter = allWords.filter(w => w.includes(mainLetter));
 
-        const validWords = wordsWithMainLetter.filter(word => {
-            const wordLetters = word.split("");
+        const validWords = wordsWithMainLetter.filter(w => {
+            const wordLetters = w.split("");
 
             for (const letter of wordLetters) {
                 if (!letters.includes(letter)) {
@@ -41,8 +41,8 @@ function createCombos(allWords: string[]) {
                 word,
                 score: getScore(word),
             })),
-            maxScore: validWords.reduce((acc, word) => {
-                const score = getScore(word);
+            maxScore: validWords.reduce((acc, w) => {
+                const score = getScore(w);
                 return acc + score;
             }, 0),
         };
