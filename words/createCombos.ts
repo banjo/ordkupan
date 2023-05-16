@@ -1,17 +1,8 @@
 import { sample, uniq } from "@banjoanton/utils";
+import { Combo } from "../src/types/types";
 import { exportJsonFile, importJsonFile } from "./helpers";
 
-type Combo = {
-    mainLetter: string;
-    otherLetters: string[];
-    words: {
-        word: string;
-        score: number;
-    }[];
-    maxScore: number;
-};
-
-const main = async () => {
+const main = () => {
     const arrayOfWords = importJsonFile("./words/words.json");
     const arrayOfCombos = createCombos(arrayOfWords);
     exportJsonFile("./words/combos.json", arrayOfCombos);
