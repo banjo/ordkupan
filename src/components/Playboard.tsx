@@ -1,5 +1,6 @@
 "use client";
 
+import { shuffle } from "@banjoanton/utils";
 import { useState } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { Combo } from "../types/types";
@@ -8,8 +9,11 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
     const [word, setWord] = useState("");
     const [score, setScore] = useState(0);
     const [matchedWords, setMatchedWords] = useState<string[]>([]);
+    const [otherLetters, setOtherLetters] = useState<string[]>(combo.otherLetters);
 
-    const letters = combo.otherLetters.sort(() => Math.random() - 0.5);
+    const shuffleLetters = () => {
+        setOtherLetters(letters => shuffle(letters));
+    };
 
     const submitWord = () => {
         const selectedWord = word;
@@ -54,7 +58,7 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                 <div className="flex flex-row gap-16">
                     <div className="flex flex-col">
                         <div>Main: {combo.mainLetter}</div>
-                        <div>Letters: {letters}</div>
+                        <div>Letters: {otherLetters}</div>
                         <input
                             type="text"
                             value={word}
@@ -63,6 +67,7 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                             className="text-black"
                             onKeyDown={keyDown}
                         ></input>
+                        <button onClick={shuffleLetters}>Shuffle</button>
                     </div>
                     <div>
                         <div>score: {score}</div>

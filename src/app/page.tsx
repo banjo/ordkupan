@@ -1,3 +1,4 @@
+import { shuffle } from "@banjoanton/utils";
 import { Playboard } from "../components/Playboard";
 import { getById } from "../utils/database";
 
@@ -14,6 +15,8 @@ export default async function Home() {
     if (!combo) {
         throw new Error("Combo not found");
     }
+
+    combo.otherLetters = shuffle(combo.otherLetters);
 
     return (
         <main className="flex h-full flex-col items-center justify-center">
