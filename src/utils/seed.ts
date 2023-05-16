@@ -1,7 +1,8 @@
 // import { combos } from "../../words/combos.ts";
+import { Combo } from "../types/types";
 import { addCombo } from "./database";
 
-const COMBOS: any[] = []; // change to combos ;
+const COMBOS: Combo[] = []; // change to combos ;
 
 const seed = async () => {
     COMBOS.sort(() => 0.5 - Math.random());

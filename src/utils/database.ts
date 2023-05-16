@@ -1,6 +1,6 @@
 import { connect } from "@planetscale/database";
 import "dotenv/config";
-import { Combo } from "../types/types";
+import { Combo, ComboFromDb } from "../types/types";
 const config = {
     host: process.env.DATABASE_HOST,
     username: process.env.DATABASE_USERNAME,
@@ -30,7 +30,7 @@ export const addCombo = async (combo: Combo) => {
 export const getById = async (id: number): Promise<Combo | null> => {
     try {
         const result = await conn.execute("select * from combos where id = ?", [id]);
-        const item = result.rows[0] as any;
+        const item = result.rows[0] as ComboFromDb;
 
         if (!item) {
             console.log("No item found");
@@ -40,7 +40,7 @@ export const getById = async (id: number): Promise<Combo | null> => {
         const combo: Combo & { id: number } = {
             id: item.id,
             mainLetter: item.mainLetter,
-            otherLetters: item.otherLetters.split(""),
+            otherLetters: [...item.otherLetters],
             words: JSON.parse(item.words),
             maxScore: item.maxScore,
         };

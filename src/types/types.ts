@@ -7,3 +7,11 @@ export type Combo = {
     }[];
     maxScore: number;
 };
+
+export type ComboFromDb = {
+    id: number;
+    mainLetter: string;
+    otherLetters: string;
+    words: string;
+    maxScore: number;
+};

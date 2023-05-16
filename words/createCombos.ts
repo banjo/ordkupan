@@ -10,20 +10,20 @@ const main = () => {
 
 function createCombos(allWords: string[]) {
     const wordsWithSevenDifferentLetters = allWords.filter(word => {
-        const letters = word.split("");
+        const letters = [...word];
         const uniqueLetters = uniq(letters);
         return uniqueLetters.length === 7;
     });
 
     const combos = wordsWithSevenDifferentLetters.map(word => {
-        const letters = word.split("");
+        const letters = [...word];
         const mainLetter = sample(letters);
         const otherLetters = letters.filter(letter => letter !== mainLetter);
 
         const wordsWithMainLetter = allWords.filter(w => w.includes(mainLetter));
 
         const validWords = wordsWithMainLetter.filter(w => {
-            const wordLetters = w.split("");
+            const wordLetters = [...w];
 
             for (const letter of wordLetters) {
                 if (!letters.includes(letter)) {
@@ -41,6 +41,7 @@ function createCombos(allWords: string[]) {
                 word,
                 score: getScore(word),
             })),
+            // eslint-disable-next-line unicorn/no-array-reduce
             maxScore: validWords.reduce((acc, w) => {
                 const score = getScore(w);
                 return acc + score;
@@ -59,7 +60,7 @@ function getScore(word: string) {
     const isFiveLetters = word.length === 5;
     const isFourLetters = word.length === 4;
 
-    const isUnique = uniq(word.split("")).length === word.length;
+    const isUnique = uniq([...word]).length === word.length;
 
     if (isFourLetters) {
         return 1;
