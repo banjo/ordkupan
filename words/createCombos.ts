@@ -18,22 +18,20 @@ const main = async () => {
 };
 
 function createCombos(allWords: string[]) {
-    const wordsWithSevenDifferentLetters = allWords.filter((word) => {
+    const wordsWithSevenDifferentLetters = allWords.filter(word => {
         const letters = word.split("");
-        const uniqueLetters = [...new Set(letters)];
+        const uniqueLetters = uniq(letters);
         return uniqueLetters.length === 7;
     });
 
-    const combos = wordsWithSevenDifferentLetters.map((word) => {
+    const combos = wordsWithSevenDifferentLetters.map(word => {
         const letters = word.split("");
         const mainLetter = sample(letters);
-        const otherLetters = letters.filter((letter) => letter !== mainLetter);
+        const otherLetters = letters.filter(letter => letter !== mainLetter);
 
-        const wordsWithMainLetter = allWords.filter((word) =>
-            word.includes(mainLetter)
-        );
+        const wordsWithMainLetter = allWords.filter(word => word.includes(mainLetter));
 
-        const validWords = wordsWithMainLetter.filter((word) => {
+        const validWords = wordsWithMainLetter.filter(word => {
             const wordLetters = word.split("");
 
             for (const letter of wordLetters) {
@@ -48,7 +46,7 @@ function createCombos(allWords: string[]) {
         const combo: Combo = {
             mainLetter,
             otherLetters,
-            words: validWords.map((word) => ({
+            words: validWords.map(word => ({
                 word,
                 score: getScore(word),
             })),
