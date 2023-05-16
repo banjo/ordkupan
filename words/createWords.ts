@@ -7,7 +7,7 @@ const main = async () => {
 };
 
 function cleanup(array: string[]) {
-    const cleanedArray = array.filter((word) => {
+    const cleanedArray = array.filter(word => {
         const wordConditionToExclude = [
             word.includes("-"),
             word.includes(" "),
@@ -19,7 +19,7 @@ function cleanup(array: string[]) {
             word.length > 7,
         ];
 
-        return !wordConditionToExclude.some((condition) => condition);
+        return !wordConditionToExclude.some(condition => condition);
     });
     return cleanedArray;
 }
