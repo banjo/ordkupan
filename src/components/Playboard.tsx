@@ -116,12 +116,30 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
             </div>
             <div className="flex flex-col items-center justify-center">
                 <div className="flex flex-col lg:flex-row gap-8">
-                    <div>
-                        <div>poäng: {score}</div>
-                        <div>
-                            {matchedWords.map(w => (
-                                <span key={w}>{w} </span>
-                            ))}
+                    <div className="flex flex-row justify-between px-8">
+                        <div className="basis-6/12">
+                            <div className="uppercase text-sm font-semibold mb-2">
+                                Korrekta svar
+                            </div>
+                            <div className="flex flex-col gap-3 h-40 overflow-y-scroll">
+                                {matchedWords.map(w => (
+                                    <span
+                                        className="py-1 px-2 bg-primary text-black uppercase rounded-sm text-center"
+                                        key={w}
+                                    >
+                                        {w}
+                                    </span>
+                                ))}
+                                {matchedWords.length === 0 && (
+                                    <span className="text-2xl font-bold">Inga 😞</span>
+                                )}
+                            </div>
+                        </div>
+                        <div className="basis-5/12 text-right">
+                            <div className="uppercase text-sm font-semibold mb-2">Poäng</div>
+                            <div className="text-2xl font-bold">
+                                {score} / {combo.maxScore}
+                            </div>
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
