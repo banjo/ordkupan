@@ -20,12 +20,14 @@ export const Hexagon: FC<Props> = ({
     clickedColor,
 }) => {
     const [clicked, setClicked] = useState(false);
-    const handleClick = () => {
+
+    const mouseDown = () => {
         onClick(text);
         setClicked(true);
-        setTimeout(() => {
-            setClicked(false);
-        }, 100);
+    };
+
+    const mouseUp = () => {
+        setClicked(false);
     };
 
     return (
@@ -34,7 +36,8 @@ export const Hexagon: FC<Props> = ({
                         ${clicked ? "scale-[35%]" : " scale-[40%]"}
                         transition duration-100 ease-in-out 
                         ${className}`}
-            onClick={handleClick}
+            onMouseDown={mouseDown}
+            onMouseUp={mouseUp}
         >
             <svg
                 version="1.1"

@@ -23,7 +23,9 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
 
     const handleLetterClick = (char: string) => {
         setWord(w => w + char);
-        inputRef.current?.focus();
+        setTimeout(() => {
+            inputRef.current?.focus();
+        }, 0);
     };
 
     const submitWord = () => {
