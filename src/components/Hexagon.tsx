@@ -53,7 +53,7 @@ export const Hexagon: FC<Props> = ({
 
                 <text
                     x="50%"
-                    y="50%"
+                    y="55%"
                     dominantBaseline="middle"
                     textAnchor="middle"
                     fill={textColor}
