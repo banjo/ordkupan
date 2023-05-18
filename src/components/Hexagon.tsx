@@ -43,30 +43,34 @@ export const Hexagon: FC<Props> = ({
             onMouseDown={mouseDown}
         >
             <svg
+                fill={clicked && clickedColor ? clickedColor : color}
+                height="200px"
+                width="200px"
                 version="1.1"
+                id="Capa_1"
                 xmlns="http://www.w3.org/2000/svg"
-                width="200"
-                height="174"
-                viewBox="0 0 200 173.20508075688772"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 184.751 184.751"
+                xmlSpace="preserve"
             >
-                <path
-                    fill={clicked && clickedColor ? clickedColor : color}
-                    d="M0 86.60254037844386L50 0L150 0L200 86.60254037844386L150 173.20508075688772L50 173.20508075688772Z"
-                ></path>
-
-                <text
-                    x="50%"
-                    y="55%"
-                    dominantBaseline="middle"
-                    textAnchor="middle"
-                    fill={textColor}
-                    fontSize="60"
-                    fontWeight="500"
-                    className={`${fadeOut ? "opacity-0" : "opacity-100"}
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                <g id="SVGRepo_iconCarrier">
+                    <path d="M0,92.375l46.188-80h92.378l46.185,80l-46.185,80H46.188L0,92.375z"></path>
+                    <text
+                        x="50%"
+                        y="55%"
+                        dominantBaseline="middle"
+                        textAnchor="middle"
+                        fill={textColor}
+                        fontSize="60"
+                        fontWeight="500"
+                        className={`${fadeOut ? "opacity-0" : "opacity-100"}
                     transition-opacity duration-500 ease-in-out`}
-                >
-                    {text}
-                </text>
+                    >
+                        {text}
+                    </text>
+                </g>
             </svg>
         </div>
     );
