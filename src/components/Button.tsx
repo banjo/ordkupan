@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { IconType } from "react-icons/lib";
 
 type Props = {
-    text: string;
+    text?: string;
     onClick: () => void;
     icon?: IconType;
 };

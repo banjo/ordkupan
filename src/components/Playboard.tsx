@@ -20,6 +20,12 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
     const [fadeOut, setFadeOut] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
+    const focusInput = () => {
+        setTimeout(() => {
+            inputRef.current?.focus();
+        }, 0);
+    };
+
     const shuffleLetters = () => {
         setFadeOut(true);
 
@@ -29,16 +35,20 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
         }, 500);
     };
 
+    const deleteLastLetter = () => {
+        setWord(w => w.slice(0, -1));
+        focusInput();
+    };
+
     const handleLetterClick = (char: string) => {
         setWord(w => w + char);
-        setTimeout(() => {
-            inputRef.current?.focus();
-        }, 0);
+        focusInput();
     };
 
     const submitWord = () => {
         const submittedWord = combo.words.find(w => w.word === word);
         setWord("");
+        focusInput();
 
         if (word.length < 4) {
             toast.error("För kort ord", {
@@ -133,9 +143,9 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                         />
 
                         <div className="flex items-center justify-between gap-3">
-                            <Button text="Delete" onClick={shuffleLetters} />
-                            <Button text="Shuffle" onClick={shuffleLetters} icon={FiRotateCcw} />
-                            <Button text="Enter" onClick={shuffleLetters} />
+                            <Button text="Delete" onClick={deleteLastLetter} />
+                            <Button onClick={shuffleLetters} icon={FiRotateCcw} />
+                            <Button text="Enter" onClick={submitWord} />
                         </div>
                     </div>
                 </div>
