@@ -50,6 +50,10 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
         setWord("");
         focusInput();
 
+        if (word.length === 0) {
+            return;
+        }
+
         if (word.length < 4) {
             toast.error("För kort ord", {
                 icon: "😞",
