@@ -4,7 +4,9 @@ import { shuffle } from "@banjoanton/utils";
 import { useRef, useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
 import { Toaster, toast } from "react-hot-toast";
+import { FiRotateCcw } from "react-icons/fi";
 import { Combo } from "../types/types";
+import { Button } from "./Button";
 import { Hexgrid } from "./HexGrid";
 
 const CONFETTI_TIME = 1700;
@@ -122,7 +124,12 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                             otherLetters={otherLetters}
                             onClick={handleLetterClick}
                         />
-                        <button onClick={shuffleLetters}>Shuffle</button>
+
+                        <div className="flex items-center justify-between gap-3">
+                            <Button text="Delete" onClick={shuffleLetters} />
+                            <Button text="Shuffle" onClick={shuffleLetters} icon={FiRotateCcw} />
+                            <Button text="Enter" onClick={shuffleLetters} />
+                        </div>
                     </div>
                 </div>
             </div>

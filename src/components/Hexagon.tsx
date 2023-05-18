@@ -29,13 +29,7 @@ export const Hexagon: FC<Props> = ({
         onClick(text);
         setClicked(true);
 
-        document.addEventListener(
-            "mouseup",
-            () => {
-                setClicked(false);
-            },
-            { once: true }
-        );
+        document.addEventListener("mouseup", mouseUp, { once: true });
     };
 
     return (
@@ -45,7 +39,6 @@ export const Hexagon: FC<Props> = ({
                         transition duration-100 ease-in-out 
                         ${className}`}
             onMouseDown={mouseDown}
-            onMouseUp={mouseUp}
         >
             <svg
                 version="1.1"
