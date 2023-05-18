@@ -21,13 +21,21 @@ export const Hexagon: FC<Props> = ({
 }) => {
     const [clicked, setClicked] = useState(false);
 
+    const mouseUp = () => {
+        setClicked(false);
+    };
+
     const mouseDown = () => {
         onClick(text);
         setClicked(true);
-    };
 
-    const mouseUp = () => {
-        setClicked(false);
+        document.addEventListener(
+            "mouseup",
+            () => {
+                setClicked(false);
+            },
+            { once: true }
+        );
     };
 
     return (
