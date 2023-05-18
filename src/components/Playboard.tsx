@@ -117,11 +117,10 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
             <div className="flex flex-col items-center justify-center">
                 <div className="flex flex-col lg:flex-row gap-8">
                     <div>
-                        <div>score: {score}</div>
+                        <div>poäng: {score}</div>
                         <div>
-                            words:
                             {matchedWords.map(w => (
-                                <div key={w}>{w}</div>
+                                <span key={w}>{w} </span>
                             ))}
                         </div>
                     </div>
