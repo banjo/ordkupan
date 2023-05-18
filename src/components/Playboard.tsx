@@ -17,10 +17,16 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
     const [matchedWords, setMatchedWords] = useState<string[]>([]);
     const [otherLetters, setOtherLetters] = useState<string[]>(combo.otherLetters);
     const [showConfetti, setShowConfetti] = useState(false);
+    const [fadeOut, setFadeOut] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const shuffleLetters = () => {
-        setOtherLetters(letters => shuffle(letters));
+        setFadeOut(true);
+
+        setTimeout(() => {
+            setOtherLetters(letters => shuffle(letters));
+            setFadeOut(false);
+        }, 500);
     };
 
     const handleLetterClick = (char: string) => {
@@ -123,6 +129,7 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                             mainLetter={combo.mainLetter}
                             otherLetters={otherLetters}
                             onClick={handleLetterClick}
+                            fadeOut={fadeOut}
                         />
 
                         <div className="flex items-center justify-between gap-3">

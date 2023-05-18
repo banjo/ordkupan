@@ -6,6 +6,7 @@ type Props = {
     mainLetter: string;
     otherLetters: string[];
     onClick: (char: string) => void;
+    fadeOut: boolean;
 };
 
 const hexGridPositions = [
@@ -17,7 +18,7 @@ const hexGridPositions = [
     "absolute right-[0px] bottom-[100px]",
 ];
 
-export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick }) => {
+export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick, fadeOut }) => {
     const { light, lighter, primary, primaryDark } = getCustomColors();
 
     const handleClick = (char: string) => {
@@ -32,6 +33,7 @@ export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick }) => {
                 clickedColor={primaryDark}
                 textColor="black"
                 onClick={handleClick}
+                fadeOut={fadeOut}
             />
             {otherLetters.map((letter, index) => (
                 <Hexagon
@@ -41,7 +43,8 @@ export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick }) => {
                     clickedColor={light}
                     textColor="black"
                     onClick={handleClick}
-                    className={hexGridPositions[index] || "absolute"}
+                    className={hexGridPositions[index]}
+                    fadeOut={fadeOut}
                 />
             ))}
         </div>

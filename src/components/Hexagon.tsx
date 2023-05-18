@@ -9,6 +9,7 @@ type Props = {
     textColor: string;
     className?: string;
     onClick: (char: string) => void;
+    fadeOut: boolean;
 };
 
 export const Hexagon: FC<Props> = ({
@@ -18,6 +19,7 @@ export const Hexagon: FC<Props> = ({
     className,
     onClick,
     clickedColor,
+    fadeOut,
 }) => {
     const [clicked, setClicked] = useState(false);
 
@@ -36,7 +38,7 @@ export const Hexagon: FC<Props> = ({
         <div
             className={`transform uppercase cursor-pointer
                         ${clicked ? "scale-[50%]" : " scale-[53%]"}
-                        transition duration-100 ease-in-out 
+                        transition-scale duration-100 ease-in-out 
                         ${className}`}
             onMouseDown={mouseDown}
         >
@@ -60,6 +62,8 @@ export const Hexagon: FC<Props> = ({
                     fill={textColor}
                     fontSize="60"
                     fontWeight="500"
+                    className={`${fadeOut ? "opacity-0" : "opacity-100"}
+                    transition-opacity duration-500 ease-in-out`}
                 >
                     {text}
                 </text>
