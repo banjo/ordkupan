@@ -1,22 +1,41 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState } from "react";
 
 type Props = {
     text: string;
     color: string;
+    clickedColor?: string;
     textColor: string;
     className?: string;
     onClick: (char: string) => void;
 };
 
-export const Hexagon: FC<Props> = ({ text, color, textColor, className, onClick }) => {
+export const Hexagon: FC<Props> = ({
+    text,
+    color,
+    textColor,
+    className,
+    onClick,
+    clickedColor,
+}) => {
+    const [clicked, setClicked] = useState(false);
     const handleClick = () => {
         onClick(text);
+        setClicked(true);
+        setTimeout(() => {
+            setClicked(false);
+        }, 100);
     };
 
     return (
-        <div className={`transform scale-[40%] uppercase ${className}`} onClick={handleClick}>
+        <div
+            className={`transform uppercase cursor-pointer
+                        ${clicked ? "scale-[35%]" : " scale-[40%]"}
+                        transition duration-100 ease-in-out 
+                        ${className}`}
+            onClick={handleClick}
+        >
             <svg
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +44,7 @@ export const Hexagon: FC<Props> = ({ text, color, textColor, className, onClick 
                 viewBox="0 0 200 173.20508075688772"
             >
                 <path
-                    fill={color}
+                    fill={clicked && clickedColor ? clickedColor : color}
                     d="M0 86.60254037844386L50 0L150 0L200 86.60254037844386L150 173.20508075688772L50 173.20508075688772Z"
                 ></path>
 

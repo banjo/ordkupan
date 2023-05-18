@@ -23,12 +23,19 @@ export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick }) => {
 
     return (
         <div className="relative flex justify-center items-center mt-14">
-            <Hexagon text={mainLetter} color="yellow" textColor="black" onClick={handleClick} />
+            <Hexagon
+                text={mainLetter}
+                color="yellow"
+                clickedColor="#8B8000"
+                textColor="black"
+                onClick={handleClick}
+            />
             {otherLetters.map((letter, index) => (
                 <Hexagon
                     key={index}
                     text={letter}
                     color="white"
+                    clickedColor="#E1D9D1"
                     textColor="black"
                     onClick={handleClick}
                     className={hexGridPositions[index] || "absolute"}
