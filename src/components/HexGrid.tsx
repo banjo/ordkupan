@@ -9,12 +9,12 @@ type Props = {
 };
 
 const hexGridPositions = [
-    "absolute left-[70px] top-[40px]",
-    "absolute left-[70px] bottom-[40px]",
-    "absolute left-[0px] top-[80px]",
-    "absolute right-[70px] top-[40px]",
-    "absolute right-[70px] bottom-[40px]",
-    "absolute right-[0px] bottom-[80px]",
+    "absolute left-[87px] bottom-[50px]",
+    "absolute left-[87px] top-[50px]",
+    "absolute left-[0px] top-[100px]",
+    "absolute right-[87px] top-[50px]",
+    "absolute right-[87px] bottom-[50px]",
+    "absolute right-[0px] bottom-[100px]",
 ];
 
 export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick }) => {
@@ -25,7 +25,7 @@ export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick }) => {
     };
 
     return (
-        <div className="relative flex justify-center items-center my-14">
+        <div className="relative flex justify-center items-center my-24">
             <Hexagon
                 text={mainLetter}
                 color={primary}

@@ -41,7 +41,7 @@ export const Hexagon: FC<Props> = ({
     return (
         <div
             className={`transform uppercase cursor-pointer
-                        ${clicked ? "scale-[35%]" : " scale-[40%]"}
+                        ${clicked ? "scale-[50%]" : " scale-[53%]"}
                         transition duration-100 ease-in-out 
                         ${className}`}
             onMouseDown={mouseDown}
@@ -65,8 +65,8 @@ export const Hexagon: FC<Props> = ({
                     dominantBaseline="middle"
                     textAnchor="middle"
                     fill={textColor}
-                    fontSize="80"
-                    fontWeight="bold"
+                    fontSize="60"
+                    fontWeight="500"
                 >
                     {text}
                 </text>
