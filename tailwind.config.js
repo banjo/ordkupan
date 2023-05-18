@@ -20,5 +20,15 @@ module.exports = {
             },
         },
     },
+    safelist: [
+        "left-[87px]",
+        "bottom-[50px]",
+        "top-[50px]",
+        "left-[0px]",
+        "top-[100px]",
+        "right-[87px]",
+        "right-[0px]",
+        "bottom-[100px]",
+    ],
     plugins: [],
 };

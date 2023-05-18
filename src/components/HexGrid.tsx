@@ -10,12 +10,12 @@ type Props = {
 };
 
 const hexGridPositions = [
-    "absolute left-[87px] bottom-[50px]",
-    "absolute left-[87px] top-[50px]",
-    "absolute left-[0px] top-[100px]",
-    "absolute right-[87px] top-[50px]",
-    "absolute right-[87px] bottom-[50px]",
-    "absolute right-[0px] bottom-[100px]",
+    "relative left-[87px] bottom-[50px]",
+    "relative left-[87px] top-[50px]",
+    "relative left-[0px] top-[100px]",
+    "relative right-[87px] top-[50px]",
+    "relative right-[87px] bottom-[50px]",
+    "relative right-[0px] bottom-[100px]",
 ];
 
 export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick, fadeOut }) => {
@@ -26,7 +26,7 @@ export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick, fadeOut 
     };
 
     return (
-        <div className="relative flex justify-center items-center my-24 w-[200px] h-[174px]">
+        <div className="relative grid grid-cols-1 my-24 left-[4px]">
             <Hexagon
                 text={mainLetter}
                 color={primary}
@@ -34,6 +34,7 @@ export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick, fadeOut 
                 textColor="black"
                 onClick={handleClick}
                 fadeOut={fadeOut}
+                className={"hexagon"}
             />
             {otherLetters.map((letter, index) => (
                 <Hexagon
@@ -43,7 +44,7 @@ export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick, fadeOut 
                     clickedColor={light}
                     textColor="black"
                     onClick={handleClick}
-                    className={hexGridPositions[index]}
+                    className={`hexagon ${hexGridPositions[index]}`}
                     fadeOut={fadeOut}
                 />
             ))}
