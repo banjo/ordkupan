@@ -19,7 +19,7 @@ export default async function Home() {
     combo.otherLetters = shuffle(combo.otherLetters);
 
     return (
-        <main className="flex h-full flex-col items-center justify-center">
+        <main className="flex h-full flex-col items-center justify-center text-black bg-white">
             <Playboard combo={combo} />
         </main>
     );

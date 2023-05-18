@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { getCustomColors } from "../utils/tailwind";
 import { Hexagon } from "./Hexagon";
 
 type Props = {
@@ -17,16 +18,18 @@ const hexGridPositions = [
 ];
 
 export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick }) => {
+    const { light, lighter, primary, primaryDark } = getCustomColors();
+
     const handleClick = (char: string) => {
         onClick(char);
     };
 
     return (
-        <div className="relative flex justify-center items-center mt-14">
+        <div className="relative flex justify-center items-center my-14">
             <Hexagon
                 text={mainLetter}
-                color="yellow"
-                clickedColor="#8B8000"
+                color={primary}
+                clickedColor={primaryDark}
                 textColor="black"
                 onClick={handleClick}
             />
@@ -34,8 +37,8 @@ export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick }) => {
                 <Hexagon
                     key={index}
                     text={letter}
-                    color="white"
-                    clickedColor="#E1D9D1"
+                    color={lighter}
+                    clickedColor={light}
                     textColor="black"
                     onClick={handleClick}
                     className={hexGridPositions[index] || "absolute"}
