@@ -25,7 +25,7 @@ export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick }) => {
     };
 
     return (
-        <div className="relative flex justify-center items-center my-24">
+        <div className="relative flex justify-center items-center my-24 w-[200px] h-[174px]">
             <Hexagon
                 text={mainLetter}
                 color={primary}

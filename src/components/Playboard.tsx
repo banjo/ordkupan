@@ -36,7 +36,13 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
             toast.error("För kort ord", {
                 icon: "😞",
             });
-            console.log("Word too short");
+            return;
+        }
+
+        if (word.length > 7) {
+            toast.error("För långt ord", {
+                icon: "😞",
+            });
             return;
         }
 
@@ -90,14 +96,17 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                             ))}
                         </div>
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col justify-center items-center">
                         <input
                             type="text"
                             ref={inputRef}
                             value={word.toUpperCase()}
-                            placeholder="Ord..."
+                            max={15}
                             onChange={event => setWord(event.target.value)}
-                            className="text-black"
+                            className="text-black h-16 w-80 bg-white 
+                            text-center font-bold text-3xl
+                            border-none outline-none
+                            caret-primary"
                             onKeyDown={keyDown}
                         ></input>
 
