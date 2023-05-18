@@ -46,6 +46,13 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
             return;
         }
 
+        if (!submittedWord && !word.includes(combo.mainLetter)) {
+            toast.error(`Måste innehålla bokstaven "${combo.mainLetter.toUpperCase()}"`, {
+                icon: "🤔",
+            });
+            return;
+        }
+
         if (!submittedWord) {
             toast.error("Inte ett giltigt ord", {
                 icon: "😞",
