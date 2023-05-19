@@ -33,6 +33,8 @@
     },
     "prettier": "@banjoanton/prettier-config",
     "devDependencies": {
-        "@banjoanton/utils": "^0.1.43"
+        "@banjoanton/utils": "^0.1.43",
+        "prettier": "^2.8.8",
+        "prettier-plugin-tailwindcss": "^0.3.0"
     }
 }
