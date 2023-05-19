@@ -1,12 +1,11 @@
 "use client";
 
 import { shuffle } from "@banjoanton/utils";
-import { useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
-import { toast, Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { FiRotateCcw } from "react-icons/fi";
+import { useGameLogic } from "../hooks/useGameLogic";
 import { useInputFocus } from "../hooks/useInputFocus";
-import { useSaveState } from "../hooks/useSaveState";
 import { Combo } from "../types/types";
 import { Button } from "./Button";
 import { Hexgrid } from "./HexGrid";
@@ -15,18 +14,22 @@ import { WordField } from "./WordField";
 const CONFETTI_TIME = 1700;
 
 export const Playboard = ({ combo }: { combo: Combo }) => {
-    const [word, setWord] = useState("");
-    const [score, setScore] = useState(0);
-    const [matchedWords, setMatchedWords] = useState<string[]>([]);
-    const [otherLetters, setOtherLetters] = useState<string[]>(combo.otherLetters);
-    const [showConfetti, setShowConfetti] = useState(false);
-    const [fadeOut, setFadeOut] = useState(false);
-    const { ref, focus } = useInputFocus();
     const {
+        fadeOut,
         isLoading,
-        updateLocalStorage,
-        value: localStorageValue,
-    } = useSaveState({ setScore, setMatchedWords, words: combo.words });
+        matchedWords,
+        otherLetters,
+        score,
+        showConfetti,
+        word,
+        setFadeOut,
+        setOtherLetters,
+        setShowConfetti,
+        setWord,
+        submitWord,
+    } = useGameLogic({ combo });
+
+    const { ref, focus } = useInputFocus();
 
     const shuffleLetters = () => {
         setFadeOut(true);
@@ -45,77 +48,6 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
     const handleLetterClick = (char: string) => {
         setWord(w => w + char);
         focus();
-    };
-
-    const submitWord = () => {
-        const submittedWord = combo.words.find(w => w.word === word);
-        setWord("");
-        focus();
-
-        if (word.length === 0) {
-            return;
-        }
-
-        if (word.length < 4) {
-            toast.error("För kort ord", {
-                icon: "😞",
-            });
-            return;
-        }
-
-        if (word.length > 7) {
-            toast.error("För långt ord", {
-                icon: "😞",
-            });
-            return;
-        }
-
-        if (!submittedWord && !word.includes(combo.mainLetter)) {
-            toast.error(`Måste innehålla bokstaven "${combo.mainLetter.toUpperCase()}"`, {
-                icon: "🤔",
-            });
-            return;
-        }
-
-        if (!submittedWord) {
-            toast.error("Inte ett giltigt ord", {
-                icon: "😞",
-            });
-            console.log("Word not found");
-            return;
-        }
-
-        if (matchedWords.includes(submittedWord.word)) {
-            toast.error("Redan använt", {
-                icon: "😲",
-            });
-            console.log("Word already matched");
-            return;
-        }
-
-        if (submittedWord.score > 5) {
-            toast.success("Full pott!", {
-                icon: "🤩",
-            });
-        } else if (submittedWord.score > 3) {
-            toast.success("Bra jobbat!", {
-                icon: "😎",
-            });
-        }
-
-        setShowConfetti(true);
-        const newMatchedWords = [...matchedWords, submittedWord.word];
-        const newScore = score + submittedWord.score;
-
-        updateLocalStorage({
-            date: new Date().toDateString(),
-            streak: localStorageValue?.streak ?? 0,
-            score: newScore,
-            matchedWords: newMatchedWords,
-        });
-
-        setMatchedWords(newMatchedWords);
-        setScore(newScore);
     };
 
     const keyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
