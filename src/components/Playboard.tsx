@@ -193,6 +193,7 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
             <div
                 className={`flex h-full w-full flex-col items-center justify-center
             ${isLoading ? "opacity-0" : ""} transition-opacity duration-500 ease-in-out`}
+                onClick={focusInput}
             >
                 <div className="flex w-full flex-col gap-8 lg:flex-row">
                     <div className="flex flex-col justify-between gap-4 px-8">
