@@ -23,11 +23,11 @@ export const Button: FC<Props> = ({ text, onClick, icon }) => {
     return (
         <button
             type="button"
-            className={`text-gray-900 border border-gray-300 outline-none
+            className={`border border-gray-300 text-gray-900 outline-none
             ${clicked ? "bg-lighter" : "bg-white"}
             ${icon ? "p-3.5" : "px-8 py-3.5"}
-            font-medium rounded-full text-sm
-            flex items-center justify-center align-center`}
+            align-center flex items-center
+            justify-center rounded-full text-sm font-medium`}
             onMouseDown={mouseDown}
         >
             {icon && <span>{icon({ size: 20 })}</span>}
