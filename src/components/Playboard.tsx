@@ -2,13 +2,13 @@
 
 import { shuffle } from "@banjoanton/utils";
 import { useState } from "react";
-import ConfettiExplosion from "react-confetti-explosion";
 import { Toaster } from "react-hot-toast";
 import { FiRotateCcw } from "react-icons/fi";
 import { useGameLogic } from "../hooks/useGameLogic";
 import { useInputFocus } from "../hooks/useInputFocus";
 import { Combo } from "../types/types";
 import { Button } from "./Button";
+import { Confetti } from "./Confetti";
 import { Hexgrid } from "./HexGrid";
 import { WordField } from "./WordField";
 
@@ -59,15 +59,12 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
 
     return (
         <>
-            <Toaster />
-            <div className="absolute top-[25%]">
-                {showConfetti && (
-                    <ConfettiExplosion
-                        duration={CONFETTI_TIME}
-                        onComplete={() => setShowConfetti(false)}
-                    />
-                )}
-            </div>
+            <Toaster toastOptions={{ duration: 1400 }} />
+            <Confetti
+                showConfetti={showConfetti}
+                duration={CONFETTI_TIME}
+                onComplete={() => setShowConfetti(false)}
+            />
             <div
                 className={`flex h-full w-full max-w-sm flex-col items-center justify-center
             ${isLoading ? "opacity-0" : ""} transition-opacity duration-500 ease-in-out`}
