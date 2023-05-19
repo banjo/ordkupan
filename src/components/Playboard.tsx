@@ -1,10 +1,11 @@
 "use client";
 
 import { shuffle } from "@banjoanton/utils";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
-import { Toaster, toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import { FiRotateCcw } from "react-icons/fi";
+import { useInputFocus } from "../hooks/useInputFocus";
 import { useSaveState } from "../hooks/useSaveState";
 import { Combo } from "../types/types";
 import { Button } from "./Button";
@@ -20,18 +21,12 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
     const [otherLetters, setOtherLetters] = useState<string[]>(combo.otherLetters);
     const [showConfetti, setShowConfetti] = useState(false);
     const [fadeOut, setFadeOut] = useState(false);
-    const inputRef = useRef<HTMLInputElement>(null);
+    const { ref, focus } = useInputFocus();
     const {
         isLoading,
         updateLocalStorage,
         value: localStorageValue,
     } = useSaveState({ setScore, setMatchedWords, words: combo.words });
-
-    const focusInput = () => {
-        setTimeout(() => {
-            inputRef.current?.focus();
-        }, 0);
-    };
 
     const shuffleLetters = () => {
         setFadeOut(true);
@@ -44,18 +39,18 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
 
     const deleteLastLetter = () => {
         setWord(w => w.slice(0, -1));
-        focusInput();
+        focus();
     };
 
     const handleLetterClick = (char: string) => {
         setWord(w => w + char);
-        focusInput();
+        focus();
     };
 
     const submitWord = () => {
         const submittedWord = combo.words.find(w => w.word === word);
         setWord("");
-        focusInput();
+        focus();
 
         if (word.length === 0) {
             return;
@@ -144,7 +139,7 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
             <div
                 className={`flex h-full w-full flex-col items-center justify-center
             ${isLoading ? "opacity-0" : ""} transition-opacity duration-500 ease-in-out`}
-                onClick={focusInput}
+                onClick={focus}
             >
                 <div className="flex w-full flex-col gap-8 lg:flex-row">
                     <div className="flex flex-col justify-between gap-4 px-8">
@@ -161,7 +156,7 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                     <div className="flex flex-col items-center justify-center">
                         <input
                             type="text"
-                            ref={inputRef}
+                            ref={ref}
                             value={word.toUpperCase()}
                             max={15}
                             inputMode="none"
