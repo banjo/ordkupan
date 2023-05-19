@@ -26,3 +26,7 @@ body {
     grid-row-start: 1;
     grid-column-start: 1;
 }
+
+body {
+    touch-action: none; /* disable scroll and refresh */
+}
