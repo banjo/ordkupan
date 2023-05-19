@@ -1,10 +1,11 @@
 "use client";
 
 import { shuffle } from "@banjoanton/utils";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
 import { Toaster, toast } from "react-hot-toast";
 import { FiRotateCcw } from "react-icons/fi";
+import { useLocalStorage } from "react-use";
 import { Combo } from "../types/types";
 import { Button } from "./Button";
 import { Hexgrid } from "./HexGrid";
@@ -14,11 +15,50 @@ const CONFETTI_TIME = 1700;
 export const Playboard = ({ combo }: { combo: Combo }) => {
     const [word, setWord] = useState("");
     const [score, setScore] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
     const [matchedWords, setMatchedWords] = useState<string[]>([]);
     const [otherLetters, setOtherLetters] = useState<string[]>(combo.otherLetters);
     const [showConfetti, setShowConfetti] = useState(false);
     const [fadeOut, setFadeOut] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
+    const [localStorageValue, setLocalStorageValue] = useLocalStorage("ordkupan", {
+        date: new Date().toDateString(),
+        score,
+        matchedWords,
+        streak: 0,
+    });
+
+    useEffect(() => {
+        if (!localStorageValue) {
+            return;
+        }
+
+        setIsLoading(true);
+
+        const isSameDay = localStorageValue.date === new Date().toDateString();
+
+        if (isSameDay) {
+            setScore(localStorageValue.score);
+            setMatchedWords(localStorageValue.matchedWords);
+            setIsLoading(false);
+            return;
+        }
+
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        const isDayAfter = localStorageValue.date === yesterday.toDateString();
+        const hasScore = localStorageValue.score > 0;
+        const streak = isDayAfter && hasScore ? localStorageValue.streak + 1 : 0;
+
+        setLocalStorageValue({
+            date: new Date().toDateString(),
+            score: 0,
+            matchedWords: [],
+            streak: streak,
+        });
+        setIsLoading(false);
+    }, [localStorageValue, setLocalStorageValue, setScore, setMatchedWords]);
 
     const focusInput = () => {
         setTimeout(() => {
@@ -92,8 +132,17 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
         }
 
         setShowConfetti(true);
-        setMatchedWords([...matchedWords, submittedWord.word]);
-        setScore(s => s + submittedWord.score);
+        const newMatchedWords = [...matchedWords, submittedWord.word];
+        const newScore = score + submittedWord.score;
+
+        setLocalStorageValue({
+            date: new Date().toDateString(),
+            streak: localStorageValue?.streak ?? 0,
+            score: newScore,
+            matchedWords: newMatchedWords,
+        });
+        setMatchedWords(newMatchedWords);
+        setScore(newScore);
     };
 
     const keyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -114,7 +163,10 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                 )}
                 {showConfetti}
             </div>
-            <div className="flex flex-col items-center justify-center">
+            <div
+                className={`flex flex-col items-center justify-center
+            ${isLoading ? "opacity-0" : ""} transition-opacity duration-500 ease-in-out`}
+            >
                 <div className="flex flex-col lg:flex-row gap-8">
                     <div className="flex flex-row justify-between px-8">
                         <div className="basis-6/12">
