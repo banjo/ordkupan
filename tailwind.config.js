@@ -29,6 +29,10 @@ module.exports = {
         "right-[87px]",
         "right-[0px]",
         "bottom-[100px]",
+        "border",
+        "border-x",
+        "border-t",
+        "border-b",
     ],
     plugins: [],
 };

@@ -9,6 +9,7 @@ import { useLocalStorage } from "react-use";
 import { Combo } from "../types/types";
 import { Button } from "./Button";
 import { Hexgrid } from "./HexGrid";
+import { WordField } from "./WordField";
 
 const CONFETTI_TIME = 1700;
 
@@ -164,34 +165,19 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                 {showConfetti}
             </div>
             <div
-                className={`flex flex-col items-center justify-center
+                className={`flex flex-col items-center justify-center w-full h-full
             ${isLoading ? "opacity-0" : ""} transition-opacity duration-500 ease-in-out`}
             >
-                <div className="flex flex-col lg:flex-row gap-8">
-                    <div className="flex flex-row justify-between px-8">
-                        <div className="basis-6/12">
-                            <div className="uppercase text-sm font-semibold mb-2">
-                                Korrekta svar
-                            </div>
-                            <div className="flex flex-col gap-3 h-20 overflow-y-scroll">
-                                {matchedWords.map(w => (
-                                    <span
-                                        className="py-1 px-2 bg-primary text-black uppercase rounded-sm text-center"
-                                        key={w}
-                                    >
-                                        {w}
-                                    </span>
-                                ))}
-                                {matchedWords.length === 0 && (
-                                    <span className="text-2xl font-bold">Inga 😞</span>
-                                )}
-                            </div>
-                        </div>
-                        <div className="basis-5/12 text-right">
-                            <div className="uppercase text-sm font-semibold mb-2">Poäng</div>
-                            <div className="text-2xl font-bold">
+                <div className="flex flex-col lg:flex-row gap-8 w-full">
+                    <div className="flex flex-col justify-between px-8 gap-4">
+                        <div className="mb-2 flex items-center justify-between">
+                            <div className="uppercase text-2xl font-bold">Poäng</div>
+                            <div className="text-2xl font-medium">
                                 {score} / {combo.maxScore}
                             </div>
+                        </div>
+                        <div>
+                            <WordField words={matchedWords} />
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
@@ -217,8 +203,8 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                         />
 
                         <div
-                            className="flex items-center justify-between gap-3 w-full 
-                            relative right-[4px]"
+                            className="flex items-center justify-between gap-3 
+                            relative w-9/12"
                         >
                             <Button text="Delete" onClick={deleteLastLetter} />
                             <Button onClick={shuffleLetters} icon={FiRotateCcw} />
