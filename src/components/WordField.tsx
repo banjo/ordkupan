@@ -7,7 +7,10 @@ type Props = {
 };
 
 const Words = ({ words }: Props) => {
-    const str = words.map(w => capitalize(w)).join("  ");
+    const str = [...words]
+        .reverse()
+        .map(w => capitalize(w))
+        .join("  ");
     return <div className="overflow-hidden text-ellipsis whitespace-nowrap">{str}</div>;
 };
 
@@ -73,7 +76,7 @@ export const WordField: FC<Props> = ({ words }) => {
             >
                 {active && (
                     <div className=" mt-4 flex flex-row flex-wrap gap-y-3 text-xl">
-                        {words.map((word, index) => (
+                        {[...words].reverse().map((word, index) => (
                             <div className="w-1/2 pl-4" key={index}>
                                 {capitalize(word)}
                             </div>

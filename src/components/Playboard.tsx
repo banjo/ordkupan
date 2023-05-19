@@ -3,7 +3,7 @@
 import { shuffle } from "@banjoanton/utils";
 import { useEffect, useRef, useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
-import { toast, Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 import { FiRotateCcw } from "react-icons/fi";
 import { useLocalStorage } from "react-use";
 import { Combo } from "../types/types";
@@ -12,6 +12,14 @@ import { Hexgrid } from "./HexGrid";
 import { WordField } from "./WordField";
 
 const CONFETTI_TIME = 1700;
+const LOCAL_STORAGE_KEY = "ordkupan";
+
+type LocalStorageState = {
+    date: string;
+    score: number;
+    matchedWords: string[];
+    streak: number;
+};
 
 export const Playboard = ({ combo }: { combo: Combo }) => {
     const [word, setWord] = useState("");
@@ -22,19 +30,22 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
     const [showConfetti, setShowConfetti] = useState(false);
     const [fadeOut, setFadeOut] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [localStorageValue, setLocalStorageValue] = useLocalStorage("ordkupan", {
-        date: new Date().toDateString(),
-        score,
-        matchedWords,
-        streak: 0,
-    });
+    const [localStorageValue, setLocalStorageValue] = useLocalStorage<LocalStorageState | null>(
+        LOCAL_STORAGE_KEY,
+        null
+    );
 
     useEffect(() => {
         if (!localStorageValue) {
+            setLocalStorageValue({
+                date: new Date().toDateString(),
+                score: 0,
+                matchedWords: [],
+                streak: 0,
+            });
+            setIsLoading(false);
             return;
         }
-
-        setIsLoading(true);
 
         const isSameDay = localStorageValue.date === new Date().toDateString();
 
@@ -50,7 +61,22 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
 
         const isDayAfter = localStorageValue.date === yesterday.toDateString();
         const hasScore = localStorageValue.score > 0;
-        const streak = isDayAfter && hasScore ? localStorageValue.streak + 1 : 0;
+
+        if (!isDayAfter || !hasScore) {
+            setLocalStorageValue({
+                date: new Date().toDateString(),
+                score: 0,
+                matchedWords: [],
+                streak: 0,
+            });
+            setIsLoading(false);
+            return;
+        }
+
+        const streak = localStorageValue.streak + 1;
+
+        const startDate = new Date();
+        startDate.setDate(startDate.getDate() - streak);
 
         setLocalStorageValue({
             date: new Date().toDateString(),
