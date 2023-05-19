@@ -36,7 +36,7 @@ export const Hexagon: FC<Props> = ({
 
     return (
         <div
-            className={`transform uppercase cursor-pointer
+            className={`transform cursor-pointer uppercase
                         ${clicked ? "scale-[50%]" : " scale-[53%]"}
                         transition-scale duration-100 ease-in-out 
                         ${className}`}

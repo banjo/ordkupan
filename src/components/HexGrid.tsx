@@ -26,7 +26,7 @@ export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick, fadeOut 
     };
 
     return (
-        <div className="relative grid grid-cols-1 mb-20 mt-14">
+        <div className="relative mb-20 mt-14 grid grid-cols-1">
             <Hexagon
                 text={mainLetter}
                 color={primary}

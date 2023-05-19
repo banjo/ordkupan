@@ -3,7 +3,7 @@
 import { shuffle } from "@banjoanton/utils";
 import { useEffect, useRef, useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
-import { Toaster, toast } from "react-hot-toast";
+import { toast, Toaster } from "react-hot-toast";
 import { FiRotateCcw } from "react-icons/fi";
 import { useLocalStorage } from "react-use";
 import { Combo } from "../types/types";
@@ -165,13 +165,13 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                 {showConfetti}
             </div>
             <div
-                className={`flex flex-col items-center justify-center w-full h-full
+                className={`flex h-full w-full flex-col items-center justify-center
             ${isLoading ? "opacity-0" : ""} transition-opacity duration-500 ease-in-out`}
             >
-                <div className="flex flex-col lg:flex-row gap-8 w-full">
-                    <div className="flex flex-col justify-between px-8 gap-4">
+                <div className="flex w-full flex-col gap-8 lg:flex-row">
+                    <div className="flex flex-col justify-between gap-4 px-8">
                         <div className="mb-2 flex items-center justify-between">
-                            <div className="uppercase text-2xl font-bold">Poäng</div>
+                            <div className="text-2xl font-bold uppercase">Poäng</div>
                             <div className="text-2xl font-medium">
                                 {score} / {combo.maxScore}
                             </div>
@@ -180,7 +180,7 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                             <WordField words={matchedWords} />
                         </div>
                     </div>
-                    <div className="flex flex-col justify-center items-center">
+                    <div className="flex flex-col items-center justify-center">
                         <input
                             type="text"
                             ref={inputRef}
@@ -188,10 +188,10 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                             max={15}
                             inputMode="none"
                             onChange={event => setWord(event.target.value)}
-                            className="text-black h-16 w-80 bg-white 
-                            text-center font-bold text-3xl
-                            border-none outline-none
-                            caret-primary"
+                            className="h-16 w-80 border-none bg-white 
+                            text-center text-3xl font-bold
+                            text-black caret-primary
+                            outline-none"
                             onKeyDown={keyDown}
                         ></input>
 
@@ -203,8 +203,8 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                         />
 
                         <div
-                            className="flex items-center justify-between gap-3 
-                            relative w-9/12"
+                            className="relative flex w-9/12 items-center 
+                            justify-between gap-3"
                         >
                             <Button text="Delete" onClick={deleteLastLetter} />
                             <Button onClick={shuffleLetters} icon={FiRotateCcw} />
