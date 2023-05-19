@@ -33,7 +33,7 @@ export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick, fadeOut 
                 clickedColor={primaryDark}
                 textColor="black"
                 onClick={handleClick}
-                fadeOut={fadeOut}
+                fadeOut={false}
                 className={"hexagon"}
             />
             {otherLetters.map((letter, index) => (
