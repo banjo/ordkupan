@@ -10,7 +10,7 @@ import { Combo } from "../types/types";
 import { Button } from "./Button";
 import { Confetti } from "./Confetti";
 import { Hexgrid } from "./HexGrid";
-import { WordField } from "./WordField";
+import { ScoreBoard } from "./ScoreBoard";
 
 const CONFETTI_TIME = 1700;
 
@@ -71,17 +71,11 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                 onClick={focus}
             >
                 <div className="flex w-full flex-col gap-8 lg:flex-row">
-                    <div className="flex flex-col justify-between gap-4 px-8">
-                        <div className="mb-2 flex items-center justify-between">
-                            <div className="text-2xl font-bold uppercase">Poäng</div>
-                            <div className="text-2xl font-medium">
-                                {score} / {combo.maxScore}
-                            </div>
-                        </div>
-                        <div>
-                            <WordField words={matchedWords} />
-                        </div>
-                    </div>
+                    <ScoreBoard
+                        matchedWords={matchedWords}
+                        maxScore={combo.maxScore}
+                        score={score}
+                    />
                     <div className="flex flex-col items-center justify-center">
                         <input
                             type="text"
