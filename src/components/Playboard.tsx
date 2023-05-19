@@ -121,7 +121,7 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                             <div className="uppercase text-sm font-semibold mb-2">
                                 Korrekta svar
                             </div>
-                            <div className="flex flex-col gap-3 h-40 overflow-y-scroll">
+                            <div className="flex flex-col gap-3 h-20 overflow-y-scroll">
                                 {matchedWords.map(w => (
                                     <span
                                         className="py-1 px-2 bg-primary text-black uppercase rounded-sm text-center"
@@ -163,7 +163,10 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                             fadeOut={fadeOut}
                         />
 
-                        <div className="flex items-center justify-between gap-3">
+                        <div
+                            className="flex items-center justify-between gap-3 w-full 
+                            relative right-[4px]"
+                        >
                             <Button text="Delete" onClick={deleteLastLetter} />
                             <Button onClick={shuffleLetters} icon={FiRotateCcw} />
                             <Button text="Enter" onClick={submitWord} />
