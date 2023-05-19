@@ -5,7 +5,6 @@ import { useSaveState } from "./useSaveState";
 
 type Out = {
     isLoading: boolean;
-    showConfetti: boolean;
     fadeOut: boolean;
     word: string;
     score: number;
@@ -13,22 +12,21 @@ type Out = {
     otherLetters: string[];
     setFadeOut: Dispatch<SetStateAction<boolean>>;
     setOtherLetters: Dispatch<SetStateAction<string[]>>;
-    setShowConfetti: Dispatch<SetStateAction<boolean>>;
     setWord: Dispatch<SetStateAction<string>>;
     submitWord: () => void;
 };
 
 type In = {
     combo: Combo;
+    setShowConfetti: Dispatch<SetStateAction<boolean>>;
 };
 
-export const useGameLogic = ({ combo }: In): Out => {
+export const useGameLogic = ({ combo, setShowConfetti }: In): Out => {
     const [word, setWord] = useState("");
     const [score, setScore] = useState(0);
     const [matchedWords, setMatchedWords] = useState<string[]>([]);
     const [otherLetters, setOtherLetters] = useState<string[]>(combo.otherLetters);
     const [fadeOut, setFadeOut] = useState(false);
-    const [showConfetti, setShowConfetti] = useState(false);
     const {
         isLoading,
         updateLocalStorage,
@@ -112,11 +110,9 @@ export const useGameLogic = ({ combo }: In): Out => {
         matchedWords,
         otherLetters,
         score,
-        showConfetti,
         word,
         setFadeOut,
         setOtherLetters,
-        setShowConfetti,
         setWord,
         submitWord,
     };

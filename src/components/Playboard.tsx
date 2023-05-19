@@ -1,6 +1,7 @@
 "use client";
 
 import { shuffle } from "@banjoanton/utils";
+import { useState } from "react";
 import ConfettiExplosion from "react-confetti-explosion";
 import { Toaster } from "react-hot-toast";
 import { FiRotateCcw } from "react-icons/fi";
@@ -14,20 +15,20 @@ import { WordField } from "./WordField";
 const CONFETTI_TIME = 1700;
 
 export const Playboard = ({ combo }: { combo: Combo }) => {
+    const [showConfetti, setShowConfetti] = useState(false);
+
     const {
         fadeOut,
         isLoading,
         matchedWords,
         otherLetters,
         score,
-        showConfetti,
         word,
         setFadeOut,
         setOtherLetters,
-        setShowConfetti,
         setWord,
         submitWord,
-    } = useGameLogic({ combo });
+    } = useGameLogic({ combo, setShowConfetti });
 
     const { ref, focus } = useInputFocus();
 
@@ -66,7 +67,6 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                         onComplete={() => setShowConfetti(false)}
                     />
                 )}
-                {showConfetti}
             </div>
             <div
                 className={`flex h-full w-full max-w-sm flex-col items-center justify-center
