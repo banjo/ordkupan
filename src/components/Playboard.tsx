@@ -148,6 +148,7 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                             ref={inputRef}
                             value={word.toUpperCase()}
                             max={15}
+                            inputMode="none"
                             onChange={event => setWord(event.target.value)}
                             className="text-black h-16 w-80 bg-white 
                             text-center font-bold text-3xl
