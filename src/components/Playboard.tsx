@@ -98,6 +98,16 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
             return;
         }
 
+        if (submittedWord.score > 5) {
+            toast.success("Full pott!", {
+                icon: "🤩",
+            });
+        } else if (submittedWord.score > 3) {
+            toast.success("Bra jobbat!", {
+                icon: "😎",
+            });
+        }
+
         setShowConfetti(true);
         const newMatchedWords = [...matchedWords, submittedWord.word];
         const newScore = score + submittedWord.score;
