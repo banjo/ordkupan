@@ -33,6 +33,9 @@ module.exports = {
         "border-x",
         "border-t",
         "border-b",
+        "rounded",
+        "rounded-t",
+        "rounded-b",
     ],
     plugins: [],
 };

@@ -13,26 +13,28 @@ const Words = ({ words }: Props) => {
 
 export const WordField: FC<Props> = ({ words }) => {
     const [active, setActive] = useState(false);
-    const [upperClasses, setUpperClasses] = useState("border");
+    const [upperClasses, setUpperClasses] = useState("border rounded");
     const [lowerClasses, setLowerClasses] = useState("");
 
     const hasWords = words.length > 0;
 
     const onClick = () => {
         if (active) {
-            setUpperClasses("border");
+            setUpperClasses("border rounded");
             setLowerClasses("");
         } else {
-            setUpperClasses("border-x border-t");
-            setLowerClasses("border-x border-b");
+            setUpperClasses("border-x border-t rounded-t");
+            setLowerClasses("border-x border-b rounded-b");
         }
         setActive(prev => !prev);
     };
 
     const title = useMemo(() => {
+        if (!hasWords && active) return "Du har ej hittat några ord";
+
         if (!hasWords) return "Dina ord...";
 
-        if (active) return `Du har hittat ${words.length} ord!`;
+        if (active) return `Du har hittat ${words.length} ord`;
 
         return <Words words={words} />;
     }, [active, hasWords, words]);
@@ -64,12 +66,13 @@ export const WordField: FC<Props> = ({ words }) => {
             <div
                 className={`absolute left-0 right-0
                     ${active ? "h-[500px]" : "h-0"}
-                    transition-height z-10 border-gray-300
+                    transition-height
+                    z-10 overflow-y-scroll border-gray-300
                     ${lowerClasses}
                     bg-white duration-200 ease-in-out`}
             >
                 {active && (
-                    <div className="mt-4 flex flex-row flex-wrap gap-y-3 text-xl">
+                    <div className=" mt-4 flex flex-row flex-wrap gap-y-3 text-xl">
                         {words.map((word, index) => (
                             <div className="w-1/2 pl-4" key={index}>
                                 {capitalize(word)}
