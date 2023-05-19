@@ -1,10 +1,12 @@
+export type Word = {
+    word: string;
+    score: number;
+};
+
 export type Combo = {
     mainLetter: string;
     otherLetters: string[];
-    words: {
-        word: string;
-        score: number;
-    }[];
+    words: Word[];
     maxScore: number;
 };
 

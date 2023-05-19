@@ -25,7 +25,7 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
         isLoading,
         updateLocalStorage,
         value: localStorageValue,
-    } = useSaveState({ setScore, setMatchedWords });
+    } = useSaveState({ setScore, setMatchedWords, words: combo.words });
 
     const focusInput = () => {
         setTimeout(() => {

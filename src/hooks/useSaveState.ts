@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 import { useLocalStorage } from "react-use";
+import { Word } from "../types/types";
 
 const LOCAL_STORAGE_KEY = "ordkupan";
 
@@ -26,9 +28,10 @@ type Out = {
 type In = {
     setScore: Dispatch<SetStateAction<number>>;
     setMatchedWords: Dispatch<SetStateAction<string[]>>;
+    words: Word[];
 };
 
-export const useSaveState = ({ setScore, setMatchedWords }: In): Out => {
+export const useSaveState = ({ setScore, setMatchedWords, words }: In): Out => {
     const [localStorageValue, setLocalStorageValue] = useLocalStorage<LocalStorageState | null>(
         LOCAL_STORAGE_KEY,
         null
@@ -62,8 +65,43 @@ export const useSaveState = ({ setScore, setMatchedWords }: In): Out => {
         });
     }, [setLocalStorageValue]);
 
+    const validateWords = useCallback(() => {
+        const matchedWords = localStorageValue?.matchedWords ?? [];
+
+        const allWordsValid = matchedWords.every(matchedWord => {
+            return words.some(word => word.word === matchedWord);
+        });
+
+        if (!allWordsValid) {
+            return false;
+        }
+
+        const score = localStorageValue?.score ?? 0;
+        // eslint-disable-next-line unicorn/no-array-reduce
+        const scoreForAllWords = matchedWords.reduce((acc, matchedWord) => {
+            const word = words.find(w => w.word === matchedWord);
+            return acc + (word?.score ?? 0);
+        }, 0);
+
+        if (score !== scoreForAllWords) {
+            return false;
+        }
+
+        return true;
+    }, [localStorageValue?.matchedWords, localStorageValue?.score, words]);
+
     useEffect(() => {
         if (!localStorageValue) {
+            resetLocalStorage();
+            setIsLoading(false);
+            return;
+        }
+
+        const isValid = validateWords();
+        if (!isValid) {
+            toast.error("Försök inte fuska!", {
+                icon: "🤬",
+            });
             resetLocalStorage();
             setIsLoading(false);
             return;
@@ -72,6 +110,9 @@ export const useSaveState = ({ setScore, setMatchedWords }: In): Out => {
         const isSameDay = localStorageValue.date === new Date().toDateString();
 
         if (isSameDay) {
+            toast.success("Välkommen tillbaka!", {
+                icon: "👋",
+            });
             setScore(localStorageValue.score);
             setMatchedWords(localStorageValue.matchedWords);
             setIsLoading(false);
@@ -99,15 +140,12 @@ export const useSaveState = ({ setScore, setMatchedWords }: In): Out => {
             score: 0,
         });
 
+        toast.success(`Din streak är nu ${streak} dag(ar)!`, {
+            icon: "🔥",
+        });
+
         setIsLoading(false);
-    }, [
-        localStorageValue,
-        setLocalStorageValue,
-        setScore,
-        setMatchedWords,
-        updateLocalStorage,
-        resetLocalStorage,
-    ]);
+    }, []);
 
     return {
         isLoading,
