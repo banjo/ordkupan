@@ -137,7 +137,7 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                 {showConfetti}
             </div>
             <div
-                className={`flex h-full w-full flex-col items-center justify-center
+                className={`flex h-full w-full max-w-sm flex-col items-center justify-center
             ${isLoading ? "opacity-0" : ""} transition-opacity duration-500 ease-in-out`}
                 onClick={focus}
             >
