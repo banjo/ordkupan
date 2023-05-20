@@ -1,15 +1,14 @@
 "use client";
 
-import { shuffle } from "@banjoanton/utils";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
-import { FiRotateCcw } from "react-icons/fi";
 import { useGameLogic } from "../hooks/useGameLogic";
 import { useInputFocus } from "../hooks/useInputFocus";
 import { Combo } from "../types/types";
-import { Button } from "./Button";
 import { Confetti } from "./Confetti";
+import { GameButtons } from "./GameButtons";
 import { Hexgrid } from "./HexGrid";
+import { InputField } from "./InputField";
 import { ScoreBoard } from "./ScoreBoard";
 
 const CONFETTI_TIME = 1700;
@@ -32,29 +31,9 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
 
     const { ref, focus } = useInputFocus();
 
-    const shuffleLetters = () => {
-        setFadeOut(true);
-
-        setTimeout(() => {
-            setOtherLetters(letters => shuffle(letters));
-            setFadeOut(false);
-        }, 500);
-    };
-
-    const deleteLastLetter = () => {
-        setWord(w => w.slice(0, -1));
-        focus();
-    };
-
     const handleLetterClick = (char: string) => {
         setWord(w => w + char);
         focus();
-    };
-
-    const keyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
-            submitWord();
-        }
     };
 
     return (
@@ -67,7 +46,7 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
             />
             <div
                 className={`flex h-full w-full max-w-sm flex-col items-center justify-center
-            ${isLoading ? "opacity-0" : ""} transition-opacity duration-500 ease-in-out`}
+                ${isLoading ? "opacity-0" : ""} transition-opacity duration-500 ease-in-out`}
                 onClick={focus}
             >
                 <div className="flex w-full flex-col gap-8 lg:flex-row">
@@ -77,19 +56,12 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                         score={score}
                     />
                     <div className="flex flex-col items-center justify-center">
-                        <input
-                            type="text"
+                        <InputField
                             ref={ref}
-                            value={word.toUpperCase()}
-                            max={15}
-                            inputMode="none"
-                            onChange={event => setWord(event.target.value)}
-                            className="h-16 w-80 border-none bg-white 
-                            text-center text-3xl font-bold
-                            text-black caret-primary
-                            outline-none"
-                            onKeyDown={keyDown}
-                        ></input>
+                            setWord={setWord}
+                            submitWord={submitWord}
+                            word={word}
+                        />
 
                         <Hexgrid
                             mainLetter={combo.mainLetter}
@@ -98,14 +70,12 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                             fadeOut={fadeOut}
                         />
 
-                        <div
-                            className="relative flex w-9/12 items-center 
-                            justify-between gap-3"
-                        >
-                            <Button text="Delete" onClick={deleteLastLetter} />
-                            <Button onClick={shuffleLetters} icon={FiRotateCcw} />
-                            <Button text="Enter" onClick={submitWord} />
-                        </div>
+                        <GameButtons
+                            setFadeOut={setFadeOut}
+                            setOtherLetters={setOtherLetters}
+                            setWord={setWord}
+                            submitWord={submitWord}
+                        />
                     </div>
                 </div>
             </div>

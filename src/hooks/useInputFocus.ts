@@ -9,6 +9,7 @@ export const useInputFocus = (): Out => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const focus = () => {
+        console.log(inputRef);
         setTimeout(() => {
             inputRef.current?.focus();
         }, 0);
