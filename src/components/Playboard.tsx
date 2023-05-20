@@ -49,7 +49,7 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                 ${isLoading ? "opacity-0" : ""} transition-opacity duration-500 ease-in-out`}
                 onClick={focus}
             >
-                <div className="flex w-full flex-col gap-8 lg:flex-row">
+                <div className="flex w-full flex-col gap-8">
                     <ScoreBoard
                         matchedWords={matchedWords}
                         maxScore={combo.maxScore}
