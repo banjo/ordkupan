@@ -18,6 +18,7 @@ const InputFieldComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 
     return (
         <input
+            autoFocus
             type="text"
             ref={ref}
             value={word}
@@ -29,7 +30,7 @@ const InputFieldComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
                             text-black caret-primary
                             outline-none"
             onKeyDown={keyDown}
-        ></input>
+        />
     );
 };
 
