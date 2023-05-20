@@ -49,13 +49,6 @@ export const useGameLogic = ({ combo, setShowConfetti }: In): Out => {
             return;
         }
 
-        if (word.length > 7) {
-            toast.error("För långt ord", {
-                icon: "😞",
-            });
-            return;
-        }
-
         if (!submittedWord && !word.includes(combo.mainLetter)) {
             toast.error(`Måste innehålla bokstaven "${combo.mainLetter.toUpperCase()}"`, {
                 icon: "🤔",
