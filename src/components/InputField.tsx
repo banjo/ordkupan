@@ -18,18 +18,19 @@ const InputFieldComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
 
     return (
         <input
+            autoFocus
             type="text"
             ref={ref}
-            value={word.toUpperCase()}
+            value={word}
             max={15}
             inputMode="none"
-            onChange={event => setWord(event.target.value)}
+            onChange={event => setWord(event.target.value.toUpperCase())}
             className="h-16 w-80 border-none bg-white
                             text-center text-3xl font-bold
                             text-black caret-primary
                             outline-none"
             onKeyDown={keyDown}
-        ></input>
+        />
     );
 };
 
