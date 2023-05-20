@@ -41,7 +41,12 @@ export const useSaveState = ({ setScore, setMatchedWords, words }: In): Out => {
     const updateLocalStorage = useCallback(
         ({ score, matchedWords, streak, date }: UpdateLocalStorageProps) => {
             setLocalStorageValue({
-                date: date ?? localStorageValue?.date ?? new Date().toDateString(),
+                date:
+                    date ??
+                    localStorageValue?.date ??
+                    new Date().toLocaleDateString("sv-SE", {
+                        timeZone: "Europe/Stockholm",
+                    }),
                 streak: streak ?? localStorageValue?.streak ?? 0,
                 score: score ?? localStorageValue?.score ?? 0,
                 matchedWords: matchedWords ?? localStorageValue?.matchedWords ?? [],
@@ -58,7 +63,9 @@ export const useSaveState = ({ setScore, setMatchedWords, words }: In): Out => {
 
     const resetLocalStorage = useCallback(() => {
         setLocalStorageValue({
-            date: new Date().toDateString(),
+            date: new Date().toLocaleDateString("sv-SE", {
+                timeZone: "Europe/Stockholm",
+            }),
             score: 0,
             matchedWords: [],
             streak: 0,
@@ -107,7 +114,11 @@ export const useSaveState = ({ setScore, setMatchedWords, words }: In): Out => {
             return;
         }
 
-        const isSameDay = localStorageValue.date === new Date().toDateString();
+        const isSameDay =
+            localStorageValue.date ===
+            new Date().toLocaleDateString("sv-SE", {
+                timeZone: "Europe/Stockholm",
+            });
 
         if (isSameDay) {
             toast.success("Välkommen tillbaka!", {
@@ -122,7 +133,11 @@ export const useSaveState = ({ setScore, setMatchedWords, words }: In): Out => {
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
 
-        const isDayAfter = localStorageValue.date === yesterday.toDateString();
+        const isDayAfter =
+            localStorageValue.date ===
+            yesterday.toLocaleDateString("se-SV", {
+                timeZone: "Europe/Stockholm",
+            });
         const hasScore = localStorageValue.score > 0;
 
         if (!isDayAfter || !hasScore) {
@@ -135,7 +150,9 @@ export const useSaveState = ({ setScore, setMatchedWords, words }: In): Out => {
 
         updateLocalStorage({
             streak,
-            date: new Date().toDateString(),
+            date: new Date().toLocaleDateString("sv-SE", {
+                timeZone: "Europe/Stockholm",
+            }),
             matchedWords: [],
             score: 0,
         });

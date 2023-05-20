@@ -3,11 +3,15 @@ import { Playboard } from "../components/Playboard";
 import { getById } from "../utils/database";
 
 export default async function Home() {
-    const startDate = new Date("2023-05-15T00:00:00.000Z");
-    const now = new Date();
+    const startDate = new Date("2023-05-14T22:00:00.000Z").toLocaleDateString("sv-SE", {
+        timeZone: "Europe/Stockholm",
+    });
+    const now = new Date().toLocaleDateString("sv-SE", {
+        timeZone: "Europe/Stockholm",
+    });
 
     const daysSinceStart = Math.floor(
-        (now.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)
+        (new Date(now).getTime() - new Date(startDate).getTime()) / (1000 * 60 * 60 * 24)
     );
 
     const combo = await getById(daysSinceStart);

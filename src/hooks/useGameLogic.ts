@@ -94,7 +94,9 @@ export const useGameLogic = ({ combo, setShowConfetti }: In): Out => {
         const newScore = score + submittedWord.score;
 
         updateLocalStorage({
-            date: new Date().toDateString(),
+            date: new Date().toLocaleDateString("sv-SE", {
+                timeZone: "Europe/Stockholm",
+            }),
             streak: localStorageValue?.streak ?? 0,
             score: newScore,
             matchedWords: newMatchedWords,
