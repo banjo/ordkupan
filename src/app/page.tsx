@@ -3,10 +3,11 @@ import { Playboard } from "../components/Playboard";
 import { getById } from "../utils/database";
 
 export default async function Home() {
-    const startDate = new Date("2023-05-14T22:00:00.000Z").toLocaleDateString("sv-SE", {
+    const startDate = new Date("2023-05-14T22:00:00.000Z").toLocaleString("sv-SE", {
         timeZone: "Europe/Stockholm",
     });
-    const now = new Date().toLocaleDateString("sv-SE", {
+
+    const now = new Date().toLocaleString("sv-SE", {
         timeZone: "Europe/Stockholm",
     });
 
