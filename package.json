@@ -12,6 +12,7 @@
     "dependencies": {
         "@banjoanton/eslint-config": "^0.1.8",
         "@banjoanton/prettier-config": "^0.1.3",
+        "@js-temporal/polyfill": "^0.4.4",
         "@planetscale/database": "^1.7.0",
         "@types/node": "20.1.5",
         "@types/react": "18.2.6",

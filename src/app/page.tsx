@@ -1,19 +1,23 @@
 import { shuffle } from "@banjoanton/utils";
+import { Temporal } from "@js-temporal/polyfill";
 import { Playboard } from "../components/Playboard";
 import { getById } from "../utils/database";
 
 export default async function Home() {
-    const startDate = new Date("2023-05-14T22:00:00.000Z").toLocaleString("sv-SE", {
+    const startDate = Temporal.ZonedDateTime.from({
+        timeZone: "Europe/Stockholm",
+        year: 2023,
+        month: 5,
+        day: 15,
+    });
+
+    const currentDate = Temporal.Now.plainDateISO("Europe/Stockholm").toZonedDateTime({
         timeZone: "Europe/Stockholm",
     });
 
-    const now = new Date().toLocaleString("sv-SE", {
-        timeZone: "Europe/Stockholm",
+    const { days: daysSinceStart } = currentDate.since(startDate, {
+        largestUnit: "day",
     });
-
-    const daysSinceStart = Math.floor(
-        (new Date(now).getTime() - new Date(startDate).getTime()) / (1000 * 60 * 60 * 24)
-    );
 
     const combo = await getById(daysSinceStart);
 
