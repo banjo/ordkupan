@@ -3,6 +3,8 @@ import { Temporal } from "@js-temporal/polyfill";
 import { Playboard } from "../components/Playboard";
 import { getById } from "../utils/database";
 
+export const revalidate = 1000;
+
 export default async function Home() {
     const startDate = Temporal.ZonedDateTime.from({
         timeZone: "Europe/Stockholm",
