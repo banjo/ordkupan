@@ -13,13 +13,19 @@ export default async function Home() {
         day: 15,
     });
 
+    console.log({ startDate: JSON.stringify(startDate) });
+
     const currentDate = Temporal.Now.plainDateISO("Europe/Stockholm").toZonedDateTime({
         timeZone: "Europe/Stockholm",
     });
 
+    console.log({ currentDate: JSON.stringify(currentDate) });
+
     const { days: daysSinceStart } = currentDate.since(startDate, {
         largestUnit: "day",
     });
+
+    console.log({ daysSinceStart });
 
     const combo = await getById(daysSinceStart);
 
