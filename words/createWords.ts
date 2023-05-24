@@ -1,9 +1,9 @@
 import { exportJsonFile, importJsonFile } from "./helpers";
 
 const main = () => {
-    const arrayOfWords = importJsonFile("./svenska-ord.json");
+    const arrayOfWords = importJsonFile("./words/data/svenska-ord.json");
     const cleanedArray = cleanup(arrayOfWords);
-    exportJsonFile("./words.json", cleanedArray);
+    exportJsonFile("./words/data/words.json", cleanedArray);
 };
 
 function cleanup(array: string[]) {
@@ -16,7 +16,6 @@ function cleanup(array: string[]) {
             word.includes("è"),
             word.includes("é"),
             word.length < 4,
-            word.length > 7,
         ];
 
         return !wordConditionToExclude.some(Boolean);

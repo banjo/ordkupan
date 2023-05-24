@@ -1,11 +1,14 @@
 import { shuffle } from "@banjoanton/utils";
 import { Temporal } from "@js-temporal/polyfill";
+import combos from "../../words/data/combos.json" assert { type: "json" };
 import { Playboard } from "../components/Playboard";
-import { getById } from "../utils/database";
+import { Combo } from "../types/types";
 
 export const revalidate = 10;
 
-export default async function Home() {
+const COMBOS = combos as Combo[];
+
+export default function Home() {
     const startDate = Temporal.ZonedDateTime.from({
         timeZone: "Europe/Stockholm",
         year: 2023,
@@ -27,7 +30,8 @@ export default async function Home() {
 
     console.log({ daysSinceStart });
 
-    const combo = await getById(daysSinceStart);
+    // const combo = await getById(daysSinceStart);
+    const combo = COMBOS[daysSinceStart];
 
     if (!combo) {
         throw new Error("Combo not found");

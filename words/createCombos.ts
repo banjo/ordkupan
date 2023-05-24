@@ -1,11 +1,12 @@
-import { sample, uniq } from "@banjoanton/utils";
+import { sample, shuffle, uniq } from "@banjoanton/utils";
 import { Combo } from "../src/types/types";
 import { exportJsonFile, importJsonFile } from "./helpers";
 
 const main = () => {
-    const arrayOfWords = importJsonFile("./words/words.json");
+    const arrayOfWords = importJsonFile("./words/data/words.json");
     const arrayOfCombos = createCombos(arrayOfWords);
-    exportJsonFile("./words/combos.json", arrayOfCombos);
+    const shuffled = shuffle(arrayOfCombos);
+    exportJsonFile("./words/data/combos.json", shuffled);
 };
 
 function createCombos(allWords: string[]) {
@@ -15,14 +16,18 @@ function createCombos(allWords: string[]) {
         return uniqueLetters.length === 7;
     });
 
-    const combos = wordsWithSevenDifferentLetters.map(word => {
+    const combos = wordsWithSevenDifferentLetters.map((word, index) => {
+        console.log(`Word ${index}/${wordsWithSevenDifferentLetters.length}:`, word);
+
         const letters = [...word];
         const mainLetter = sample(letters);
-        const otherLetters = letters.filter(letter => letter !== mainLetter);
+        const otherLetters = uniq(letters.filter(letter => letter !== mainLetter));
 
-        const wordsWithMainLetter = allWords.filter(w => w.includes(mainLetter));
+        const validWords = allWords.filter(w => {
+            if (!w.includes(mainLetter)) {
+                return false;
+            }
 
-        const validWords = wordsWithMainLetter.filter(w => {
             const wordLetters = [...w];
 
             for (const letter of wordLetters) {
@@ -37,9 +42,9 @@ function createCombos(allWords: string[]) {
         const combo: Combo = {
             mainLetter,
             otherLetters,
-            words: validWords.map(word => ({
-                word,
-                score: getScore(word),
+            words: validWords.map(w => ({
+                word: w,
+                score: getScore(w),
             })),
             // eslint-disable-next-line unicorn/no-array-reduce
             maxScore: validWords.reduce((acc, w) => {
@@ -55,34 +60,20 @@ function createCombos(allWords: string[]) {
 }
 
 function getScore(word: string) {
-    const isSevenLetters = word.length === 7;
-    const isSixLetters = word.length === 6;
-    const isFiveLetters = word.length === 5;
-    const isFourLetters = word.length === 4;
+    let score = word.length - 3;
 
+    if (score < 0) {
+        return 0;
+    }
+
+    const isSevenLettersOrMore = word.length >= 7;
     const isUnique = uniq([...word]).length === word.length;
 
-    if (isFourLetters) {
-        return 1;
+    if (isSevenLettersOrMore && isUnique) {
+        score += 7;
     }
 
-    if (isFiveLetters) {
-        return 2;
-    }
-
-    if (isSixLetters) {
-        return 3;
-    }
-
-    if (isSevenLetters && isUnique) {
-        return 4 + 7;
-    }
-
-    if (isSevenLetters) {
-        return 4;
-    }
-
-    return 0;
+    return score;
 }
 
 main();
