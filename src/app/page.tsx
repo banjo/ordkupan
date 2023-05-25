@@ -25,7 +25,7 @@ export default function Home() {
     });
 
     const combo = COMBOS[daysSinceStart]; // add modulo so it does not break after 3000 days
-    const previousDayWords = COMBOS[daysSinceStart - 1];
+    const previousCombo = COMBOS[daysSinceStart - 1];
 
     if (!combo) {
         throw new Error("Combo not found");
@@ -38,7 +38,7 @@ export default function Home() {
             className="flex min-h-[100dvh] flex-col items-center justify-center 
         bg-white text-black"
         >
-            <Playboard combo={combo} previous={previousDayWords} />
+            <Playboard combo={combo} previous={previousCombo} />
         </main>
     );
 }

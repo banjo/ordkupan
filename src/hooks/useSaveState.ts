@@ -1,3 +1,4 @@
+import { formatDate } from "@banjoanton/utils";
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useLocalStorage } from "react-use";
@@ -31,6 +32,8 @@ type In = {
     words: Word[];
 };
 
+const nowAsString = () => formatDate(new Date());
+
 export const useSaveState = ({ setScore, setMatchedWords, words }: In): Out => {
     const [localStorageValue, setLocalStorageValue] = useLocalStorage<LocalStorageState | null>(
         LOCAL_STORAGE_KEY,
@@ -41,12 +44,7 @@ export const useSaveState = ({ setScore, setMatchedWords, words }: In): Out => {
     const updateLocalStorage = useCallback(
         ({ score, matchedWords, streak, date }: UpdateLocalStorageProps) => {
             setLocalStorageValue({
-                date:
-                    date ??
-                    localStorageValue?.date ??
-                    new Date().toLocaleDateString("sv-SE", {
-                        timeZone: "Europe/Stockholm",
-                    }),
+                date: date ?? localStorageValue?.date ?? nowAsString(),
                 streak: streak ?? localStorageValue?.streak ?? 0,
                 score: score ?? localStorageValue?.score ?? 0,
                 matchedWords: matchedWords ?? localStorageValue?.matchedWords ?? [],
@@ -63,9 +61,7 @@ export const useSaveState = ({ setScore, setMatchedWords, words }: In): Out => {
 
     const resetLocalStorage = useCallback(() => {
         setLocalStorageValue({
-            date: new Date().toLocaleDateString("sv-SE", {
-                timeZone: "Europe/Stockholm",
-            }),
+            date: nowAsString(),
             score: 0,
             matchedWords: [],
             streak: 0,
@@ -104,26 +100,23 @@ export const useSaveState = ({ setScore, setMatchedWords, words }: In): Out => {
             return;
         }
 
-        const isValid = validateWords();
-        if (!isValid) {
-            toast.error("Försök inte fuska!", {
-                icon: "🤬",
-            });
-            resetLocalStorage();
-            setIsLoading(false);
-            return;
-        }
-
-        const isSameDay =
-            localStorageValue.date ===
-            new Date().toLocaleDateString("sv-SE", {
-                timeZone: "Europe/Stockholm",
-            });
+        const isSameDay = localStorageValue.date === nowAsString();
 
         if (isSameDay) {
+            const isValid = validateWords();
+            if (!isValid) {
+                toast.error("Försök inte fuska!", {
+                    icon: "🤬",
+                });
+                resetLocalStorage();
+                setIsLoading(false);
+                return;
+            }
+
             toast.success("Välkommen tillbaka!", {
                 icon: "👋",
             });
+
             setScore(localStorageValue.score);
             setMatchedWords(localStorageValue.matchedWords);
             setIsLoading(false);
@@ -133,11 +126,7 @@ export const useSaveState = ({ setScore, setMatchedWords, words }: In): Out => {
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
 
-        const isDayAfter =
-            localStorageValue.date ===
-            yesterday.toLocaleDateString("se-SV", {
-                timeZone: "Europe/Stockholm",
-            });
+        const isDayAfter = localStorageValue.date === formatDate(yesterday);
         const hasScore = localStorageValue.score > 0;
 
         if (!isDayAfter || !hasScore) {

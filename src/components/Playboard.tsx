@@ -44,7 +44,7 @@ export const Playboard = ({ combo, previous }: Props) => {
 
     return (
         <>
-            <Toaster toastOptions={{ duration: 1400 }} />
+            <Toaster toastOptions={{ duration: 2000 }} />
             <Confetti
                 showConfetti={showConfetti}
                 duration={CONFETTI_TIME}
