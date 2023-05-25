@@ -46,7 +46,7 @@ export const WordField: FC<Props> = ({ words }) => {
     return (
         <div className="relative">
             <div
-                className={`flex h-14 w-full items-center justify-between 
+                className={`flex h-12 w-full items-center justify-between 
                 border-gray-300 px-4
                 ${upperClasses}`}
                 onClick={onClick}
@@ -69,7 +69,7 @@ export const WordField: FC<Props> = ({ words }) => {
 
             <div
                 className={`absolute left-0 right-0
-                    ${active ? "h-[500px]" : "h-0"}
+                    ${active ? "h-[450px]" : "h-0"}
                     transition-height
                     z-10 overflow-y-scroll border-gray-300
                     ${lowerClasses}
