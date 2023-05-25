@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useGameLogic } from "../hooks/useGameLogic";
 import { useInputFocus } from "../hooks/useInputFocus";
+import { useLanguage } from "../hooks/useLanguage";
 import { Combo } from "../types/types";
 import { Confetti } from "./Confetti";
 import { GameButtons } from "./GameButtons";
@@ -20,6 +21,7 @@ type Props = {
 };
 
 export const Playboard = ({ combo, previous }: Props) => {
+    useLanguage();
     const [showConfetti, setShowConfetti] = useState(false);
 
     const {

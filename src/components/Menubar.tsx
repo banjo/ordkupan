@@ -1,7 +1,10 @@
 import { shuffle } from "@banjoanton/utils";
+// eslint-disable-next-line import/no-duplicates
+
 import { FC, useMemo, useState } from "react";
 import { FiX } from "react-icons/fi";
 import { Combo } from "../types/types";
+import { readableDate } from "../utils/date";
 import { WordDisplay } from "./WordDisplay";
 
 type Props = {
@@ -11,8 +14,8 @@ type Props = {
 export const Menubar: FC<Props> = ({ previous }) => {
     const [showPrevious, setShowPrevious] = useState(false);
 
-    const today = new Date().toLocaleDateString();
-    const yesterday = new Date(Date.now() - 86_400_000).toLocaleDateString();
+    const today = readableDate(new Date());
+    const yesterday = readableDate(new Date(Date.now() - 86_400_000));
 
     const sortedWords = useMemo(() => {
         return previous.words.map(w => w.word).sort((a, b) => b.length - a.length);
@@ -68,7 +71,7 @@ export const Menubar: FC<Props> = ({ previous }) => {
                         py-1 text-sm text-gray-900 outline-none hover:text-gray-700"
                     onClick={handlePreviousWordClick}
                 >
-                    Gårdagens
+                    Gårdagens ord
                 </div>
             </div>
         </>
