@@ -1,3 +1,4 @@
+import { uniq } from "@banjoanton/utils";
 import { Dispatch, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 import { Combo } from "../types/types";
@@ -68,12 +69,15 @@ export const useGameLogic = ({ combo, setShowConfetti }: In): Out => {
             toast.error("Redan använt", {
                 icon: "😲",
             });
-            console.log("Word already matched");
             return;
         }
 
-        if (submittedWord.score > 5) {
-            toast.success("Full pott!", {
+        if (uniq([...submittedWord.word]).length === 7) {
+            toast.success("Alla bokstäver med!", {
+                icon: "🥳",
+            });
+        } else if (submittedWord.score > 5) {
+            toast.success("Snyggt!", {
                 icon: "🤩",
             });
         } else if (submittedWord.score > 3) {
