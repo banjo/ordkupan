@@ -61,7 +61,6 @@ export const useGameLogic = ({ combo, setShowConfetti }: In): Out => {
             toast.error("Inte ett giltigt ord", {
                 icon: "😞",
             });
-            console.log("Word not found");
             return;
         }
 

@@ -17,7 +17,7 @@ function createCombos(allWords: string[]) {
     });
 
     const combos = wordsWithSevenDifferentLetters.map((word, index) => {
-        console.log(`Word ${index}/${wordsWithSevenDifferentLetters.length}:`, word);
+        console.log(`Word ${index + 1}/${wordsWithSevenDifferentLetters.length}:`, word);
 
         const letters = [...word];
         const mainLetter = sample(letters);

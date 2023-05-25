@@ -9,11 +9,17 @@ import { Confetti } from "./Confetti";
 import { GameButtons } from "./GameButtons";
 import { Hexgrid } from "./HexGrid";
 import { InputField } from "./InputField";
+import { Menubar } from "./Menubar";
 import { ScoreBoard } from "./ScoreBoard";
 
 const CONFETTI_TIME = 1700;
 
-export const Playboard = ({ combo }: { combo: Combo }) => {
+type Props = {
+    combo: Combo;
+    previous: Combo;
+};
+
+export const Playboard = ({ combo, previous }: Props) => {
     const [showConfetti, setShowConfetti] = useState(false);
 
     const {
@@ -45,11 +51,12 @@ export const Playboard = ({ combo }: { combo: Combo }) => {
                 onComplete={() => setShowConfetti(false)}
             />
             <div
-                className={`flex h-full w-full max-w-sm flex-col items-center justify-center
+                className={`relative flex h-full w-full max-w-sm flex-col items-center justify-center
                 ${isLoading ? "opacity-0" : ""} transition-opacity duration-500 ease-in-out`}
                 onClick={focus}
             >
-                <div className="flex w-full flex-col gap-8">
+                <div className="flex w-full flex-col gap-6 px-8">
+                    <Menubar previous={previous} />
                     <ScoreBoard
                         matchedWords={matchedWords}
                         maxScore={combo.maxScore}

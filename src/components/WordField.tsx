@@ -1,6 +1,7 @@
 import { capitalize } from "@banjoanton/utils";
 import { FC, useMemo, useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
+import { WordDisplay } from "./WordDisplay";
 
 type Props = {
     words: string[];
@@ -74,15 +75,7 @@ export const WordField: FC<Props> = ({ words }) => {
                     ${lowerClasses}
                     bg-white duration-200 ease-in-out`}
             >
-                {active && (
-                    <div className=" mt-4 flex flex-row flex-wrap gap-y-3 text-xl">
-                        {[...words].reverse().map((word, index) => (
-                            <div className="w-1/2 pl-4" key={index}>
-                                {capitalize(word)}
-                            </div>
-                        ))}
-                    </div>
-                )}
+                {active && <WordDisplay words={words} />}
             </div>
         </div>
     );

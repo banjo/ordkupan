@@ -1,6 +1,6 @@
 import { shuffle } from "@banjoanton/utils";
 import { Dispatch, FC, SetStateAction } from "react";
-import { FiRotateCcw } from "react-icons/fi";
+import { FiRefreshCw } from "react-icons/fi";
 import { Button } from "./Button";
 
 type Props = {
@@ -26,12 +26,9 @@ export const GameButtons: FC<Props> = ({ setFadeOut, setOtherLetters, setWord, s
     };
 
     return (
-        <div
-            className="relative flex w-9/12 items-center 
-                            justify-between gap-3"
-        >
+        <div className="relative flex w-9/12 items-center justify-center gap-3">
             <Button text="Delete" onClick={deleteLastLetter} />
-            <Button onClick={shuffleLetters} icon={FiRotateCcw} />
+            <Button onClick={shuffleLetters} icon={FiRefreshCw} />
             <Button text="Enter" onClick={submitWord} />
         </div>
     );

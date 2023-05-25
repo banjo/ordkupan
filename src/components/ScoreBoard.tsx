@@ -9,7 +9,7 @@ type Props = {
 
 export const ScoreBoard: FC<Props> = ({ score, maxScore, matchedWords }) => {
     return (
-        <div className="flex flex-col justify-between gap-4 px-8">
+        <div className="flex flex-col justify-between gap-4">
             <div className="mb-2 flex items-center justify-between">
                 <div className="text-2xl font-bold uppercase">Poäng</div>
                 <div className="text-2xl font-medium">

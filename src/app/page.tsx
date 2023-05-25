@@ -4,7 +4,7 @@ import combos from "../../words/data/combos.json" assert { type: "json" };
 import { Playboard } from "../components/Playboard";
 import { Combo } from "../types/types";
 
-export const revalidate = 10;
+export const revalidate = 0;
 
 const COMBOS = combos as Combo[];
 
@@ -16,22 +16,16 @@ export default function Home() {
         day: 15,
     });
 
-    console.log({ startDate: JSON.stringify(startDate) });
-
     const currentDate = Temporal.Now.plainDateISO("Europe/Stockholm").toZonedDateTime({
         timeZone: "Europe/Stockholm",
     });
-
-    console.log({ currentDate: JSON.stringify(currentDate) });
 
     const { days: daysSinceStart } = currentDate.since(startDate, {
         largestUnit: "day",
     });
 
-    console.log({ daysSinceStart });
-
-    // const combo = await getById(daysSinceStart);
-    const combo = COMBOS[daysSinceStart];
+    const combo = COMBOS[daysSinceStart]; // add modulo so it does not break after 3000 days
+    const previousDayWords = COMBOS[daysSinceStart - 1];
 
     if (!combo) {
         throw new Error("Combo not found");
@@ -44,7 +38,7 @@ export default function Home() {
             className="flex min-h-[100dvh] flex-col items-center justify-center 
         bg-white text-black"
         >
-            <Playboard combo={combo} />
+            <Playboard combo={combo} previous={previousDayWords} />
         </main>
     );
 }
