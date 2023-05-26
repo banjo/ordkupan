@@ -23,12 +23,10 @@ export const Menubar: FC<Props> = ({ previous }) => {
 
     const letters = useMemo(() => {
         return (
-            <div className="flex gap-1">
-                <div className="uppercase text-primaryDark">{previous.mainLetter}</div>
+            <div className="flex gap-2 font-bold uppercase">
+                <div className="text-primaryDark">{previous.mainLetter}</div>
                 {shuffle(previous.otherLetters).map((letter, index) => (
-                    <div key={index} className="uppercase">
-                        {letter}
-                    </div>
+                    <div key={index}>{letter}</div>
                 ))}
             </div>
         );
