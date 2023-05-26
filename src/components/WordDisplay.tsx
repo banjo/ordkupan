@@ -7,9 +7,9 @@ type Props = {
 
 export const WordDisplay: FC<Props> = ({ words }) => {
     return (
-        <div className="mt-4 flex flex-row flex-wrap justify-around gap-y-3 text-xl">
+        <div className="mt-4 grid grid-cols-2 gap-4 text-xl">
             {[...words].reverse().map((word, index) => (
-                <div className="w-5/12 border-b border-black pl-4" key={index}>
+                <div className="ml-4 w-10/12 border-b border-black" key={index}>
                     {capitalize(word)}
                 </div>
             ))}
