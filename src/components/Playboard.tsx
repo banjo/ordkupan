@@ -23,7 +23,7 @@ type Props = {
     previous: Combo;
 };
 
-const variants = {
+const variantsMain = {
     hidden: { opacity: 0, y: 5 },
     visible: { opacity: 1, y: 0 },
 };
@@ -62,7 +62,7 @@ export const Playboard = ({ combo, previous }: Props) => {
                 onComplete={() => setShowConfetti(false)}
             />
             <motion.div
-                variants={variants}
+                variants={variantsMain}
                 initial="hidden"
                 animate={isLoading ? "hidden" : "visible"}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
@@ -80,30 +80,33 @@ export const Playboard = ({ combo, previous }: Props) => {
                     />
 
                     <div className="flex flex-col items-center justify-start">
-                        <Toggle show={finished}>
-                            <FinishedCard />
-                        </Toggle>
                         <Toggle show={!finished}>
-                            <InputField
-                                ref={ref}
-                                setWord={setWord}
-                                submitWord={submitWord}
-                                word={word}
-                            />
+                            <div key="game" className="flex flex-col items-center">
+                                <InputField
+                                    ref={ref}
+                                    setWord={setWord}
+                                    submitWord={submitWord}
+                                    word={word}
+                                />
 
-                            <Hexgrid
-                                mainLetter={combo.mainLetter}
-                                otherLetters={otherLetters}
-                                onClick={handleLetterClick}
-                                fadeOut={fadeOut}
-                            />
+                                <Hexgrid
+                                    mainLetter={combo.mainLetter}
+                                    otherLetters={otherLetters}
+                                    onClick={handleLetterClick}
+                                    fadeOut={fadeOut}
+                                />
 
-                            <GameButtons
-                                setFadeOut={setFadeOut}
-                                setOtherLetters={setOtherLetters}
-                                setWord={setWord}
-                                submitWord={submitWord}
-                            />
+                                <GameButtons
+                                    setFadeOut={setFadeOut}
+                                    setOtherLetters={setOtherLetters}
+                                    setWord={setWord}
+                                    submitWord={submitWord}
+                                />
+                            </div>
+                        </Toggle>
+
+                        <Toggle show={finished} delay={0.5}>
+                            <FinishedCard />
                         </Toggle>
                     </div>
                 </div>
