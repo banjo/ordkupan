@@ -25,7 +25,7 @@ const InputFieldComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
             max={15}
             inputMode="none"
             onChange={event => setWord(event.target.value.toLowerCase())}
-            className="h-16 w-80 border-none bg-white
+            className="h-14 w-80 border-none bg-white
                             text-center text-3xl font-bold
                             uppercase text-black caret-primary
                             outline-none"

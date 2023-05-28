@@ -21,13 +21,15 @@ const labels = [
     "🔥 Legend",
 ];
 
+const STEPS = 9;
+
 export const ScoreBoard: FC<Props> = ({ score, maxScore, matchedWords }) => {
-    const step = calculateStep(score, maxScore, 9);
+    const step = calculateStep(score, maxScore, STEPS);
 
     return (
         <div className="flex flex-col justify-between gap-4">
             <div className="flex flex-col items-center justify-center">
-                <Stepper steps={9} active={step} display={score} />
+                <Stepper steps={STEPS} active={step} display={score} />
                 <div>{labels[step - 1]}</div>
             </div>
             <WordField words={matchedWords} />

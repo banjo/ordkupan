@@ -34,10 +34,7 @@ export default function Home() {
     combo.otherLetters = shuffle(combo.otherLetters);
 
     return (
-        <main
-            className="flex min-h-[100dvh] flex-col items-center justify-center 
-        bg-white text-black"
-        >
+        <main className="flex min-h-[100dvh] flex-col items-center justify-start bg-white text-black">
             <Playboard combo={combo} previous={previousCombo} />
         </main>
     );

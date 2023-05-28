@@ -1,5 +1,5 @@
 import { uniq } from "@banjoanton/utils";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { Combo } from "../types/types";
 import { useSaveState } from "./useSaveState";
@@ -11,6 +11,7 @@ type Out = {
     score: number;
     matchedWords: string[];
     otherLetters: string[];
+    finished: boolean;
     setFadeOut: Dispatch<SetStateAction<boolean>>;
     setOtherLetters: Dispatch<SetStateAction<string[]>>;
     setWord: Dispatch<SetStateAction<string>>;
@@ -33,6 +34,10 @@ export const useGameLogic = ({ combo, setShowConfetti }: In): Out => {
         updateLocalStorage,
         value: localStorageValue,
     } = useSaveState({ setScore, setMatchedWords, words: combo.words });
+
+    const finished = useMemo(() => {
+        return score === combo.maxScore;
+    }, [combo.maxScore, score]);
 
     const submitWord = () => {
         const submittedWord = combo.words.find(w => w.word === word);
@@ -109,6 +114,7 @@ export const useGameLogic = ({ combo, setShowConfetti }: In): Out => {
         otherLetters,
         score,
         word,
+        finished,
         setFadeOut,
         setOtherLetters,
         setWord,
