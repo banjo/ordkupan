@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useGameLogic } from "../hooks/useGameLogic";
@@ -20,6 +21,11 @@ const CONFETTI_TIME = 1700;
 type Props = {
     combo: Combo;
     previous: Combo;
+};
+
+const variants = {
+    hidden: { opacity: 0, y: 5 },
+    visible: { opacity: 1, y: 0 },
 };
 
 export const Playboard = ({ combo, previous }: Props) => {
@@ -55,11 +61,14 @@ export const Playboard = ({ combo, previous }: Props) => {
                 duration={CONFETTI_TIME}
                 onComplete={() => setShowConfetti(false)}
             />
-            <div
+            <motion.div
+                variants={variants}
+                initial="hidden"
+                animate={isLoading ? "hidden" : "visible"}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
                 className={`relative flex h-full w-full max-w-sm flex-col 
                 items-center justify-start 
-                px-4 py-6
-                ${isLoading ? "opacity-0" : ""} transition-opacity duration-500 ease-in-out`}
+                px-4 py-6`}
                 onClick={focus}
             >
                 <div className="flex min-h-full w-full flex-col justify-start gap-4 px-8">
@@ -98,7 +107,7 @@ export const Playboard = ({ combo, previous }: Props) => {
                         </Toggle>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </>
     );
 };
