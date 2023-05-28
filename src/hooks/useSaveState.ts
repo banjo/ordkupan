@@ -4,8 +4,6 @@ import { toast } from "react-hot-toast";
 import { useLocalStorage } from "react-use";
 import { Word } from "../types/types";
 
-const LOCAL_STORAGE_KEY = "ordkupan";
-
 type UpdateLocalStorageProps = {
     score?: number;
     matchedWords?: string[];
@@ -30,13 +28,14 @@ type In = {
     setScore: Dispatch<SetStateAction<number>>;
     setMatchedWords: Dispatch<SetStateAction<string[]>>;
     words: Word[];
+    localStorageKey: string;
 };
 
 const nowAsString = () => formatDate(new Date());
 
-export const useSaveState = ({ setScore, setMatchedWords, words }: In): Out => {
+export const useSaveState = ({ setScore, setMatchedWords, words, localStorageKey }: In): Out => {
     const [localStorageValue, setLocalStorageValue] = useLocalStorage<LocalStorageState | null>(
-        LOCAL_STORAGE_KEY,
+        localStorageKey,
         null
     );
     const [isLoading, setIsLoading] = useState(true);

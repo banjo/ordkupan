@@ -21,9 +21,10 @@ type Out = {
 type In = {
     combo: Combo;
     setShowConfetti: Dispatch<SetStateAction<boolean>>;
+    localStorageKey: string;
 };
 
-export const useGameLogic = ({ combo, setShowConfetti }: In): Out => {
+export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): Out => {
     const [word, setWord] = useState("");
     const [score, setScore] = useState(0);
     const [matchedWords, setMatchedWords] = useState<string[]>([]);
@@ -33,7 +34,7 @@ export const useGameLogic = ({ combo, setShowConfetti }: In): Out => {
         isLoading,
         updateLocalStorage,
         value: localStorageValue,
-    } = useSaveState({ setScore, setMatchedWords, words: combo.words });
+    } = useSaveState({ setScore, setMatchedWords, words: combo.words, localStorageKey });
 
     const finished = useMemo(() => {
         return score === combo.maxScore;

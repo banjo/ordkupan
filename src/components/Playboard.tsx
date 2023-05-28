@@ -21,6 +21,7 @@ const CONFETTI_TIME = 1700;
 type Props = {
     combo: Combo;
     previous: Combo;
+    localStorageKey: string;
 };
 
 const variantsMain = {
@@ -28,7 +29,7 @@ const variantsMain = {
     visible: { opacity: 1, y: 0 },
 };
 
-export const Playboard = ({ combo, previous }: Props) => {
+export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
     useLanguage();
     const [showConfetti, setShowConfetti] = useState(false);
 
@@ -44,7 +45,7 @@ export const Playboard = ({ combo, previous }: Props) => {
         setOtherLetters,
         setWord,
         submitWord,
-    } = useGameLogic({ combo, setShowConfetti });
+    } = useGameLogic({ combo, setShowConfetti, localStorageKey });
 
     const { ref, focus } = useInputFocus();
 
