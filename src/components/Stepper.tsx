@@ -1,4 +1,5 @@
 import { range } from "@banjoanton/utils";
+import { motion } from "framer-motion";
 import { FC, ReactNode } from "react";
 
 type Props = {
@@ -15,14 +16,37 @@ type StepProps = {
     children?: ReactNode;
 };
 
+const DURATION = 0.2;
+
+const lineVariants = {
+    hidden: {
+        width: 0,
+    },
+    visible: {
+        width: "100%",
+    },
+};
+
+const circleVariants = {
+    default: {
+        width: "1rem",
+        height: "1rem",
+    },
+    active: {
+        width: "3rem",
+        height: "3rem",
+    },
+};
 const Step = ({ active, passed, children, isLast }: StepProps) => {
-    const color = passed ? "bg-primary" : "bg-gray-300";
+    const color = passed || active ? "bg-primary" : "bg-gray-300";
 
     return (
         <div className="relative flex items-center justify-center">
-            <div
-                className={`rounded-full
-                ${active ? "h-10 w-10 bg-primary" : "h-4 w-4"} 
+            <motion.div
+                variants={circleVariants}
+                animate={active ? "active" : "default"}
+                transition={{ duration: DURATION }}
+                className={`h-4 w-4 rounded-full
                 ${color}`}
             >
                 <div
@@ -31,8 +55,18 @@ const Step = ({ active, passed, children, isLast }: StepProps) => {
                 >
                     {active && children}
                 </div>
-            </div>
-            {!isLast && <div className={`h-[2px] w-[14px] ${color}`}></div>}
+            </motion.div>
+            {!isLast && (
+                <div className={`relative h-[2px] w-[14px] bg-gray-300`}>
+                    <motion.div
+                        variants={lineVariants}
+                        initial="hidden"
+                        animate={passed ? "visible" : "hidden"}
+                        transition={{ duration: DURATION }}
+                        className="absolute h-full bg-primary"
+                    ></motion.div>
+                </div>
+            )}
         </div>
     );
 };
