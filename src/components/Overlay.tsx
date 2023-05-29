@@ -18,7 +18,6 @@ const variants = {
 };
 
 export const Overlay: FC<Props> = ({ show, children, close }) => {
-    console.log("Overlay rendered", show);
     return (
         <>
             <motion.div
