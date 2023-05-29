@@ -109,6 +109,10 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         setMatchedWords(newMatchedWords);
         setScore(newScore);
 
+        toast.success(`+${submittedWord.score}`, {
+            position: "bottom-center",
+        });
+
         if (newScore === combo.maxScore) {
             setShowFinalCelebration(true);
 
