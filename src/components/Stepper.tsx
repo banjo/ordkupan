@@ -6,6 +6,7 @@ type Props = {
     steps: number;
     active: number;
     display: number;
+    maxScore: number;
 };
 
 type StepProps = {
@@ -44,7 +45,7 @@ const Step = ({ active, passed, children, isLast }: StepProps) => {
         <div className="relative flex items-center justify-center">
             <motion.div
                 variants={circleVariants}
-                animate={active ? "active" : "default"}
+                animate={active || isLast ? "active" : "default"}
                 transition={{ duration: DURATION }}
                 className={`h-4 w-4 rounded-full
                 ${color}`}
@@ -53,7 +54,7 @@ const Step = ({ active, passed, children, isLast }: StepProps) => {
                     className="flex h-full w-full items-center justify-center 
                     text-sm text-gray-900"
                 >
-                    {active && children}
+                    {children}
                 </div>
             </motion.div>
             {!isLast && (
@@ -71,19 +72,27 @@ const Step = ({ active, passed, children, isLast }: StepProps) => {
     );
 };
 
-export const Stepper: FC<Props> = ({ steps, active, display }) => {
+export const Stepper: FC<Props> = ({ steps, active, display, maxScore }) => {
     return (
         <div className="flex items-center justify-center">
-            {range(steps).map((_, i) => (
-                <Step
-                    key={i}
-                    active={i + 1 === active}
-                    passed={active > i + 1}
-                    isLast={i + 1 === steps}
-                >
-                    {display}
-                </Step>
-            ))}
+            {range(steps).map((_, i) => {
+                const isLast = i + 1 === steps;
+                const hasPassed = active > i + 1;
+                const isActive = active === i + 1;
+
+                let text = "";
+                if (isLast) {
+                    text = `${maxScore}`;
+                } else if (isActive) {
+                    text = `${display}`;
+                }
+
+                return (
+                    <Step key={i} active={isActive} passed={hasPassed} isLast={isLast}>
+                        {text}
+                    </Step>
+                );
+            })}
         </div>
     );
 };

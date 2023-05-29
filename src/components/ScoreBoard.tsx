@@ -29,7 +29,7 @@ export const ScoreBoard: FC<Props> = ({ score, maxScore, matchedWords }) => {
     return (
         <div className="flex flex-col justify-between gap-4">
             <div className="flex flex-col items-center justify-center">
-                <Stepper steps={STEPS} active={step} display={score} />
+                <Stepper steps={STEPS} active={step} display={score} maxScore={maxScore} />
                 <div>{labels[step - 1]}</div>
             </div>
             <WordField words={matchedWords} />
