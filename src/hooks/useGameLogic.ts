@@ -12,6 +12,7 @@ type Out = {
     matchedWords: string[];
     otherLetters: string[];
     finished: boolean;
+    showFinalCelebration: boolean;
     setFadeOut: Dispatch<SetStateAction<boolean>>;
     setOtherLetters: Dispatch<SetStateAction<string[]>>;
     setWord: Dispatch<SetStateAction<string>>;
@@ -30,6 +31,7 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
     const [matchedWords, setMatchedWords] = useState<string[]>([]);
     const [otherLetters, setOtherLetters] = useState<string[]>(combo.otherLetters);
     const [fadeOut, setFadeOut] = useState(false);
+    const [showFinalCelebration, setShowFinalCelebration] = useState(false);
     const {
         isLoading,
         updateLocalStorage,
@@ -106,6 +108,14 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
 
         setMatchedWords(newMatchedWords);
         setScore(newScore);
+
+        if (newScore === combo.maxScore) {
+            setShowFinalCelebration(true);
+
+            setTimeout(() => {
+                setShowFinalCelebration(false);
+            }, 2000);
+        }
     };
 
     return {
@@ -116,6 +126,7 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         score,
         word,
         finished,
+        showFinalCelebration,
         setFadeOut,
         setOtherLetters,
         setWord,

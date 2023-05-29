@@ -5,11 +5,12 @@ type Props = {
     showConfetti: boolean;
     duration: number;
     onComplete: () => void;
+    className?: string;
 };
 
-export const Confetti: FC<Props> = ({ showConfetti, onComplete, duration }) => {
+export const Confetti: FC<Props> = ({ showConfetti, onComplete, duration, className }) => {
     return (
-        <div className="absolute top-[25%]">
+        <div className={`absolute ${className}`}>
             {showConfetti && <ConfettiExplosion duration={duration} onComplete={onComplete} />}
         </div>
     );

@@ -8,6 +8,7 @@ import { useInputFocus } from "../hooks/useInputFocus";
 import { useLanguage } from "../hooks/useLanguage";
 import { Combo } from "../types/types";
 import { Confetti } from "./Confetti";
+import { ConfettiExplosion } from "./ConfettiExplosion";
 import { FinishedCard } from "./FinishedCard";
 import { GameButtons } from "./GameButtons";
 import { Hexgrid } from "./HexGrid";
@@ -61,7 +62,10 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                 showConfetti={showConfetti}
                 duration={CONFETTI_TIME}
                 onComplete={() => setShowConfetti(false)}
+                className="top-[25%]"
             />
+            <ConfettiExplosion show={finished} duration={CONFETTI_TIME} />
+
             <motion.div
                 variants={variantsMain}
                 initial="hidden"
