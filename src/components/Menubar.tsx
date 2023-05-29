@@ -33,11 +33,11 @@ export const Menubar: FC<Props> = ({ previous }) => {
     }, [previous.mainLetter, previous.otherLetters]);
 
     const handlePreviousWordClick = () => {
-        setShowPrevious(prev => !prev);
+        setShowPrevious(true);
     };
 
     const close = () => {
-        setShowPrevious(prev => !prev);
+        setShowPrevious(false);
     };
 
     return (

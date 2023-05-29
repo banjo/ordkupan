@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { FC, ReactNode } from "react";
 import { FiX } from "react-icons/fi";
 
@@ -7,23 +8,35 @@ type Props = {
     children?: ReactNode;
 };
 
+const variants = {
+    hidden: {
+        y: "-150%",
+    },
+    visible: {
+        y: 0,
+    },
+};
+
 export const Overlay: FC<Props> = ({ show, children, close }) => {
+    console.log("Overlay rendered", show);
     return (
         <>
-            <div
-                className={`absolute left-0 right-0 top-0 z-20 h-full w-full max-w-sm transform 
-                overflow-y-scroll
-                bg-white px-8 py-16 
-                transition-transform duration-500 
-                ease-in-out ${show ? "" : "-translate-y-[200%]"}`}
+            <motion.div
+                variants={variants}
+                initial="hidden"
+                animate={show ? "visible" : "hidden"}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className={`absolute inset-0 z-20  
+                flex
+                flex-col
+                overflow-y-scroll bg-white
+                px-8 py-4`}
             >
-                <div className="absolute right-8 top-8 cursor-pointer" onClick={close}>
-                    <FiX size={25} />
+                <div className="flex h-10 w-full items-center justify-end">
+                    <FiX onClick={close} size={25} />
                 </div>
-                <div className="justify-top flex h-full w-full flex-col items-center gap-4">
-                    {children}
-                </div>
-            </div>
+                {children}
+            </motion.div>
         </>
     );
 };
