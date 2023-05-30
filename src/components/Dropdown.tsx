@@ -21,11 +21,14 @@ export const Dropdown: FC<Props> = ({ title, data }: Props) => {
         <div className="relative">
             <button
                 onClick={() => setShow(prev => !prev)}
-                className="inline-flex w-fit items-center justify-center px-4 py-2.5 text-center text-sm font-medium text-black focus:outline-none focus:ring-4 focus:ring-gray-400 "
+                className="inline-flex w-fit items-center justify-center py-2.5 text-center text-sm font-medium text-black focus:outline-none focus:ring-4 focus:ring-gray-400 "
                 type="button"
             >
                 {title}
-                <svg
+                <motion.svg
+                    initial={{ rotate: 0 }}
+                    animate={show ? { rotate: 180 } : { rotate: 0 }}
+                    transition={{ duration: 0.2, ease: "easeInOut" }}
                     className="ml-2 h-4 w-4"
                     aria-hidden="true"
                     fill="none"
@@ -39,7 +42,7 @@ export const Dropdown: FC<Props> = ({ title, data }: Props) => {
                         strokeWidth="2"
                         d="M19 9l-7 7-7-7"
                     ></path>
-                </svg>
+                </motion.svg>
             </button>
             <motion.div
                 variants={variants}
