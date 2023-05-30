@@ -11,6 +11,7 @@ export const Rules: FC = () => {
                         Med hjälp av de 7 bokstäverna på skärmen ska du bilda så många ord som
                         möjligt. Mittenbokstaven måste användas i varje ord. Varje bokstav får
                         användas hur många gånger som helst. Orden måste vara minst 4 bokstäver.
+                        Varje dag publiceras ett nytt spel.
                     </div>
                 </div>
 
