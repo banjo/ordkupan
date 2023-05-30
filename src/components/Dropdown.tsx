@@ -9,9 +9,11 @@ type Props = {
 const variants = {
     hidden: {
         opacity: 0,
+        display: "none",
     },
     visible: {
         opacity: 1,
+        display: "block",
     },
 };
 
