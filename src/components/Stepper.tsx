@@ -30,12 +30,12 @@ const lineVariants = {
 
 const circleVariants = {
     default: {
-        width: "1rem",
-        height: "1rem",
+        width: "0.75rem",
+        height: "0.75rem",
     },
     active: {
-        width: "3rem",
-        height: "3rem",
+        width: "2.5rem",
+        height: "2.5rem",
     },
 };
 const Step = ({ active, passed, children, isLast }: StepProps) => {
