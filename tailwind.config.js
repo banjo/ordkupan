@@ -18,6 +18,9 @@ module.exports = {
                 lighter: "#e5e5e5",
                 light: "#d1d1d1",
             },
+            screens: {
+                standalone: { raw: "(display-mode: standalone)" },
+            },
         },
     },
     safelist: [

@@ -3,7 +3,6 @@ import { FC } from "react";
 export const Assets: FC = () => {
     return (
         <>
-            {" "}
             <link rel="icon" type="image/png" sizes="196x196" href="favicon-196.png" />
             <link rel="apple-touch-icon" href="apple-icon-180.png" />
             <meta name="apple-mobile-web-app-capable" content="yes" />

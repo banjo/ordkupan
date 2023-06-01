@@ -72,8 +72,8 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                 animate={isLoading ? "hidden" : "visible"}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className={`relative flex h-full w-full max-w-sm flex-col 
-                items-center justify-start 
-                px-4 py-6`}
+                items-center justify-start px-4 py-6
+                standalone:gap-4`}
                 onClick={focus}
             >
                 <div className="flex min-h-full w-full flex-col justify-start gap-4 px-8">
@@ -84,9 +84,9 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                         score={score}
                     />
 
-                    <div className="flex flex-col items-center justify-start">
+                    <div className="flex flex-col items-center justify-start standalone:mt-8">
                         <Toggle show={!finished}>
-                            <div key="game" className="flex flex-col items-center">
+                            <div key="game" className="flex flex-col items-center standalone:gap-8">
                                 <InputField
                                     ref={ref}
                                     setWord={setWord}

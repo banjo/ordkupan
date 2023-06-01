@@ -14,6 +14,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en" className="h-full">
             <link rel="manifest" href="/site.webmanifest" />
+            <meta name="viewport" content="initial-scale=1, viewport-fit=cover" />
+            <meta name="apple-mobile-web-app-status-bar-style" content="white-translucent" />
+
             <Assets />
 
             <Script
