@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { FC, useState } from "react";
 
 type Props = {
@@ -35,12 +36,15 @@ export const Hexagon: FC<Props> = ({
     };
 
     return (
-        <div
-            className={`transform cursor-pointer uppercase
-                        ${clicked ? "scale-[50%]" : " scale-[53%]"}
-                        transition-scale duration-100 ease-in-out 
-                        ${className}`}
+        <motion.div
+            className={`cursor-pointer uppercase ${className}`}
             onMouseDown={mouseDown}
+            variants={{
+                clicked: { scale: "45%" },
+                unclicked: { scale: "53%" },
+            }}
+            initial="unclicked"
+            animate={clicked ? "clicked" : "unclicked"}
         >
             <svg
                 fill={clicked && clickedColor ? clickedColor : color}
@@ -72,6 +76,6 @@ export const Hexagon: FC<Props> = ({
                     </text>
                 </g>
             </svg>
-        </div>
+        </motion.div>
     );
 };
