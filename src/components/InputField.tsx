@@ -1,13 +1,15 @@
+import { motion } from "framer-motion";
 import React, { Dispatch, forwardRef, ForwardRefRenderFunction } from "react";
 
 type Props = {
     word: string;
     setWord: Dispatch<React.SetStateAction<string>>;
-    submitWord: () => void;
+    submitWord: () => boolean;
+    isWrongGuess: boolean;
 };
 
 const InputFieldComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
-    { word, setWord, submitWord },
+    { word, setWord, submitWord, isWrongGuess },
     ref
 ) => {
     const keyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -17,7 +19,7 @@ const InputFieldComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
     };
 
     return (
-        <input
+        <motion.input
             autoFocus
             type="text"
             ref={ref}
@@ -25,6 +27,12 @@ const InputFieldComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
             max={15}
             inputMode="none"
             spellCheck="false"
+            variants={{
+                wrong: { rotate: [0, 10, 0, -10, 0] },
+                normal: {},
+            }}
+            transition={{ duration: 0.3 }}
+            animate={isWrongGuess ? "wrong" : "normal"}
             onChange={event => setWord(event.target.value.toLowerCase())}
             className="h-14 w-80 select-none border-none
                             bg-white text-center text-3xl

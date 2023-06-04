@@ -13,21 +13,24 @@ type Out = {
     otherLetters: string[];
     finished: boolean;
     showFinalCelebration: boolean;
+    isWrongGuess: boolean;
     setFadeOut: Dispatch<SetStateAction<boolean>>;
     setOtherLetters: Dispatch<SetStateAction<string[]>>;
     setWord: Dispatch<SetStateAction<string>>;
-    submitWord: () => void;
+    submitWord: () => boolean;
 };
 
 type In = {
     combo: Combo;
     setShowConfetti: Dispatch<SetStateAction<boolean>>;
     localStorageKey: string;
+    focus: () => void;
 };
 
-export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): Out => {
+export const useGameLogic = ({ combo, setShowConfetti, focus, localStorageKey }: In): Out => {
     const [word, setWord] = useState("");
     const [score, setScore] = useState(0);
+    const [isWrongGuess, setIsWrongGuess] = useState(false);
     const [matchedWords, setMatchedWords] = useState<string[]>([]);
     const [otherLetters, setOtherLetters] = useState<string[]>(combo.otherLetters);
     const [fadeOut, setFadeOut] = useState(false);
@@ -42,42 +45,56 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         return score === combo.maxScore;
     }, [combo.maxScore, score]);
 
+    const triggerWrongGuess = () => {
+        setIsWrongGuess(true);
+        setTimeout(() => {
+            setIsWrongGuess(false);
+            setWord("");
+        }, 500);
+    };
+
     const submitWord = () => {
         const submittedWord = combo.words.find(w => w.word === word);
-        setWord("");
         focus();
 
         if (word.length === 0) {
-            return;
+            triggerWrongGuess();
+            return false;
         }
 
         if (word.length < 4) {
             toast.error("För kort ord", {
                 icon: "😞",
             });
-            return;
+            triggerWrongGuess();
+            return false;
         }
 
         if (!submittedWord && !word.includes(combo.mainLetter)) {
             toast.error(`Måste innehålla bokstaven "${combo.mainLetter.toUpperCase()}"`, {
                 icon: "🤔",
             });
-            return;
+            triggerWrongGuess();
+            return false;
         }
 
         if (!submittedWord) {
             toast.error("Inte ett giltigt ord", {
                 icon: "😞",
             });
-            return;
+            triggerWrongGuess();
+            return false;
         }
 
         if (matchedWords.includes(submittedWord.word)) {
             toast.error("Redan använt", {
                 icon: "😲",
             });
-            return;
+            triggerWrongGuess();
+            return false;
         }
+
+        setWord("");
 
         if (uniq([...submittedWord.word]).length === 7) {
             toast.success("Alla bokstäver med!", {
@@ -120,6 +137,8 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
                 setShowFinalCelebration(false);
             }, 2000);
         }
+
+        return true;
     };
 
     return {
@@ -135,5 +154,6 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         setOtherLetters,
         setWord,
         submitWord,
+        isWrongGuess,
     };
 };

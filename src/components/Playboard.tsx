@@ -34,6 +34,8 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
     useLanguage();
     const [showConfetti, setShowConfetti] = useState(false);
 
+    const { ref, focus } = useInputFocus();
+
     const {
         fadeOut,
         isLoading,
@@ -46,9 +48,8 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
         setOtherLetters,
         setWord,
         submitWord,
-    } = useGameLogic({ combo, setShowConfetti, localStorageKey });
-
-    const { ref, focus } = useInputFocus();
+        isWrongGuess,
+    } = useGameLogic({ combo, setShowConfetti, focus, localStorageKey });
 
     const handleLetterClick = (char: string) => {
         setWord(w => w + char);
@@ -92,6 +93,7 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                                     setWord={setWord}
                                     submitWord={submitWord}
                                     word={word}
+                                    isWrongGuess={isWrongGuess}
                                 />
 
                                 <Hexgrid
