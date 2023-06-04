@@ -44,11 +44,12 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
         score,
         word,
         finished,
+        isWrongGuess,
+        streak,
         setFadeOut,
         setOtherLetters,
         setWord,
         submitWord,
-        isWrongGuess,
     } = useGameLogic({ combo, setShowConfetti, focus, localStorageKey });
 
     const handleLetterClick = (char: string) => {
@@ -78,7 +79,7 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                 onClick={focus}
             >
                 <div className="flex min-h-full w-full flex-col justify-start gap-4 px-8">
-                    <Menubar previous={previous} />
+                    <Menubar previous={previous} streak={streak} />
                     <ScoreBoard
                         matchedWords={matchedWords}
                         maxScore={combo.maxScore}

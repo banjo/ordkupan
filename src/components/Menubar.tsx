@@ -10,12 +10,14 @@ import { Rules } from "./Rules";
 
 type Props = {
     previous: Combo;
+    streak: number;
 };
 
-export const Menubar: FC<Props> = ({ previous }) => {
+export const Menubar: FC<Props> = ({ previous, streak }) => {
     const [showPrevious, setShowPrevious] = useState(false);
     const [showRules, setShowRules] = useState(false);
     const today = readableDate(new Date());
+    streak = 3;
 
     return (
         <>
@@ -29,6 +31,7 @@ export const Menubar: FC<Props> = ({ previous }) => {
 
             <div className="my-2 flex h-2 items-center justify-between font-light">
                 <div>{today}</div>
+                {streak > 0 && <div className="font-semibold">{streak}🔥</div>}
                 <Dropdown
                     title="Meny"
                     data={[

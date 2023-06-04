@@ -14,6 +14,7 @@ type Out = {
     finished: boolean;
     showFinalCelebration: boolean;
     isWrongGuess: boolean;
+    streak: number;
     setFadeOut: Dispatch<SetStateAction<boolean>>;
     setOtherLetters: Dispatch<SetStateAction<string[]>>;
     setWord: Dispatch<SetStateAction<string>>;
@@ -150,10 +151,11 @@ export const useGameLogic = ({ combo, setShowConfetti, focus, localStorageKey }:
         word,
         finished,
         showFinalCelebration,
+        isWrongGuess,
+        streak: localStorageValue?.streak ?? 0,
         setFadeOut,
         setOtherLetters,
         setWord,
         submitWord,
-        isWrongGuess,
     };
 };
