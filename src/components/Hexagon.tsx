@@ -32,13 +32,13 @@ export const Hexagon: FC<Props> = ({
         onClick(text);
         setClicked(true);
 
-        document.addEventListener("mouseup", mouseUp, { once: true });
+        document.addEventListener("pointerup", mouseUp, { once: true });
     };
 
     return (
         <motion.div
             className={`cursor-pointer uppercase ${className}`}
-            onMouseDown={mouseDown}
+            onPointerDown={mouseDown}
             variants={{
                 clicked: { scale: "45%" },
                 unclicked: { scale: "53%" },
