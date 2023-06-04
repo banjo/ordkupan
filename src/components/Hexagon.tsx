@@ -24,21 +24,21 @@ export const Hexagon: FC<Props> = ({
 }) => {
     const [clicked, setClicked] = useState(false);
 
-    const mouseUp = () => {
+    const onPointerUp = () => {
         setClicked(false);
     };
 
-    const mouseDown = () => {
+    const onPointerDown = () => {
         onClick(text);
         setClicked(true);
 
-        document.addEventListener("pointerup", mouseUp, { once: true });
+        document.addEventListener("pointerup", onPointerUp, { once: true });
     };
 
     return (
         <motion.div
             className={`cursor-pointer uppercase ${className}`}
-            onPointerDown={mouseDown}
+            onPointerDown={onPointerDown}
             variants={{
                 clicked: { scale: "45%" },
                 unclicked: { scale: "53%" },
