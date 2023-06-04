@@ -37,7 +37,7 @@ export const Hexagon: FC<Props> = ({
 
     return (
         <motion.div
-            className={`cursor-pointer uppercase ${className}`}
+            className={`cursor-pointer select-none uppercase ${className}`}
             onPointerDown={onPointerDown}
             variants={{
                 clicked: { scale: "45%" },

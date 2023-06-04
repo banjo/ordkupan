@@ -24,10 +24,12 @@ const InputFieldComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
             value={word}
             max={15}
             inputMode="none"
+            spellCheck="false"
             onChange={event => setWord(event.target.value.toLowerCase())}
-            className="h-14 w-80 border-none bg-white
-                            text-center text-3xl font-bold
-                            uppercase text-black caret-primary
+            className="h-14 w-80 select-none border-none
+                            bg-white text-center text-3xl
+                            font-bold uppercase text-black
+                            caret-primary
                             outline-none"
             onKeyDown={keyDown}
         />
