@@ -17,7 +17,6 @@ export const Menubar: FC<Props> = ({ previous, streak }) => {
     const [showPrevious, setShowPrevious] = useState(false);
     const [showRules, setShowRules] = useState(false);
     const today = readableDate(new Date());
-    streak = 3;
 
     return (
         <>
