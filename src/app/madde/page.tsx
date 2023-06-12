@@ -11,7 +11,7 @@ const COMBOS = combos as Combo[];
 
 export default function Home() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_, previousCombo, daysSinceStart] = getCombos(COMBOS);
+    const [_, previousCombo, daysSinceStart] = getCombos();
     const combo = COMBOS[daysSinceStart + 1000];
     combo.otherLetters = shuffle(combo.otherLetters);
 

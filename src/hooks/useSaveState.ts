@@ -3,20 +3,19 @@ import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "reac
 import { toast } from "react-hot-toast";
 import { useLocalStorage } from "react-use";
 import { Word } from "../types/types";
-
-type UpdateLocalStorageProps = {
-    score?: number;
-    matchedWords?: string[];
-    streak?: number;
-    date?: string;
-};
+import { validate } from "../utils/validation";
 
 type LocalStorageState = {
     date: string;
     score: number;
     matchedWords: string[];
     streak: number;
+    friends: string[];
+    name: string;
+    id?: string;
 };
+
+type UpdateLocalStorageProps = Partial<LocalStorageState>;
 
 type Out = {
     isLoading: boolean;
@@ -41,17 +40,23 @@ export const useSaveState = ({ setScore, setMatchedWords, words, localStorageKey
     const [isLoading, setIsLoading] = useState(true);
 
     const updateLocalStorage = useCallback(
-        ({ score, matchedWords, streak, date }: UpdateLocalStorageProps) => {
+        ({ score, matchedWords, streak, date, name, friends, id }: UpdateLocalStorageProps) => {
             setLocalStorageValue({
                 date: date ?? localStorageValue?.date ?? nowAsString(),
                 streak: streak ?? localStorageValue?.streak ?? 0,
                 score: score ?? localStorageValue?.score ?? 0,
                 matchedWords: matchedWords ?? localStorageValue?.matchedWords ?? [],
+                friends: friends ?? localStorageValue?.friends ?? [],
+                name: name ?? localStorageValue?.name ?? "",
+                id: id ?? localStorageValue?.id,
             });
         },
         [
             localStorageValue?.date,
+            localStorageValue?.friends,
+            localStorageValue?.id,
             localStorageValue?.matchedWords,
+            localStorageValue?.name,
             localStorageValue?.score,
             localStorageValue?.streak,
             setLocalStorageValue,
@@ -64,32 +69,24 @@ export const useSaveState = ({ setScore, setMatchedWords, words, localStorageKey
             score: 0,
             matchedWords: [],
             streak: 0,
+            friends: localStorageValue?.friends ?? [],
+            name: localStorageValue?.name ?? "",
+            id: localStorageValue?.id,
         });
-    }, [setLocalStorageValue]);
+    }, [
+        localStorageValue?.friends,
+        localStorageValue?.id,
+        localStorageValue?.name,
+        setLocalStorageValue,
+    ]);
 
     const validateWords = useCallback(() => {
-        const matchedWords = localStorageValue?.matchedWords ?? [];
-
-        const allWordsValid = matchedWords.every(matchedWord => {
-            return words.some(word => word.word === matchedWord);
+        return validate({
+            allWords: words,
+            matchedWords: localStorageValue?.matchedWords ?? [],
+            score: localStorageValue?.score ?? 0,
+            maxScore: words.reduce((acc, word) => acc + word.score, 0),
         });
-
-        if (!allWordsValid) {
-            return false;
-        }
-
-        const score = localStorageValue?.score ?? 0;
-        // eslint-disable-next-line unicorn/no-array-reduce
-        const scoreForAllWords = matchedWords.reduce((acc, matchedWord) => {
-            const word = words.find(w => w.word === matchedWord);
-            return acc + (word?.score ?? 0);
-        }, 0);
-
-        if (score !== scoreForAllWords) {
-            return false;
-        }
-
-        return true;
     }, [localStorageValue?.matchedWords, localStorageValue?.score, words]);
 
     useEffect(() => {

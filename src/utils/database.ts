@@ -1,53 +1,83 @@
-import { connect } from "@planetscale/database";
-import "dotenv/config";
-import { Combo, ComboFromDb } from "../types/types";
-const config = {
-    host: process.env.DATABASE_HOST,
-    username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
+import { PrismaClient, Score, User } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+export const getUsers = (): Promise<User[]> => {
+    return prisma.user.findMany();
 };
 
-const conn = connect(config);
-
-export const addCombo = async (combo: Combo) => {
-    try {
-        const result = await conn.execute(
-            "insert into combos (mainLetter, otherLetters, words, maxScore) values (?, ?, ?, ?)",
-            [
-                combo.mainLetter,
-                combo.otherLetters.join(""),
-                JSON.stringify(combo.words),
-                combo.maxScore,
-            ]
-        );
-        return result.rowsAffected;
-    } catch (error) {
-        console.error(error);
-        return false;
-    }
+export const addUser = (name: string): Promise<User> => {
+    return prisma.user.create({
+        data: {
+            name: name.trim().toLowerCase(),
+        },
+    });
 };
 
-export const getById = async (id: number): Promise<Combo | null> => {
-    try {
-        const result = await conn.execute("select * from combos where id = ?", [id]);
-        const item = result.rows[0] as ComboFromDb;
+export const getUserByName = (name: string): Promise<User | null> => {
+    return prisma.user.findFirst({
+        where: { name: name.trim().toLowerCase() },
+    });
+};
 
-        if (!item) {
-            console.log("No item found");
-            return null;
-        }
+export const addScore = (userId: number, score: number, maxScore: number): Promise<Score> => {
+    return prisma.score.create({
+        data: {
+            userId,
+            score,
+            maxScore,
+        },
+    });
+};
 
-        const combo: Combo & { id: number } = {
-            id: item.id,
-            mainLetter: item.mainLetter,
-            otherLetters: [...item.otherLetters],
-            words: JSON.parse(item.words),
-            maxScore: item.maxScore,
-        };
+export const setScore = (id: number, score: number): Promise<Score | null> => {
+    return prisma.score.update({
+        where: { id },
+        data: { score },
+    });
+};
 
-        return combo;
-    } catch (error) {
-        console.error(error);
-        return null;
-    }
+export const getTodaysScore = (userId: number): Promise<Score | null> => {
+    return prisma.score.findFirst({
+        where: {
+            userId,
+            date: { equals: new Date() },
+        },
+    });
+};
+
+export const getUserByUserId = (id: number): Promise<User | null> => {
+    return prisma.user.findUnique({
+        where: { id },
+    });
+};
+
+export const getUserByUniqueIdentifier = (uniqueIdentifier: string): Promise<User | null> => {
+    return prisma.user.findFirst({
+        where: { uniqueIdentifier },
+    });
+};
+
+export type ScoreWithUser = Score & {
+    user: User;
+};
+
+export const getTodaysScoreByUserIds = (userIds: number[]): Promise<ScoreWithUser[]> => {
+    return prisma.score.findMany({
+        where: {
+            userId: { in: userIds },
+            date: { equals: new Date() },
+        },
+        include: {
+            user: true,
+        },
+    });
+};
+
+export const getUsersByPublicIdentifiers = (publicIdentifiers: string[]): Promise<User[]> => {
+    return prisma.user.findMany({
+        where: {
+            publicIdentifier: { in: publicIdentifiers },
+        },
+    });
 };

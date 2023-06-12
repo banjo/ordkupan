@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect } from "react";
 import { FiX } from "react-icons/fi";
+import { DisableFocus } from "../hooks/useInputFocus";
 
 type Props = {
     show: boolean;
     close: () => void;
     children?: ReactNode;
+    setDisableFocus?: DisableFocus;
 };
 
 const variants = {
@@ -17,7 +19,19 @@ const variants = {
     },
 };
 
-export const Overlay: FC<Props> = ({ show, children, close }) => {
+export const Overlay: FC<Props> = ({ show, children, close, setDisableFocus }) => {
+    useEffect(() => {
+        if (setDisableFocus && show) {
+            setDisableFocus(true);
+        }
+
+        return () => {
+            if (setDisableFocus) {
+                setDisableFocus(false);
+            }
+        };
+    }, [setDisableFocus, show]);
+
     return (
         <>
             <motion.div

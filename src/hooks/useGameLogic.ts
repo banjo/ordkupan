@@ -1,6 +1,10 @@
 import { uniq } from "@banjoanton/utils";
+import ky from "ky";
 import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import toast from "react-hot-toast";
+import { PostFriendNameBody, PostFriendNameResponse } from "../app/api/friends/name/route";
+import { PostScoreExpectedBody } from "../app/api/score/route";
+import { PostUserResponse } from "../app/api/user/route";
 import { Combo } from "../types/types";
 import { useSaveState } from "./useSaveState";
 
@@ -15,10 +19,15 @@ type Out = {
     showFinalCelebration: boolean;
     isWrongGuess: boolean;
     streak: number;
+    name: string;
+    friends: string[];
+    id?: string;
     setFadeOut: Dispatch<SetStateAction<boolean>>;
     setOtherLetters: Dispatch<SetStateAction<string[]>>;
     setWord: Dispatch<SetStateAction<string>>;
-    submitWord: () => boolean;
+    submitWord: () => Promise<boolean>;
+    addFriend: (friend: string) => Promise<string[]>;
+    createUser: (name: string) => Promise<boolean>;
 };
 
 type In = {
@@ -54,7 +63,7 @@ export const useGameLogic = ({ combo, setShowConfetti, focus, localStorageKey }:
         }, 500);
     };
 
-    const submitWord = () => {
+    const submitWord = async () => {
         const submittedWord = combo.words.find(w => w.word === word);
         focus();
 
@@ -127,6 +136,23 @@ export const useGameLogic = ({ combo, setShowConfetti, focus, localStorageKey }:
         setMatchedWords(newMatchedWords);
         setScore(newScore);
 
+        if (localStorageValue?.id) {
+            const body: PostScoreExpectedBody = {
+                matchedWords: newMatchedWords,
+                score: newScore,
+                maxScore: combo.maxScore,
+                userUniqueIdentifier: localStorageValue.id,
+            };
+
+            await ky
+                .post("/api/score", {
+                    body: JSON.stringify(body),
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+        }
+
         toast.success(`+${submittedWord.score}`, {
             position: "bottom-center",
         });
@@ -142,6 +168,57 @@ export const useGameLogic = ({ combo, setShowConfetti, focus, localStorageKey }:
         return true;
     };
 
+    const addFriend = async (friend: string) => {
+        try {
+            const body: PostFriendNameBody = {
+                name: friend,
+            };
+            const res: PostFriendNameResponse = await ky
+                .post(`/api/friends/name`, {
+                    body: JSON.stringify(body),
+                })
+                .json();
+
+            if (!res.publicIdentifier) {
+                toast.error("Kunde inte hitta användaren");
+                return localStorageValue?.friends ?? [];
+            }
+
+            const newFriends = [...(localStorageValue?.friends ?? []), res.publicIdentifier];
+            updateLocalStorage({
+                friends: newFriends,
+            });
+            return newFriends;
+        } catch (error) {
+            console.log(error);
+            return localStorageValue?.friends ?? [];
+        }
+    };
+
+    const createUser = async (name: string): Promise<boolean> => {
+        const body = {
+            name,
+        };
+
+        try {
+            const response = await ky.post("/api/user", {
+                body: JSON.stringify(body),
+            });
+
+            const data: PostUserResponse = await response.json();
+
+            updateLocalStorage({
+                id: data.uniqueIdentifier,
+                name,
+            });
+
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    };
+
     return {
         fadeOut,
         isLoading,
@@ -153,9 +230,14 @@ export const useGameLogic = ({ combo, setShowConfetti, focus, localStorageKey }:
         showFinalCelebration,
         isWrongGuess,
         streak: localStorageValue?.streak ?? 0,
+        friends: localStorageValue?.friends ?? [],
+        id: localStorageValue?.id,
+        name: localStorageValue?.name ?? "",
         setFadeOut,
         setOtherLetters,
         setWord,
         submitWord,
+        addFriend,
+        createUser,
     };
 };

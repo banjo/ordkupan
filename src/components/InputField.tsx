@@ -4,7 +4,7 @@ import React, { Dispatch, forwardRef, ForwardRefRenderFunction } from "react";
 type Props = {
     word: string;
     setWord: Dispatch<React.SetStateAction<string>>;
-    submitWord: () => boolean;
+    submitWord: () => Promise<boolean>;
     isWrongGuess: boolean;
 };
 
@@ -12,9 +12,9 @@ const InputFieldComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
     { word, setWord, submitWord, isWrongGuess },
     ref
 ) => {
-    const keyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const keyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
-            submitWord();
+            await submitWord();
         }
     };
 

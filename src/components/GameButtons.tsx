@@ -7,7 +7,7 @@ type Props = {
     setFadeOut: Dispatch<SetStateAction<boolean>>;
     setOtherLetters: Dispatch<SetStateAction<string[]>>;
     setWord: Dispatch<SetStateAction<string>>;
-    submitWord: () => void;
+    submitWord: () => Promise<boolean>;
 };
 
 export const GameButtons: FC<Props> = ({ setFadeOut, setOtherLetters, setWord, submitWord }) => {

@@ -16,6 +16,7 @@ import { InputField } from "./InputField";
 import { Menubar } from "./Menubar";
 import { ScoreBoard } from "./ScoreBoard";
 import { Toggle } from "./Toggle";
+import { AddName } from "./AddName";
 
 const CONFETTI_TIME = 1700;
 
@@ -34,7 +35,7 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
     useLanguage();
     const [showConfetti, setShowConfetti] = useState(false);
 
-    const { ref, focus } = useInputFocus();
+    const { ref, focus, setDisableFocus } = useInputFocus();
 
     const {
         fadeOut,
@@ -46,10 +47,14 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
         finished,
         isWrongGuess,
         streak,
+        friends,
+        id,
         setFadeOut,
         setOtherLetters,
         setWord,
         submitWord,
+        addFriend,
+        createUser,
     } = useGameLogic({ combo, setShowConfetti, focus, localStorageKey });
 
     const handleLetterClick = (char: string) => {
@@ -79,7 +84,14 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                 onClick={focus}
             >
                 <div className="flex min-h-full w-full flex-col justify-start gap-4 px-8">
-                    <Menubar previous={previous} streak={streak} />
+                    <AddName setDisableFocus={setDisableFocus} createUser={createUser} id={id} />
+                    <Menubar
+                        previous={previous}
+                        streak={streak}
+                        addFriend={addFriend}
+                        friends={friends}
+                        setDisableFocus={setDisableFocus}
+                    />
                     <ScoreBoard
                         matchedWords={matchedWords}
                         maxScore={combo.maxScore}
