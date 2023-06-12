@@ -1,17 +1,16 @@
-// import { combos } from "../../words/combos.ts";
-import { Combo } from "../types/types";
-import { addCombo } from "./database";
+// // import { combos } from "../../words/combos.ts";
+// import { Combo } from "../types/types";
 
-const COMBOS: Combo[] = []; // change to combos ;
+// const COMBOS: Combo[] = []; // change to combos ;
 
-const seed = async () => {
-    COMBOS.sort(() => 0.5 - Math.random());
-    let index = 0;
-    for (const combo of COMBOS) {
-        console.log(`Adding combo: ${index + 1}/${COMBOS.length}`);
-        await addCombo(combo);
-        index++;
-    }
-};
+// const seed = async () => {
+//     COMBOS.sort(() => 0.5 - Math.random());
+//     let index = 0;
+//     for (const combo of COMBOS) {
+//         console.log(`Adding combo: ${index + 1}/${COMBOS.length}`);
+//         await addCombo(combo);
+//         index++;
+//     }
+// };
 
-seed();
+// seed();
