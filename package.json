@@ -13,7 +13,8 @@
         "create:combos": "esno words/createCombos.ts",
         "db:local:start": "docker compose up -d",
         "db:local:stop": "docker compose stop",
-        "db:local:reset": "docker compose down --volumes && docker compose up -d"
+        "db:local:reset": "docker compose down --volumes && docker compose up -d",
+        "postinstall": "prisma generate"
     },
     "dependencies": {
         "@banjoanton/eslint-config": "^0.1.8",
