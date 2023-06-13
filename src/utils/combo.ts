@@ -1,15 +1,13 @@
 import { Temporal } from "@js-temporal/polyfill";
-import combos from "../../words/data/combos.json" assert { type: "json" };
-import { Combo } from "../types/types";
+import { BasicComboWithWords } from "../types/types";
+import { getCombo } from "./database";
 
-const COMBOS = combos as Combo[];
-
-export const getCombos = (): [Combo, Combo, number] => {
+export const getCombos = async (): Promise<[BasicComboWithWords, BasicComboWithWords, number]> => {
     const startDate = Temporal.ZonedDateTime.from({
         timeZone: "Europe/Stockholm",
         year: 2023,
         month: 5,
-        day: 15,
+        day: 14, // decreased from 15 to 14 due to changing to database
     });
 
     const currentDate = Temporal.Now.plainDateISO("Europe/Stockholm").toZonedDateTime({
@@ -20,8 +18,13 @@ export const getCombos = (): [Combo, Combo, number] => {
         largestUnit: "day",
     });
 
-    const combo = COMBOS[daysSinceStart]; // add modulo so it does not break after 3000 days
-    const previousCombo = COMBOS[daysSinceStart - 1];
+    const [combo, previousCombo] = await Promise.all([
+        getCombo(daysSinceStart),
+        getCombo(daysSinceStart - 1),
+    ]).catch(error => {
+        console.error(error);
+        throw error;
+    });
 
     if (!combo || !previousCombo) {
         throw new Error("Combo not found");

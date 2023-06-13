@@ -1,19 +1,14 @@
-export type Word = {
-    word: string;
-    score: number;
-};
+import { Combo, Word } from "@prisma/client";
 
-export type Combo = {
-    mainLetter: string;
+export type BasicWord = Omit<Word, "id" | "comboId">;
+export type BasicCombo = Omit<Combo, "id" | "otherLetters"> & {
     otherLetters: string[];
-    words: Word[];
-    maxScore: number;
 };
 
-export type ComboFromDb = {
-    id: number;
-    mainLetter: string;
-    otherLetters: string;
-    words: string;
-    maxScore: number;
+export type BasicComboWithWords = BasicCombo & {
+    words: BasicWord[];
+};
+
+export type ComboWithWords = Combo & {
+    words: BasicWord[];
 };

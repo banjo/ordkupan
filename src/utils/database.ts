@@ -1,4 +1,5 @@
 import { PrismaClient, Score, User } from "@prisma/client";
+import { BasicComboWithWords } from "../types/types";
 
 const prisma = new PrismaClient();
 
@@ -80,4 +81,24 @@ export const getUsersByPublicIdentifiers = (publicIdentifiers: string[]): Promis
             publicIdentifier: { in: publicIdentifiers },
         },
     });
+};
+
+export const getCombo = async (id: number): Promise<BasicComboWithWords | null> => {
+    const combo = await prisma.combo.findUnique({
+        where: { id },
+        include: {
+            words: true,
+        },
+    });
+
+    if (!combo) {
+        return null;
+    }
+
+    const otherLetters = JSON.parse(combo.otherLetters as string) as string[];
+
+    return {
+        ...combo,
+        otherLetters,
+    };
 };

@@ -27,3 +27,19 @@ model Score {
   updatedAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
 }
+
+model Word {
+  id      Int    @id @default(autoincrement())
+  word    String
+  score   Int
+  combo   Combo  @relation(fields: [comboId], references: [id])
+  comboId Int
+}
+
+model Combo {
+  id           Int    @id @default(autoincrement())
+  mainLetter   String
+  otherLetters Json   @db.Json
+  words        Word[]
+  maxScore     Int
+}
