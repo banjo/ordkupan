@@ -2,7 +2,7 @@
 
 import { FC, useState } from "react";
 import { DisableFocus } from "../hooks/useInputFocus";
-import { BasicCombo } from "../types/types";
+import { BasicComboWithWords } from "../types/types";
 import { readableDate } from "../utils/date";
 import { Dropdown } from "./Dropdown";
 import { Friends } from "./Friends";
@@ -11,7 +11,7 @@ import { PreviousDay } from "./PreviousDay";
 import { Rules } from "./Rules";
 
 type Props = {
-    previous: BasicCombo;
+    previous: BasicComboWithWords;
     streak: number;
     addFriend: (friend: string) => Promise<string[]>;
     friends: string[];

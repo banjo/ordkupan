@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { useGameLogic } from "../hooks/useGameLogic";
 import { useInputFocus } from "../hooks/useInputFocus";
 import { useLanguage } from "../hooks/useLanguage";
-import { BasicCombo } from "../types/types";
+import { BasicComboWithWords } from "../types/types";
 import { AddName } from "./AddName";
 import { Confetti } from "./Confetti";
 import { ConfettiExplosion } from "./ConfettiExplosion";
@@ -21,8 +21,8 @@ import { Toggle } from "./Toggle";
 const CONFETTI_TIME = 1700;
 
 type Props = {
-    combo: BasicCombo;
-    previous: BasicCombo;
+    combo: BasicComboWithWords;
+    previous: BasicComboWithWords;
     localStorageKey: string;
 };
 

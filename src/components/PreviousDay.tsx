@@ -1,11 +1,11 @@
 import { shuffle } from "@banjoanton/utils";
 import { FC, useMemo } from "react";
-import { Combo } from "../types/types";
+import { BasicComboWithWords } from "../types/types";
 import { readableDate } from "../utils/date";
 import { WordDisplay } from "./WordDisplay";
 
 type Props = {
-    previous: Combo;
+    previous: BasicComboWithWords;
 };
 
 export const PreviousDay: FC<Props> = ({ previous }) => {
