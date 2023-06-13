@@ -6,7 +6,8 @@ import { Toaster } from "react-hot-toast";
 import { useGameLogic } from "../hooks/useGameLogic";
 import { useInputFocus } from "../hooks/useInputFocus";
 import { useLanguage } from "../hooks/useLanguage";
-import { Combo } from "../types/types";
+import { BasicCombo } from "../types/types";
+import { AddName } from "./AddName";
 import { Confetti } from "./Confetti";
 import { ConfettiExplosion } from "./ConfettiExplosion";
 import { FinishedCard } from "./FinishedCard";
@@ -16,13 +17,12 @@ import { InputField } from "./InputField";
 import { Menubar } from "./Menubar";
 import { ScoreBoard } from "./ScoreBoard";
 import { Toggle } from "./Toggle";
-import { AddName } from "./AddName";
 
 const CONFETTI_TIME = 1700;
 
 type Props = {
-    combo: Combo;
-    previous: Combo;
+    combo: BasicCombo;
+    previous: BasicCombo;
     localStorageKey: string;
 };
 
