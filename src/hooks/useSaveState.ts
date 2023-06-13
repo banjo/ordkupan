@@ -2,7 +2,7 @@ import { formatDate } from "@banjoanton/utils";
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useLocalStorage } from "react-use";
-import { Word } from "../types/types";
+import { BasicWord } from "../types/types";
 import { validate } from "../utils/validation";
 
 type LocalStorageState = {
@@ -26,7 +26,7 @@ type Out = {
 type In = {
     setScore: Dispatch<SetStateAction<number>>;
     setMatchedWords: Dispatch<SetStateAction<string[]>>;
-    words: Word[];
+    words: BasicWord[];
     localStorageKey: string;
 };
 

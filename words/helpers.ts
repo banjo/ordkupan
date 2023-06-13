@@ -1,4 +1,4 @@
-import * as fs from "fs";
+import * as fs from "node:fs";
 
 export function importJsonFile(filePath: string) {
     const file = fs.readFileSync(filePath, "utf8");

@@ -1,5 +1,5 @@
 import { sample, shuffle, uniq } from "@banjoanton/utils";
-import { Combo } from "../src/types/types";
+import { BasicComboWithWords } from "../src/types/types";
 import { exportJsonFile, importJsonFile } from "./helpers";
 
 const main = () => {
@@ -39,7 +39,7 @@ function createCombos(allWords: string[]) {
             return true;
         });
 
-        const combo: Combo = {
+        const combo: BasicComboWithWords = {
             mainLetter,
             otherLetters,
             words: validWords.map(w => ({

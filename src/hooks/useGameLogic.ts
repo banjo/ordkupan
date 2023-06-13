@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { PostFriendNameBody, PostFriendNameResponse } from "../app/api/friends/name/route";
 import { PostScoreExpectedBody } from "../app/api/score/route";
 import { PostUserResponse } from "../app/api/user/route";
-import { Combo } from "../types/types";
+import { BasicComboWithWords } from "../types/types";
 import { useSaveState } from "./useSaveState";
 
 type Out = {
@@ -31,7 +31,7 @@ type Out = {
 };
 
 type In = {
-    combo: Combo;
+    combo: BasicComboWithWords;
     setShowConfetti: Dispatch<SetStateAction<boolean>>;
     localStorageKey: string;
     focus: () => void;

@@ -1,4 +1,4 @@
-import { Word } from "../types/types";
+import { BasicWord } from "../types/types";
 
 export const validate = ({
     matchedWords,
@@ -7,7 +7,7 @@ export const validate = ({
     maxScore,
 }: {
     matchedWords: string[];
-    allWords: Word[];
+    allWords: BasicWord[];
     score: number;
     maxScore: number;
 }) => {
