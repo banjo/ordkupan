@@ -41,7 +41,7 @@ export const Overlay: FC<Props> = ({ show, children, close }) => {
                 flex
                 flex-col
                 overflow-y-scroll bg-white
-                px-8 py-4`}
+                px-8 py-4 h-full`}
             >
                 <div className="flex h-10 w-full items-center justify-end">
                     <FiX onClick={close} size={25} />

@@ -48,9 +48,9 @@ export const Friends: FC<Props> = ({ friends, addFriend, showFriends }) => {
     }, [friends]);
 
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center flex-1 max-h-1/12">
             <div className="text-2xl font-bold uppercase">Topplista 🏆</div>
-            <div className="flex flex-col items-center justify-start h-[300px] my-8 overflow-y-scroll w-full px-10">
+            <div className="flex flex-col items-center justify-betweem h-full my-8 overflow-y-scroll w-full px-10">
                 {friendScore.map((friend, index) => (
                     <div key={index} className="flex items-center justify-between w-full">
                         <div className="flex items-center">
@@ -65,7 +65,7 @@ export const Friends: FC<Props> = ({ friends, addFriend, showFriends }) => {
                     <div className="text-xl font-semibold">Inga vänner än 😢</div>
                 )}
             </div>
-            <div className="flex flex-col items-center justify-center h-[10%]">
+            <div className="flex flex-col items-center justify-center mb-4">
                 <AddFriend addFriend={addFriend} />
             </div>
         </div>

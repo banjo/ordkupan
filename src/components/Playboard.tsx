@@ -82,7 +82,7 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                 standalone:gap-4`}
                 onClick={focus}
             >
-                <div className="flex min-h-full w-full flex-col justify-start gap-4 px-8">
+                <div className="flex min-h-full w-full flex-col justify-between gap-4 px-8">
                     <AddName createUser={createUser} id={id} />
                     <Menubar
                         previous={previous}

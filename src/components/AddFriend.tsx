@@ -24,8 +24,7 @@ export const AddFriend: FC<Props> = ({ addFriend }) => {
                 className="w-full border-slate-800 border h-12 
                             rounded px-4 py-2 focus:outline-none 
                             focus:ring-2 focus:ring-slate-800 
-                            focus:border-transparent
-                            mt-8"
+                            focus:border-transparent"
                 placeholder="Namn"
                 value={name}
                 onChange={e => setName(e.target.value)}
