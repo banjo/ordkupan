@@ -30,7 +30,7 @@ export const Dropdown: FC<Props> = ({ title, data }: Props) => {
                 <motion.svg
                     initial={{ rotate: 0 }}
                     animate={show ? { rotate: 180 } : { rotate: 0 }}
-                    transition={{ duration: 0.2, ease: "easeInOut" }}
+                    transition={{ duration: 0.1, ease: "easeInOut" }}
                     className="ml-2 h-4 w-4"
                     aria-hidden="true"
                     fill="none"
