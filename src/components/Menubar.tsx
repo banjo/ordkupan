@@ -1,7 +1,6 @@
 // eslint-disable-next-line import/no-duplicates
 
 import { FC, useState } from "react";
-import { DisableFocus } from "../hooks/useInputFocus";
 import { BasicComboWithWords } from "../types/types";
 import { readableDate } from "../utils/date";
 import { Dropdown } from "./Dropdown";
@@ -15,10 +14,9 @@ type Props = {
     streak: number;
     addFriend: (friend: string) => Promise<string[]>;
     friends: string[];
-    setDisableFocus: DisableFocus;
 };
 
-export const Menubar: FC<Props> = ({ previous, streak, addFriend, friends, setDisableFocus }) => {
+export const Menubar: FC<Props> = ({ previous, streak, addFriend, friends }) => {
     const [showPrevious, setShowPrevious] = useState(false);
     const [showRules, setShowRules] = useState(false);
     const [showFriends, setShowFriends] = useState(false);
@@ -34,17 +32,8 @@ export const Menubar: FC<Props> = ({ previous, streak, addFriend, friends, setDi
                 <Rules />
             </Overlay>
 
-            <Overlay
-                setDisableFocus={setDisableFocus}
-                show={showFriends}
-                close={() => setShowFriends(false)}
-            >
-                <Friends
-                    setDisableFocus={setDisableFocus}
-                    addFriend={addFriend}
-                    friends={friends}
-                    showFriends={showFriends}
-                />
+            <Overlay show={showFriends} close={() => setShowFriends(false)}>
+                <Friends addFriend={addFriend} friends={friends} showFriends={showFriends} />
             </Overlay>
 
             <div className="my-2 flex h-2 items-center justify-between font-light">

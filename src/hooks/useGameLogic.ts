@@ -6,6 +6,7 @@ import { PostFriendNameBody, PostFriendNameResponse } from "../app/api/friends/n
 import { PostScoreExpectedBody } from "../app/api/score/route";
 import { PostUserResponse } from "../app/api/user/route";
 import { BasicComboWithWords } from "../types/types";
+import { useInputFocus } from "./useInputFocus";
 import { useSaveState } from "./useSaveState";
 
 type Out = {
@@ -34,10 +35,10 @@ type In = {
     combo: BasicComboWithWords;
     setShowConfetti: Dispatch<SetStateAction<boolean>>;
     localStorageKey: string;
-    focus: () => void;
 };
 
-export const useGameLogic = ({ combo, setShowConfetti, focus, localStorageKey }: In): Out => {
+export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): Out => {
+    const { focus } = useInputFocus();
     const [word, setWord] = useState("");
     const [score, setScore] = useState(0);
     const [isWrongGuess, setIsWrongGuess] = useState(false);

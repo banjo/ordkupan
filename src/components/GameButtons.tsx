@@ -1,6 +1,7 @@
 import { shuffle } from "@banjoanton/utils";
 import { Dispatch, FC, SetStateAction } from "react";
 import { FiRefreshCw } from "react-icons/fi";
+import { useInputFocus } from "../hooks/useInputFocus";
 import { Button } from "./Button";
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export const GameButtons: FC<Props> = ({ setFadeOut, setOtherLetters, setWord, submitWord }) => {
+    const { focus } = useInputFocus();
     const shuffleLetters = () => {
         setFadeOut(true);
 

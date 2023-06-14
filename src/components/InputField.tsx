@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import React, { Dispatch, forwardRef, ForwardRefRenderFunction } from "react";
+import { useInputFocus } from "../hooks/useInputFocus";
 
 type Props = {
     word: string;
@@ -8,10 +9,14 @@ type Props = {
     isWrongGuess: boolean;
 };
 
-const InputFieldComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
-    { word, setWord, submitWord, isWrongGuess },
-    ref
-) => {
+const InputFieldComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = ({
+    word,
+    setWord,
+    submitWord,
+    isWrongGuess,
+}) => {
+    const { setInputRef } = useInputFocus();
+
     const keyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
             await submitWord();
@@ -22,7 +27,9 @@ const InputFieldComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
         <motion.input
             autoFocus
             type="text"
-            ref={ref}
+            ref={r => {
+                if (r) setInputRef(r);
+            }}
             value={word}
             max={15}
             inputMode="none"

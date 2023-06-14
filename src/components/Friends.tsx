@@ -2,13 +2,11 @@ import { capitalize } from "@banjoanton/utils";
 import ky from "ky";
 import { FC, useEffect, useState } from "react";
 import { PostFriendResponse, PublicScore } from "../app/api/friends/route";
-import { DisableFocus } from "../hooks/useInputFocus";
 import { AddFriend } from "./AddFriend";
 
 type Props = {
     friends: string[];
     addFriend: (friend: string) => Promise<string[]>;
-    setDisableFocus: DisableFocus;
     showFriends: boolean;
 };
 

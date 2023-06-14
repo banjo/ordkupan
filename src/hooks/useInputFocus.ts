@@ -1,29 +1,23 @@
-import { Dispatch, useRef, useState } from "react";
+let isFocusDisabled = false;
+let inputRef: HTMLInputElement | null = null;
 
-export type DisableFocus = Dispatch<React.SetStateAction<boolean>>;
+function setIsFocusDisabled(value: boolean) {
+    isFocusDisabled = value;
+}
 
-type Out = {
-    ref: React.RefObject<HTMLInputElement>;
-    focus: () => void;
-    setDisableFocus: DisableFocus;
+function setInputRef(ref: HTMLInputElement) {
+    inputRef = ref;
+}
+
+const focus = () => {
+    if (isFocusDisabled) {
+        return;
+    }
+    setTimeout(() => {
+        inputRef?.focus();
+    }, 0);
 };
 
-export const useInputFocus = (): Out => {
-    const inputRef = useRef<HTMLInputElement>(null);
-    const [disable, setDisableFocus] = useState(false);
-
-    const focus = () => {
-        if (disable) {
-            return;
-        }
-        setTimeout(() => {
-            inputRef.current?.focus();
-        }, 0);
-    };
-
-    return {
-        ref: inputRef,
-        focus: focus,
-        setDisableFocus,
-    };
+export const useInputFocus = () => {
+    return { focus, isFocusDisabled, setInputRef, setIsFocusDisabled };
 };

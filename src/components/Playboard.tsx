@@ -33,9 +33,8 @@ const variantsMain = {
 
 export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
     useLanguage();
+    const { focus } = useInputFocus();
     const [showConfetti, setShowConfetti] = useState(false);
-
-    const { ref, focus, setDisableFocus } = useInputFocus();
 
     const {
         fadeOut,
@@ -55,7 +54,7 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
         submitWord,
         addFriend,
         createUser,
-    } = useGameLogic({ combo, setShowConfetti, focus, localStorageKey });
+    } = useGameLogic({ combo, setShowConfetti, localStorageKey });
 
     const handleLetterClick = (char: string) => {
         setWord(w => w + char);
@@ -84,13 +83,12 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                 onClick={focus}
             >
                 <div className="flex min-h-full w-full flex-col justify-start gap-4 px-8">
-                    <AddName setDisableFocus={setDisableFocus} createUser={createUser} id={id} />
+                    <AddName createUser={createUser} id={id} />
                     <Menubar
                         previous={previous}
                         streak={streak}
                         addFriend={addFriend}
                         friends={friends}
-                        setDisableFocus={setDisableFocus}
                     />
                     <ScoreBoard
                         matchedWords={matchedWords}
@@ -102,7 +100,6 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                         <Toggle show={!finished}>
                             <div key="game" className="flex flex-col items-center standalone:gap-8">
                                 <InputField
-                                    ref={ref}
                                     setWord={setWord}
                                     submitWord={submitWord}
                                     word={word}

@@ -2,23 +2,26 @@
 
 import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { DisableFocus } from "../hooks/useInputFocus";
+import { useInputFocus } from "../hooks/useInputFocus";
 import { Overlay } from "./Overlay";
 
 type Props = {
-    setDisableFocus: DisableFocus;
     createUser: (name: string) => Promise<boolean>;
     id: string | undefined;
 };
 
-export const AddName: FC<Props> = ({ setDisableFocus, createUser, id }) => {
+export const AddName: FC<Props> = ({ createUser, id }) => {
     const [isOpen, setIsOpen] = useState(() => !id);
-
+    const { setIsFocusDisabled } = useInputFocus();
     const [name, setName] = useState("");
 
     useEffect(() => {
-        setDisableFocus(isOpen);
-    }, [isOpen, setDisableFocus]);
+        if (isOpen) {
+            setIsFocusDisabled(true);
+        } else {
+            setIsFocusDisabled(false);
+        }
+    }, [isOpen, setIsFocusDisabled]);
 
     const submit = async () => {
         if (name.length === 0) {
