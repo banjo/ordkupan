@@ -3,6 +3,8 @@ import { Main } from "../components/Main";
 import { Playboard } from "../components/Playboard";
 import { getCombos } from "../utils/combo";
 
+export const revalidate = 0;
+
 export default async function Home() {
     const [combo, previousCombo] = await getCombos();
     combo.otherLetters = shuffle(combo.otherLetters);
