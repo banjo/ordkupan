@@ -18,6 +18,6 @@ const focus = () => {
     }, 0);
 };
 
-export const useInputFocus = () => {
+export const useGlobalInputFocus = () => {
     return { focus, isFocusDisabled, setInputRef, setIsFocusDisabled };
 };

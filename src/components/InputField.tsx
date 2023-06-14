@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import React, { Dispatch, forwardRef, ForwardRefRenderFunction } from "react";
-import { useInputFocus } from "../hooks/useInputFocus";
+import { useGlobalInputFocus } from "../hooks/useGlobalInputFocus";
 
 type Props = {
     word: string;
@@ -15,7 +15,7 @@ const InputFieldComponent: ForwardRefRenderFunction<HTMLInputElement, Props> = (
     submitWord,
     isWrongGuess,
 }) => {
-    const { setInputRef } = useInputFocus();
+    const { setInputRef } = useGlobalInputFocus();
 
     const keyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {

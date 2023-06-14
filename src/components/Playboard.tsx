@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useGameLogic } from "../hooks/useGameLogic";
-import { useInputFocus } from "../hooks/useInputFocus";
+import { useGlobalInputFocus } from "../hooks/useGlobalInputFocus";
 import { useLanguage } from "../hooks/useLanguage";
 import { BasicComboWithWords } from "../types/types";
 import { AddName } from "./AddName";
@@ -33,7 +33,7 @@ const variantsMain = {
 
 export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
     useLanguage();
-    const { focus } = useInputFocus();
+    const { focus } = useGlobalInputFocus();
     const [showConfetti, setShowConfetti] = useState(false);
 
     const {

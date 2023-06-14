@@ -1,9 +1,11 @@
 "use client";
 
+import { isEmpty } from "@banjoanton/utils";
 import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useInputFocus } from "../hooks/useInputFocus";
+import { useGlobalInputFocus } from "../hooks/useGlobalInputFocus";
 import { Overlay } from "./Overlay";
+import { PrimaryButton } from "./PrimaryButton";
 
 type Props = {
     createUser: (name: string) => Promise<boolean>;
@@ -12,8 +14,9 @@ type Props = {
 
 export const AddName: FC<Props> = ({ createUser, id }) => {
     const [isOpen, setIsOpen] = useState(() => !id);
-    const { setIsFocusDisabled } = useInputFocus();
     const [name, setName] = useState("");
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const { setIsFocusDisabled } = useGlobalInputFocus();
 
     useEffect(() => {
         if (isOpen) {
@@ -29,7 +32,9 @@ export const AddName: FC<Props> = ({ createUser, id }) => {
             return;
         }
 
+        setIsLoading(true);
         const success = await createUser(name);
+        setIsLoading(false);
 
         if (!success) {
             toast.error("Namnet är upptaget");
@@ -73,15 +78,10 @@ export const AddName: FC<Props> = ({ createUser, id }) => {
                                 }
                             }}
                         />
-                        <button
-                            className="w-full
-                            bg-primary text-white 
-                            font-bold uppercase rounded 
-                            px-4 py-2 mt-4"
-                            onClick={submit}
-                        >
+
+                        <PrimaryButton onClick={submit} isDisabled={isLoading || isEmpty(name)}>
                             Spara
-                        </button>
+                        </PrimaryButton>
                     </div>
                 </div>
             </div>

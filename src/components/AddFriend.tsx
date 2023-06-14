@@ -1,4 +1,6 @@
+import { isEmpty } from "@banjoanton/utils";
 import { FC, useState } from "react";
+import { PrimaryButton } from "./PrimaryButton";
 
 type Props = {
     addFriend: (friend: string) => Promise<string[]>;
@@ -6,10 +8,13 @@ type Props = {
 
 export const AddFriend: FC<Props> = ({ addFriend }) => {
     const [name, setName] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const submit = async () => {
+        setIsLoading(true);
         await addFriend(name);
         setName("");
+        setIsLoading(false);
     };
 
     return (
@@ -30,15 +35,10 @@ export const AddFriend: FC<Props> = ({ addFriend }) => {
                     }
                 }}
             />
-            <button
-                className="w-full
-                            bg-primary text-white 
-                            font-bold uppercase rounded 
-                            px-4 py-2 mt-4"
-                onClick={submit}
-            >
-                Spara
-            </button>
+
+            <PrimaryButton onClick={submit} isDisabled={isLoading || isEmpty(name)}>
+                {isLoading ? "Lägger till..." : "Lägg till"}
+            </PrimaryButton>
         </div>
     );
 };

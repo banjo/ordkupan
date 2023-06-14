@@ -6,7 +6,7 @@ import { PostFriendNameBody, PostFriendNameResponse } from "../app/api/friends/n
 import { PostScoreExpectedBody } from "../app/api/score/route";
 import { PostUserResponse } from "../app/api/user/route";
 import { BasicComboWithWords } from "../types/types";
-import { useInputFocus } from "./useInputFocus";
+import { useGlobalInputFocus } from "./useGlobalInputFocus";
 import { useSaveState } from "./useSaveState";
 
 type Out = {
@@ -38,7 +38,7 @@ type In = {
 };
 
 export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): Out => {
-    const { focus } = useInputFocus();
+    const { focus } = useGlobalInputFocus();
     const [word, setWord] = useState("");
     const [score, setScore] = useState(0);
     const [isWrongGuess, setIsWrongGuess] = useState(false);
@@ -181,7 +181,7 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
                 .json();
 
             if (!res.publicIdentifier) {
-                toast.error("Kunde inte hitta användaren");
+                toast.error("Kunde inte hitta användaren 😔");
                 return localStorageValue?.friends ?? [];
             }
 
@@ -189,9 +189,12 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
             updateLocalStorage({
                 friends: newFriends,
             });
+
+            toast.success("Vän tillagd! 🧑‍🤝‍🧑");
             return newFriends;
         } catch (error) {
             console.log(error);
+            toast.error("Kunde inte hitta användaren 😔");
             return localStorageValue?.friends ?? [];
         }
     };

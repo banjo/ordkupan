@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { FC, ReactNode, useEffect } from "react";
 import { FiX } from "react-icons/fi";
-import { useInputFocus } from "../hooks/useInputFocus";
+import { useGlobalInputFocus } from "../hooks/useGlobalInputFocus";
 
 type Props = {
     show: boolean;
@@ -19,7 +19,7 @@ const variants = {
 };
 
 export const Overlay: FC<Props> = ({ show, children, close }) => {
-    const { setIsFocusDisabled } = useInputFocus();
+    const { setIsFocusDisabled } = useGlobalInputFocus();
     useEffect(() => {
         if (show) {
             setIsFocusDisabled(true);
