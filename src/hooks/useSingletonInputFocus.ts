@@ -18,6 +18,6 @@ const focus = () => {
     }, 0);
 };
 
-export const useGlobalInputFocus = () => {
+export const useSingletonInputFocus = () => {
     return { focus, isFocusDisabled, setInputRef, setIsFocusDisabled };
 };

@@ -3,7 +3,7 @@
 import { isEmpty } from "@banjoanton/utils";
 import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useGlobalInputFocus } from "../hooks/useGlobalInputFocus";
+import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
 import { Overlay } from "./Overlay";
 import { PrimaryButton } from "./PrimaryButton";
 
@@ -16,7 +16,7 @@ export const AddName: FC<Props> = ({ createUser, id }) => {
     const [isOpen, setIsOpen] = useState(() => !id);
     const [name, setName] = useState("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const { setIsFocusDisabled } = useGlobalInputFocus();
+    const { setIsFocusDisabled } = useSingletonInputFocus();
 
     useEffect(() => {
         if (isOpen) {

@@ -6,8 +6,8 @@ import { PostFriendNameBody, PostFriendNameResponse } from "../app/api/friends/n
 import { PostScoreExpectedBody } from "../app/api/score/route";
 import { PostUserResponse } from "../app/api/user/route";
 import { BasicComboWithWords } from "../types/types";
-import { useGlobalInputFocus } from "./useGlobalInputFocus";
 import { useSaveState } from "./useSaveState";
+import { useSingletonInputFocus } from "./useSingletonInputFocus";
 
 type Out = {
     isLoading: boolean;
@@ -38,7 +38,7 @@ type In = {
 };
 
 export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): Out => {
-    const { focus } = useGlobalInputFocus();
+    const { focus } = useSingletonInputFocus();
     const [word, setWord] = useState("");
     const [score, setScore] = useState(0);
     const [isWrongGuess, setIsWrongGuess] = useState(false);

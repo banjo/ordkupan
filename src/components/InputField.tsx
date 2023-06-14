@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import React, { Dispatch } from "react";
-import { useGlobalInputFocus } from "../hooks/useGlobalInputFocus";
+import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
 
 type Props = {
     word: string;
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const InputField = ({ word, setWord, submitWord, isWrongGuess }: Props) => {
-    const { setInputRef } = useGlobalInputFocus();
+    const { setInputRef } = useSingletonInputFocus();
 
     const keyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {

@@ -1,6 +1,7 @@
 import { capitalize } from "@banjoanton/utils";
 import { FC, useMemo, useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
+import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
 import { WordDisplay } from "./WordDisplay";
 
 type Props = {
@@ -16,6 +17,7 @@ const Words = ({ words }: Props) => {
 };
 
 export const WordField: FC<Props> = ({ words }) => {
+    const { focus } = useSingletonInputFocus();
     const [active, setActive] = useState(false);
     const [upperClasses, setUpperClasses] = useState("border rounded");
     const [lowerClasses, setLowerClasses] = useState("");
@@ -26,6 +28,7 @@ export const WordField: FC<Props> = ({ words }) => {
         if (active) {
             setUpperClasses("border rounded");
             setLowerClasses("");
+            focus();
         } else {
             setUpperClasses("border-x border-t rounded-t");
             setLowerClasses("border-x border-b rounded-b");
