@@ -1,4 +1,3 @@
-import { shuffle } from "@banjoanton/utils";
 import { FC, useMemo } from "react";
 import { BasicComboWithWords } from "../types/types";
 import { readableDate } from "../utils/date";
@@ -19,7 +18,7 @@ export const PreviousDay: FC<Props> = ({ previous }) => {
         return (
             <div className="flex gap-2 font-bold uppercase">
                 <div className="text-primaryDark">{previous.mainLetter}</div>
-                {shuffle(previous.otherLetters).map((letter, index) => (
+                {previous.otherLetters.map((letter, index) => (
                     <div key={index}>{letter}</div>
                 ))}
             </div>
