@@ -2,17 +2,18 @@ import { shuffle } from "@banjoanton/utils";
 import { Dispatch, FC, SetStateAction } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
+import { useGameStore } from "../stores/useGameStore";
 import { Button } from "./Button";
 
 type Props = {
     setFadeOut: Dispatch<SetStateAction<boolean>>;
     setOtherLetters: Dispatch<SetStateAction<string[]>>;
-    setWord: Dispatch<SetStateAction<string>>;
     submitWord: () => Promise<boolean>;
 };
 
-export const GameButtons: FC<Props> = ({ setFadeOut, setOtherLetters, setWord, submitWord }) => {
+export const GameButtons: FC<Props> = ({ setFadeOut, setOtherLetters, submitWord }) => {
     const { focus } = useSingletonInputFocus();
+    const { setWord, word } = useGameStore();
     const shuffleLetters = () => {
         setFadeOut(true);
 
@@ -23,7 +24,8 @@ export const GameButtons: FC<Props> = ({ setFadeOut, setOtherLetters, setWord, s
     };
 
     const deleteLastLetter = () => {
-        setWord(w => w.slice(0, -1));
+        const updatedWord = word.slice(0, -1);
+        setWord(updatedWord);
         focus();
     };
 

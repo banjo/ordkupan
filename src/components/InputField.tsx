@@ -1,16 +1,16 @@
 import { motion } from "framer-motion";
-import React, { Dispatch } from "react";
+import React from "react";
 import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
+import { useGameStore } from "../stores/useGameStore";
 
 type Props = {
-    word: string;
-    setWord: Dispatch<React.SetStateAction<string>>;
     submitWord: () => Promise<boolean>;
     isWrongGuess: boolean;
 };
 
-export const InputField = ({ word, setWord, submitWord, isWrongGuess }: Props) => {
+export const InputField = ({ submitWord, isWrongGuess }: Props) => {
     const { setInputRef } = useSingletonInputFocus();
+    const { setWord, word } = useGameStore();
 
     const keyDown = async (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {

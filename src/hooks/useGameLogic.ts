@@ -1,6 +1,6 @@
 import { uniq } from "@banjoanton/utils";
 import ky from "ky";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { PostScoreExpectedBody } from "../app/api/score/route";
 import { PostUserResponse } from "../app/api/user/route";
@@ -12,7 +12,6 @@ import { useSingletonInputFocus } from "./useSingletonInputFocus";
 type Out = {
     isLoading: boolean;
     fadeOut: boolean;
-    word: string;
     score: number;
     matchedWords: string[];
     otherLetters: string[];
@@ -24,7 +23,6 @@ type Out = {
     id?: string;
     setFadeOut: Dispatch<SetStateAction<boolean>>;
     setOtherLetters: Dispatch<SetStateAction<string[]>>;
-    setWord: Dispatch<SetStateAction<string>>;
     submitWord: () => Promise<boolean>;
     createUser: (name: string) => Promise<boolean>;
 };
@@ -37,7 +35,7 @@ type In = {
 
 export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): Out => {
     const { focus } = useSingletonInputFocus();
-    const [word, setWord] = useState("");
+    const { setWord, word } = useGameStore();
     const [score, setScore] = useState(0);
     const [isWrongGuess, setIsWrongGuess] = useState(false);
     const [matchedWords, setMatchedWords] = useState<string[]>([]);
@@ -49,20 +47,6 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         updateLocalStorage,
         value: localStorageValue,
     } = useSaveState({ setScore, setMatchedWords, words: combo.words, localStorageKey });
-
-    useEffect(() => {
-        useGameStore.setState({
-            friends: localStorageValue?.friends ?? [],
-        });
-    }, []);
-
-    useEffect(() => {
-        useGameStore.subscribe(state => {
-            updateLocalStorage({
-                friends: state.friends,
-            });
-        });
-    }, [updateLocalStorage]);
 
     const finished = useMemo(() => {
         return score === combo.maxScore;
@@ -211,7 +195,6 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         matchedWords,
         otherLetters,
         score,
-        word,
         finished,
         showFinalCelebration,
         isWrongGuess,
@@ -220,7 +203,6 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         name: localStorageValue?.name ?? "",
         setFadeOut,
         setOtherLetters,
-        setWord,
         submitWord,
         createUser,
     };

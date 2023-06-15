@@ -5,11 +5,18 @@ import { create } from "zustand";
 import { PostFriendNameBody, PostFriendNameResponse } from "../app/api/friends/name/route";
 
 type GameStore = {
+    word: string;
+    setWord: (word: string) => void;
+    appendLetter: (letter: string) => void;
     friends: string[];
     addFriend: (friend: string) => Promise<void>;
     removeFriend: (friend: string) => void;
 };
 export const useGameStore = create<GameStore>(set => ({
+    word: "",
+    setWord: (word: string) => set({ word }),
+    appendLetter: (letter: string) =>
+        set(state => ({ word: `${state.word}${letter}`.toLowerCase() })),
     friends: [],
     addFriend: async (friend: string) => {
         try {

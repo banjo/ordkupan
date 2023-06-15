@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { useGameLogic } from "../hooks/useGameLogic";
 import { useLanguage } from "../hooks/useLanguage";
 import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
+import { useGameStore } from "../stores/useGameStore";
 import { BasicComboWithWords } from "../types/types";
 import { AddName } from "./AddName";
 import { Confetti } from "./Confetti";
@@ -35,6 +36,7 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
     useLanguage();
     const { focus } = useSingletonInputFocus();
     const [showConfetti, setShowConfetti] = useState(false);
+    const { appendLetter } = useGameStore();
 
     const {
         fadeOut,
@@ -42,20 +44,18 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
         matchedWords,
         otherLetters,
         score,
-        word,
         finished,
         isWrongGuess,
         streak,
         id,
         setFadeOut,
         setOtherLetters,
-        setWord,
         submitWord,
         createUser,
     } = useGameLogic({ combo, setShowConfetti, localStorageKey });
 
     const handleLetterClick = (char: string) => {
-        setWord(w => w + char);
+        appendLetter(char);
         focus();
     };
 
@@ -92,12 +92,7 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                     <div className="flex flex-col items-center justify-start standalone:mt-8">
                         <Toggle show={!finished}>
                             <div key="game" className="flex flex-col items-center standalone:gap-8">
-                                <InputField
-                                    setWord={setWord}
-                                    submitWord={submitWord}
-                                    word={word}
-                                    isWrongGuess={isWrongGuess}
-                                />
+                                <InputField submitWord={submitWord} isWrongGuess={isWrongGuess} />
 
                                 <Hexgrid
                                     mainLetter={combo.mainLetter}
@@ -109,7 +104,6 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                                 <GameButtons
                                     setFadeOut={setFadeOut}
                                     setOtherLetters={setOtherLetters}
-                                    setWord={setWord}
                                     submitWord={submitWord}
                                 />
                             </div>
