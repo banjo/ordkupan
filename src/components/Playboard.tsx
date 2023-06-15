@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { useGameLogic } from "../hooks/useGameLogic";
 import { useLanguage } from "../hooks/useLanguage";
 import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
+import { useConfettiStore } from "../stores/useConfettiStore";
 import { useGameStore } from "../stores/useGameStore";
 import { BasicComboWithWords } from "../types/types";
 import { AddName } from "./AddName";
@@ -35,12 +35,11 @@ const variantsMain = {
 export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
     useLanguage();
     const { focus } = useSingletonInputFocus();
-    const [showConfetti, setShowConfetti] = useState(false);
     const { appendLetter, isFinished, isWrongGuess } = useGameStore();
+    const { setShowConfetti, showConfetti } = useConfettiStore();
 
     const { fadeOut, isLoading, streak, id, setFadeOut, submitWord, createUser } = useGameLogic({
         combo,
-        setShowConfetti,
         localStorageKey,
     });
 

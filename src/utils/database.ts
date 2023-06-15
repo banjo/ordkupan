@@ -1,7 +1,6 @@
-import { PrismaClient, Score, User } from "@prisma/client";
+import { Score, User } from "@prisma/client";
+import prisma from "../lib/prisma";
 import { BasicComboWithWords } from "../types/types";
-
-const prisma = new PrismaClient();
 
 export const getUsers = (): Promise<User[]> => {
     return prisma.user.findMany();

@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { PostScoreExpectedBody } from "../app/api/score/route";
 import { PostUserResponse } from "../app/api/user/route";
+import { useConfettiStore } from "../stores/useConfettiStore";
 import { useGameStore } from "../stores/useGameStore";
 import { BasicComboWithWords } from "../types/types";
 import { useSaveState } from "./useSaveState";
@@ -23,11 +24,10 @@ type Out = {
 
 type In = {
     combo: BasicComboWithWords;
-    setShowConfetti: Dispatch<SetStateAction<boolean>>;
     localStorageKey: string;
 };
 
-export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): Out => {
+export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
     const { focus } = useSingletonInputFocus();
     const {
         setWord,
@@ -39,6 +39,7 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         setIsWrongGuess,
         setIsFinished,
     } = useGameStore();
+    const { setShowConfetti } = useConfettiStore();
     const [fadeOut, setFadeOut] = useState(false);
     const [showFinalCelebration, setShowFinalCelebration] = useState(false);
     const {
