@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { useLocalStorage } from "react-use";
 import { useGameStore } from "../stores/useGameStore";
 import { useSocialStore } from "../stores/useSocialStore";
-import { BasicWord } from "../types/types";
+import { BasicComboWithWords } from "../types/types";
 import { validate } from "../utils/validation";
 
 type LocalStorageState = {
@@ -26,19 +26,20 @@ type Out = {
 };
 
 type In = {
-    words: BasicWord[];
+    combo: BasicComboWithWords;
     localStorageKey: string;
 };
 
 const nowAsString = () => formatDate(new Date());
 
-export const useSaveState = ({ words, localStorageKey }: In): Out => {
+export const useSaveState = ({ combo, localStorageKey }: In): Out => {
+    const { words, otherLetters } = combo;
     const [localStorageValue, setLocalStorageValue] = useLocalStorage<LocalStorageState | null>(
         localStorageKey,
         null
     );
     const [isLoading, setIsLoading] = useState(true);
-    const { setScore, setMatchedWords } = useGameStore();
+    const { setScore, setMatchedWords, setOtherLetters } = useGameStore();
 
     const updateLocalStorage = useCallback(
         ({ score, matchedWords, streak, date, name, friends, id }: UpdateLocalStorageProps) => {
@@ -89,6 +90,11 @@ export const useSaveState = ({ words, localStorageKey }: In): Out => {
             maxScore: words.reduce((acc, word) => acc + word.score, 0),
         });
     }, [localStorageValue?.matchedWords, localStorageValue?.score, words]);
+
+    // INIT
+    useEffect(() => {
+        setOtherLetters(otherLetters);
+    }, []);
 
     // INIT STORES FROM LOCAL STORAGE
     useEffect(() => {

@@ -13,7 +13,6 @@ type Out = {
     isLoading: boolean;
     fadeOut: boolean;
     score: number;
-    otherLetters: string[];
     finished: boolean;
     showFinalCelebration: boolean;
     isWrongGuess: boolean;
@@ -21,7 +20,6 @@ type Out = {
     name: string;
     id?: string;
     setFadeOut: Dispatch<SetStateAction<boolean>>;
-    setOtherLetters: Dispatch<SetStateAction<string[]>>;
     submitWord: () => Promise<boolean>;
     createUser: (name: string) => Promise<boolean>;
 };
@@ -36,14 +34,13 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
     const { focus } = useSingletonInputFocus();
     const { setWord, word, score, setScore, matchedWords, setMatchedWords } = useGameStore();
     const [isWrongGuess, setIsWrongGuess] = useState(false);
-    const [otherLetters, setOtherLetters] = useState<string[]>(combo.otherLetters);
     const [fadeOut, setFadeOut] = useState(false);
     const [showFinalCelebration, setShowFinalCelebration] = useState(false);
     const {
         isLoading,
         updateLocalStorage,
         value: localStorageValue,
-    } = useSaveState({ words: combo.words, localStorageKey });
+    } = useSaveState({ combo, localStorageKey });
 
     const finished = useMemo(() => {
         return score === combo.maxScore;
@@ -180,7 +177,6 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
     return {
         fadeOut,
         isLoading,
-        otherLetters,
         score,
         finished,
         showFinalCelebration,
@@ -189,7 +185,6 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         id: localStorageValue?.id,
         name: localStorageValue?.name ?? "",
         setFadeOut,
-        setOtherLetters,
         submitWord,
         createUser,
     };

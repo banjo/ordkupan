@@ -41,14 +41,12 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
     const {
         fadeOut,
         isLoading,
-        otherLetters,
         score,
         finished,
         isWrongGuess,
         streak,
         id,
         setFadeOut,
-        setOtherLetters,
         submitWord,
         createUser,
     } = useGameLogic({ combo, setShowConfetti, localStorageKey });
@@ -91,16 +89,11 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
 
                                 <Hexgrid
                                     mainLetter={combo.mainLetter}
-                                    otherLetters={otherLetters}
                                     onClick={handleLetterClick}
                                     fadeOut={fadeOut}
                                 />
 
-                                <GameButtons
-                                    setFadeOut={setFadeOut}
-                                    setOtherLetters={setOtherLetters}
-                                    submitWord={submitWord}
-                                />
+                                <GameButtons setFadeOut={setFadeOut} submitWord={submitWord} />
                             </div>
                         </Toggle>
 

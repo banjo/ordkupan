@@ -1,10 +1,10 @@
 import { FC } from "react";
+import { useGameStore } from "../stores/useGameStore";
 import { getCustomColors } from "../utils/tailwind";
 import { Hexagon } from "./Hexagon";
 
 type Props = {
     mainLetter: string;
-    otherLetters: string[];
     onClick: (char: string) => void;
     fadeOut: boolean;
 };
@@ -18,8 +18,9 @@ const hexGridPositions = [
     "relative right-[0px] bottom-[100px]",
 ];
 
-export const Hexgrid: FC<Props> = ({ mainLetter, otherLetters, onClick, fadeOut }) => {
+export const Hexgrid: FC<Props> = ({ mainLetter, onClick, fadeOut }) => {
     const { light, lighter, primary, primaryDark } = getCustomColors();
+    const { otherLetters } = useGameStore();
 
     const handleClick = (char: string) => {
         onClick(char);
