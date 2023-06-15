@@ -2,7 +2,7 @@ import { formatDate } from "@banjoanton/utils";
 import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useLocalStorage } from "react-use";
-import { useGameStore } from "../stores/useGameStore";
+import { useSocialStore } from "../stores/useSocialStore";
 import { BasicWord } from "../types/types";
 import { validate } from "../utils/validation";
 
@@ -90,16 +90,16 @@ export const useSaveState = ({ setScore, setMatchedWords, words, localStorageKey
         });
     }, [localStorageValue?.matchedWords, localStorageValue?.score, words]);
 
-    // INIT STORE FROM LOCAL STORAGE
+    // INIT STORES FROM LOCAL STORAGE
     useEffect(() => {
-        useGameStore.setState({
+        useSocialStore.setState({
             friends: localStorageValue?.friends ?? [],
         });
     }, []);
 
-    // UPDATE LOCAL STORAGE FROM STORE
+    // UPDATE LOCAL STORAGE FROM SOCIAL STORE
     useEffect(() => {
-        useGameStore.subscribe(state => {
+        useSocialStore.subscribe(state => {
             updateLocalStorage({
                 friends: state.friends,
             });

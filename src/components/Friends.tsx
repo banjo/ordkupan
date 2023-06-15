@@ -3,7 +3,7 @@ import ky from "ky";
 import { FC, useEffect, useState } from "react";
 import { LuUserX } from "react-icons/lu";
 import { PostFriendResponse, PublicScore } from "../app/api/friends/route";
-import { useGameStore } from "../stores/useGameStore";
+import { useSocialStore } from "../stores/useSocialStore";
 import { AddFriend } from "./AddFriend";
 
 type Props = {
@@ -24,7 +24,7 @@ const fetchFriends = async (friends: string[]) => {
 
 export const Friends: FC<Props> = ({ showFriends }) => {
     const [friendScore, setFriendScore] = useState([] as PublicScore[]);
-    const { removeFriend, friends } = useGameStore();
+    const { removeFriend, friends } = useSocialStore();
 
     useEffect(() => {
         const fetchFriendScores = async () => {
