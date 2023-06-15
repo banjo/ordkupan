@@ -36,20 +36,13 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
     useLanguage();
     const { focus } = useSingletonInputFocus();
     const [showConfetti, setShowConfetti] = useState(false);
-    const { appendLetter } = useGameStore();
+    const { appendLetter, isFinished, isWrongGuess } = useGameStore();
 
-    const {
-        fadeOut,
-        isLoading,
-        score,
-        finished,
-        isWrongGuess,
-        streak,
-        id,
-        setFadeOut,
-        submitWord,
-        createUser,
-    } = useGameLogic({ combo, setShowConfetti, localStorageKey });
+    const { fadeOut, isLoading, streak, id, setFadeOut, submitWord, createUser } = useGameLogic({
+        combo,
+        setShowConfetti,
+        localStorageKey,
+    });
 
     const handleLetterClick = (char: string) => {
         appendLetter(char);
@@ -65,7 +58,7 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                 onComplete={() => setShowConfetti(false)}
                 className="top-[25%]"
             />
-            <ConfettiExplosion show={finished} duration={CONFETTI_TIME} />
+            <ConfettiExplosion show={isFinished} duration={CONFETTI_TIME} />
 
             <motion.div
                 variants={variantsMain}
@@ -77,13 +70,13 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                 standalone:gap-4`}
                 onClick={focus}
             >
-                <div className="flex min-h-full w-full flex-col justify-between gap-4 px-8">
+                <div className={`flex min-h-full w-full flex-col justify-between gap-4 px-8`}>
                     <AddName createUser={createUser} id={id} />
                     <Menubar previous={previous} streak={streak} />
-                    <ScoreBoard maxScore={combo.maxScore} score={score} />
+                    <ScoreBoard maxScore={combo.maxScore} />
 
                     <div className="flex flex-col items-center justify-start standalone:mt-8">
-                        <Toggle show={!finished}>
+                        <Toggle show={!isFinished}>
                             <div key="game" className="flex flex-col items-center standalone:gap-8">
                                 <InputField submitWord={submitWord} isWrongGuess={isWrongGuess} />
 
@@ -97,8 +90,10 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                             </div>
                         </Toggle>
 
-                        <Toggle show={finished} delay={0.5}>
-                            <FinishedCard />
+                        <Toggle show={isFinished} delay={0.5}>
+                            <div className="h-[400px]">
+                                <FinishedCard />
+                            </div>
                         </Toggle>
                     </div>
                 </div>

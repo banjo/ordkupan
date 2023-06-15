@@ -5,7 +5,6 @@ import { Stepper } from "./Stepper";
 import { WordField } from "./WordField";
 
 type Props = {
-    score: number;
     maxScore: number;
 };
 
@@ -23,9 +22,9 @@ const labels = [
 
 const STEPS = 9;
 
-export const ScoreBoard: FC<Props> = ({ score, maxScore }) => {
+export const ScoreBoard: FC<Props> = ({ maxScore }) => {
+    const { matchedWords, score } = useGameStore();
     const step = calculateStep(score, maxScore, STEPS);
-    const { matchedWords } = useGameStore();
 
     return (
         <div className="flex flex-col justify-between gap-4">

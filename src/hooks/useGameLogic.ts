@@ -1,6 +1,6 @@
 import { uniq } from "@banjoanton/utils";
 import ky from "ky";
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { PostScoreExpectedBody } from "../app/api/score/route";
 import { PostUserResponse } from "../app/api/user/route";
@@ -12,10 +12,7 @@ import { useSingletonInputFocus } from "./useSingletonInputFocus";
 type Out = {
     isLoading: boolean;
     fadeOut: boolean;
-    score: number;
-    finished: boolean;
     showFinalCelebration: boolean;
-    isWrongGuess: boolean;
     streak: number;
     name: string;
     id?: string;
@@ -32,8 +29,16 @@ type In = {
 
 export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): Out => {
     const { focus } = useSingletonInputFocus();
-    const { setWord, word, score, setScore, matchedWords, setMatchedWords } = useGameStore();
-    const [isWrongGuess, setIsWrongGuess] = useState(false);
+    const {
+        setWord,
+        word,
+        score,
+        setScore,
+        matchedWords,
+        setMatchedWords,
+        setIsWrongGuess,
+        setIsFinished,
+    } = useGameStore();
     const [fadeOut, setFadeOut] = useState(false);
     const [showFinalCelebration, setShowFinalCelebration] = useState(false);
     const {
@@ -42,9 +47,11 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         value: localStorageValue,
     } = useSaveState({ combo, localStorageKey });
 
-    const finished = useMemo(() => {
-        return score === combo.maxScore;
-    }, [combo.maxScore, score]);
+    useEffect(() => {
+        if (score === combo.maxScore) {
+            setIsFinished(true);
+        }
+    }, [combo.maxScore, score, setIsFinished]);
 
     const triggerWrongGuess = () => {
         setIsWrongGuess(true);
@@ -177,10 +184,7 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
     return {
         fadeOut,
         isLoading,
-        score,
-        finished,
         showFinalCelebration,
-        isWrongGuess,
         streak: localStorageValue?.streak ?? 0,
         id: localStorageValue?.id,
         name: localStorageValue?.name ?? "",
