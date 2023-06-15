@@ -3,7 +3,6 @@ import ky from "ky";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { PostScoreExpectedBody } from "../app/api/score/route";
-import { PostUserResponse } from "../app/api/user/route";
 import { useConfettiStore } from "../stores/useConfettiStore";
 import { useGameStore } from "../stores/useGameStore";
 import { BasicComboWithWords } from "../types/types";
@@ -19,7 +18,6 @@ type Out = {
     id?: string;
     setFadeOut: Dispatch<SetStateAction<boolean>>;
     submitWord: () => Promise<boolean>;
-    createUser: (name: string) => Promise<boolean>;
 };
 
 type In = {
@@ -42,11 +40,7 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
     const { setShowConfetti } = useConfettiStore();
     const [fadeOut, setFadeOut] = useState(false);
     const [showFinalCelebration, setShowFinalCelebration] = useState(false);
-    const {
-        isLoading,
-        updateLocalStorage,
-        value: localStorageValue,
-    } = useSaveState({ combo, localStorageKey });
+    const { isLoading, value: localStorageValue } = useSaveState({ combo, localStorageKey });
 
     useEffect(() => {
         if (score === combo.maxScore) {
@@ -158,30 +152,6 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
         return true;
     };
 
-    const createUser = async (name: string): Promise<boolean> => {
-        const body = {
-            name,
-        };
-
-        try {
-            const response = await ky.post("/api/user", {
-                body: JSON.stringify(body),
-            });
-
-            const data: PostUserResponse = await response.json();
-
-            updateLocalStorage({
-                id: data.uniqueIdentifier,
-                name,
-            });
-
-            return true;
-        } catch (error) {
-            console.log(error);
-            return false;
-        }
-    };
-
     return {
         fadeOut,
         isLoading,
@@ -191,6 +161,5 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
         name: localStorageValue?.name ?? "",
         setFadeOut,
         submitWord,
-        createUser,
     };
 };

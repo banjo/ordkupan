@@ -100,6 +100,9 @@ export const useSaveState = ({ combo, localStorageKey }: In): Out => {
     useEffect(() => {
         useSocialStore.setState({
             friends: localStorageValue?.friends ?? [],
+            id: localStorageValue?.id,
+            name: localStorageValue?.name ?? "",
+            streak: localStorageValue?.streak ?? 0,
         });
 
         useGameStore.setState({
@@ -113,6 +116,9 @@ export const useSaveState = ({ combo, localStorageKey }: In): Out => {
         useSocialStore.subscribe(state => {
             updateLocalStorage({
                 friends: state.friends,
+                name: state.name,
+                id: state.id,
+                streak: state.streak,
             });
         });
 

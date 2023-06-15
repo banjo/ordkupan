@@ -4,19 +4,24 @@ import { isEmpty } from "@banjoanton/utils";
 import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
+import { useSocialStore } from "../stores/useSocialStore";
 import { Overlay } from "./Overlay";
 import { PrimaryButton } from "./PrimaryButton";
 
-type Props = {
-    createUser: (name: string) => Promise<boolean>;
-    id: string | undefined;
-};
-
-export const AddName: FC<Props> = ({ createUser, id }) => {
-    const [isOpen, setIsOpen] = useState(() => !id);
+export const AddName: FC = () => {
+    const { createUser, id } = useSocialStore();
+    const [isOpen, setIsOpen] = useState(false);
     const [name, setName] = useState("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { setIsFocusDisabled } = useSingletonInputFocus();
+
+    useEffect(() => {
+        if (id) {
+            setIsOpen(false);
+        } else {
+            setIsOpen(true);
+        }
+    }, [id]);
 
     useEffect(() => {
         if (isOpen) {
