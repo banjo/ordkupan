@@ -9,15 +9,6 @@ type Props = {
     children?: ReactNode;
 };
 
-const variants = {
-    hidden: {
-        y: "-150%",
-    },
-    visible: {
-        y: 0,
-    },
-};
-
 export const Overlay: FC<Props> = ({ show, children, close }) => {
     const { setIsFocusDisabled } = useSingletonInputFocus();
     const { focus } = useSingletonInputFocus();
@@ -35,7 +26,19 @@ export const Overlay: FC<Props> = ({ show, children, close }) => {
     return (
         <>
             <motion.div
-                variants={variants}
+                variants={{
+                    hidden: {
+                        y: "-150%",
+                        opacity: 0,
+                        transition: {
+                            opacity: { delay: 0.3 },
+                        },
+                    },
+                    visible: {
+                        y: 0,
+                        opacity: [0, 1, 1],
+                    },
+                }}
                 initial="hidden"
                 animate={show ? "visible" : "hidden"}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
