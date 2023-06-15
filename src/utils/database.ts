@@ -74,6 +74,21 @@ export const getTodaysScoreByUserIds = (userIds: number[]): Promise<ScoreWithUse
     });
 };
 
+export const getScoreByUserIdsAndDate = (
+    userIds: number[],
+    date: Date
+): Promise<ScoreWithUser[]> => {
+    return prisma.score.findMany({
+        where: {
+            userId: { in: userIds },
+            date: { equals: date },
+        },
+        include: {
+            user: true,
+        },
+    });
+};
+
 export const getUsersByPublicIdentifiers = (publicIdentifiers: string[]): Promise<User[]> => {
     return prisma.user.findMany({
         where: {

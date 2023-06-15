@@ -1,13 +1,14 @@
 import { User } from "@prisma/client";
 import { NextResponse } from "next/server";
 import {
-    getTodaysScoreByUserIds,
+    getScoreByUserIdsAndDate,
     getUsersByPublicIdentifiers,
     ScoreWithUser,
 } from "../../../utils/database";
 
 export type PostFriendBody = {
     friends: string[];
+    date: string;
 };
 
 export type PublicScore = {
@@ -23,7 +24,7 @@ export type PostFriendResponse = {
 export async function POST(req: Request) {
     const body: PostFriendBody = await req.json();
 
-    const { friends } = body;
+    const { friends, date } = body;
 
     if (!friends) {
         return NextResponse.json({ error: "Friends not provided" }, { status: 400 });
@@ -45,7 +46,7 @@ export async function POST(req: Request) {
 
     let scores: ScoreWithUser[] = [];
     try {
-        scores = await getTodaysScoreByUserIds(userIds);
+        scores = await getScoreByUserIdsAndDate(userIds, new Date(date));
     } catch (error) {
         console.log(error);
         return NextResponse.json({ error: "Error fetching scores" }, { status: 500 });
