@@ -15,7 +15,7 @@ type SocialStore = {
     createUser: (name: string) => Promise<boolean>;
     friends: string[];
     addFriend: (friend: string) => Promise<void>;
-    removeFriend: (friend: string) => void;
+    removeFriend: (publicIdentifier: string) => void;
 };
 export const useSocialStore = create<SocialStore>(set => ({
     name: "",
