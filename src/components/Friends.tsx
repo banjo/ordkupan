@@ -24,7 +24,7 @@ const fetchFriends = async (friends: string[]) => {
 
 export const Friends: FC<Props> = ({ showFriends }) => {
     const [friendScore, setFriendScore] = useState([] as PublicScore[]);
-    const { removeFriend, friends } = useSocialStore();
+    const { removeFriend, friends, name } = useSocialStore();
 
     useEffect(() => {
         const fetchFriendScores = async () => {
@@ -51,6 +51,7 @@ export const Friends: FC<Props> = ({ showFriends }) => {
     return (
         <div className="flex flex-col items-center flex-1 max-h-1/12">
             <div className="text-2xl font-bold uppercase">Topplista 🏆</div>
+            <div className="uppercase text-gray-400 font-bold">{name}</div>
             <div className="flex flex-col items-center justify-betweem h-full my-8 overflow-y-scroll w-full px-4">
                 {friendScore.map((friend, index) => (
                     <div key={index} className="flex items-center justify-start w-full">
