@@ -13,7 +13,6 @@ type Out = {
     isLoading: boolean;
     fadeOut: boolean;
     score: number;
-    matchedWords: string[];
     otherLetters: string[];
     finished: boolean;
     showFinalCelebration: boolean;
@@ -35,10 +34,8 @@ type In = {
 
 export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): Out => {
     const { focus } = useSingletonInputFocus();
-    const { setWord, word } = useGameStore();
-    const [score, setScore] = useState(0);
+    const { setWord, word, score, setScore, matchedWords, setMatchedWords } = useGameStore();
     const [isWrongGuess, setIsWrongGuess] = useState(false);
-    const [matchedWords, setMatchedWords] = useState<string[]>([]);
     const [otherLetters, setOtherLetters] = useState<string[]>(combo.otherLetters);
     const [fadeOut, setFadeOut] = useState(false);
     const [showFinalCelebration, setShowFinalCelebration] = useState(false);
@@ -46,7 +43,7 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         isLoading,
         updateLocalStorage,
         value: localStorageValue,
-    } = useSaveState({ setScore, setMatchedWords, words: combo.words, localStorageKey });
+    } = useSaveState({ words: combo.words, localStorageKey });
 
     const finished = useMemo(() => {
         return score === combo.maxScore;
@@ -118,17 +115,8 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         }
 
         setShowConfetti(true);
-        const newMatchedWords = [...matchedWords, submittedWord.word];
         const newScore = score + submittedWord.score;
-
-        updateLocalStorage({
-            date: new Date().toLocaleDateString("sv-SE", {
-                timeZone: "Europe/Stockholm",
-            }),
-            streak: localStorageValue?.streak ?? 0,
-            score: newScore,
-            matchedWords: newMatchedWords,
-        });
+        const newMatchedWords = [...matchedWords, submittedWord.word];
 
         setMatchedWords(newMatchedWords);
         setScore(newScore);
@@ -192,7 +180,6 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
     return {
         fadeOut,
         isLoading,
-        matchedWords,
         otherLetters,
         score,
         finished,

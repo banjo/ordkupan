@@ -41,7 +41,6 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
     const {
         fadeOut,
         isLoading,
-        matchedWords,
         otherLetters,
         score,
         finished,
@@ -83,11 +82,7 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                 <div className="flex min-h-full w-full flex-col justify-between gap-4 px-8">
                     <AddName createUser={createUser} id={id} />
                     <Menubar previous={previous} streak={streak} />
-                    <ScoreBoard
-                        matchedWords={matchedWords}
-                        maxScore={combo.maxScore}
-                        score={score}
-                    />
+                    <ScoreBoard maxScore={combo.maxScore} score={score} />
 
                     <div className="flex flex-col items-center justify-start standalone:mt-8">
                         <Toggle show={!finished}>

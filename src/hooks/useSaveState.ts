@@ -1,7 +1,8 @@
 import { formatDate } from "@banjoanton/utils";
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useLocalStorage } from "react-use";
+import { useGameStore } from "../stores/useGameStore";
 import { useSocialStore } from "../stores/useSocialStore";
 import { BasicWord } from "../types/types";
 import { validate } from "../utils/validation";
@@ -25,20 +26,19 @@ type Out = {
 };
 
 type In = {
-    setScore: Dispatch<SetStateAction<number>>;
-    setMatchedWords: Dispatch<SetStateAction<string[]>>;
     words: BasicWord[];
     localStorageKey: string;
 };
 
 const nowAsString = () => formatDate(new Date());
 
-export const useSaveState = ({ setScore, setMatchedWords, words, localStorageKey }: In): Out => {
+export const useSaveState = ({ words, localStorageKey }: In): Out => {
     const [localStorageValue, setLocalStorageValue] = useLocalStorage<LocalStorageState | null>(
         localStorageKey,
         null
     );
     const [isLoading, setIsLoading] = useState(true);
+    const { setScore, setMatchedWords } = useGameStore();
 
     const updateLocalStorage = useCallback(
         ({ score, matchedWords, streak, date, name, friends, id }: UpdateLocalStorageProps) => {
@@ -95,13 +95,25 @@ export const useSaveState = ({ setScore, setMatchedWords, words, localStorageKey
         useSocialStore.setState({
             friends: localStorageValue?.friends ?? [],
         });
+
+        useGameStore.setState({
+            score: localStorageValue?.score ?? 0,
+            matchedWords: localStorageValue?.matchedWords ?? [],
+        });
     }, []);
 
-    // UPDATE LOCAL STORAGE FROM SOCIAL STORE
+    // UPDATE LOCAL STORAGE FROM STORES
     useEffect(() => {
         useSocialStore.subscribe(state => {
             updateLocalStorage({
                 friends: state.friends,
+            });
+        });
+
+        useGameStore.subscribe(state => {
+            updateLocalStorage({
+                score: state.score,
+                matchedWords: state.matchedWords,
             });
         });
     }, [updateLocalStorage]);

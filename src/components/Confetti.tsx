@@ -9,6 +9,7 @@ type Props = {
 };
 
 export const Confetti: FC<Props> = ({ showConfetti, onComplete, duration, className }) => {
+    console.log("🪕%c Banjo | Confetti.tsx:12 |", "color: #E91E63", showConfetti);
     return (
         <div className={`absolute ${className}`}>
             {showConfetti && <ConfettiExplosion duration={duration} onComplete={onComplete} />}
