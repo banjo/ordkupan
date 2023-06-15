@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-duplicates
 
 import { FC, useState } from "react";
+import { useSocialStore } from "../stores/useSocialStore";
 import { BasicComboWithWords } from "../types/types";
 import { readableDate } from "../utils/date";
 import { Dropdown } from "./Dropdown";
@@ -11,13 +12,13 @@ import { Rules } from "./Rules";
 
 type Props = {
     previous: BasicComboWithWords;
-    streak: number;
 };
 
-export const Menubar: FC<Props> = ({ previous, streak }) => {
+export const Menubar: FC<Props> = ({ previous }) => {
     const [showPrevious, setShowPrevious] = useState(false);
     const [showRules, setShowRules] = useState(false);
     const [showFriends, setShowFriends] = useState(false);
+    const { streak } = useSocialStore();
     const today = readableDate(new Date());
 
     return (

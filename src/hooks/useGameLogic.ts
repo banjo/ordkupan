@@ -13,9 +13,6 @@ type Out = {
     isLoading: boolean;
     fadeOut: boolean;
     showFinalCelebration: boolean;
-    streak: number;
-    name: string;
-    id?: string;
     setFadeOut: Dispatch<SetStateAction<boolean>>;
     submitWord: () => Promise<boolean>;
 };
@@ -156,9 +153,6 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
         fadeOut,
         isLoading,
         showFinalCelebration,
-        streak: localStorageValue?.streak ?? 0,
-        id: localStorageValue?.id,
-        name: localStorageValue?.name ?? "",
         setFadeOut,
         submitWord,
     };
