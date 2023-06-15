@@ -21,8 +21,6 @@ type UpdateLocalStorageProps = Partial<LocalStorageState>;
 
 type Out = {
     isLoading: boolean;
-    updateLocalStorage: (props: UpdateLocalStorageProps) => void;
-    value: LocalStorageState | null | undefined;
 };
 
 type In = {
@@ -193,7 +191,5 @@ export const useSaveState = ({ combo, localStorageKey }: In): Out => {
 
     return {
         isLoading,
-        updateLocalStorage,
-        value: localStorageValue,
     };
 };

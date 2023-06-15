@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { PostScoreExpectedBody } from "../app/api/score/route";
 import { useConfettiStore } from "../stores/useConfettiStore";
 import { useGameStore } from "../stores/useGameStore";
+import { useSocialStore } from "../stores/useSocialStore";
 import { BasicComboWithWords } from "../types/types";
 import { useSaveState } from "./useSaveState";
 import { useSingletonInputFocus } from "./useSingletonInputFocus";
@@ -12,7 +13,6 @@ import { useSingletonInputFocus } from "./useSingletonInputFocus";
 type Out = {
     isLoading: boolean;
     fadeOut: boolean;
-    showFinalCelebration: boolean;
     setFadeOut: Dispatch<SetStateAction<boolean>>;
     submitWord: () => Promise<boolean>;
 };
@@ -35,9 +35,9 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
         setIsFinished,
     } = useGameStore();
     const { setShowConfetti } = useConfettiStore();
+    const { id } = useSocialStore();
     const [fadeOut, setFadeOut] = useState(false);
-    const [showFinalCelebration, setShowFinalCelebration] = useState(false);
-    const { isLoading, value: localStorageValue } = useSaveState({ combo, localStorageKey });
+    const { isLoading } = useSaveState({ combo, localStorageKey });
 
     useEffect(() => {
         if (score === combo.maxScore) {
@@ -117,12 +117,12 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
         setMatchedWords(newMatchedWords);
         setScore(newScore);
 
-        if (localStorageValue?.id) {
+        if (id) {
             const body: PostScoreExpectedBody = {
                 matchedWords: newMatchedWords,
                 score: newScore,
                 maxScore: combo.maxScore,
-                userUniqueIdentifier: localStorageValue.id,
+                userUniqueIdentifier: id,
             };
 
             await ky
@@ -138,21 +138,12 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
             position: "bottom-center",
         });
 
-        if (newScore === combo.maxScore) {
-            setShowFinalCelebration(true);
-
-            setTimeout(() => {
-                setShowFinalCelebration(false);
-            }, 2000);
-        }
-
         return true;
     };
 
     return {
         fadeOut,
         isLoading,
-        showFinalCelebration,
         setFadeOut,
         submitWord,
     };
