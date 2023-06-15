@@ -46,13 +46,11 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
         finished,
         isWrongGuess,
         streak,
-        friends,
         id,
         setFadeOut,
         setOtherLetters,
         setWord,
         submitWord,
-        addFriend,
         createUser,
     } = useGameLogic({ combo, setShowConfetti, localStorageKey });
 
@@ -84,12 +82,7 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
             >
                 <div className="flex min-h-full w-full flex-col justify-between gap-4 px-8">
                     <AddName createUser={createUser} id={id} />
-                    <Menubar
-                        previous={previous}
-                        streak={streak}
-                        addFriend={addFriend}
-                        friends={friends}
-                    />
+                    <Menubar previous={previous} streak={streak} />
                     <ScoreBoard
                         matchedWords={matchedWords}
                         maxScore={combo.maxScore}

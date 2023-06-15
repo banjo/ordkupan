@@ -1,9 +1,9 @@
 import { User } from "@prisma/client";
 import { NextResponse } from "next/server";
 import {
-    ScoreWithUser,
     getTodaysScoreByUserIds,
     getUsersByPublicIdentifiers,
+    ScoreWithUser,
 } from "../../../utils/database";
 
 export type PostFriendBody = {
@@ -13,6 +13,7 @@ export type PostFriendBody = {
 export type PublicScore = {
     score: number;
     name: string;
+    publicIdentifier: string;
 };
 
 export type PostFriendResponse = {
@@ -57,12 +58,14 @@ export async function POST(req: Request) {
             return {
                 score: 0,
                 name: user.name,
+                publicIdentifier: user.publicIdentifier,
             };
         }
 
         return {
             score: score.score ?? 0,
             name: user.name,
+            publicIdentifier: user.publicIdentifier,
         };
     });
 

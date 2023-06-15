@@ -1,14 +1,12 @@
 import { isEmpty } from "@banjoanton/utils";
 import { FC, useState } from "react";
+import { useGameStore } from "../stores/useGameStore";
 import { PrimaryButton } from "./PrimaryButton";
 
-type Props = {
-    addFriend: (friend: string) => Promise<string[]>;
-};
-
-export const AddFriend: FC<Props> = ({ addFriend }) => {
+export const AddFriend: FC = () => {
     const [name, setName] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const { addFriend } = useGameStore();
 
     const submit = async () => {
         setIsLoading(true);

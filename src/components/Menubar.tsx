@@ -12,11 +12,9 @@ import { Rules } from "./Rules";
 type Props = {
     previous: BasicComboWithWords;
     streak: number;
-    addFriend: (friend: string) => Promise<string[]>;
-    friends: string[];
 };
 
-export const Menubar: FC<Props> = ({ previous, streak, addFriend, friends }) => {
+export const Menubar: FC<Props> = ({ previous, streak }) => {
     const [showPrevious, setShowPrevious] = useState(false);
     const [showRules, setShowRules] = useState(false);
     const [showFriends, setShowFriends] = useState(false);
@@ -33,7 +31,7 @@ export const Menubar: FC<Props> = ({ previous, streak, addFriend, friends }) => 
             </Overlay>
 
             <Overlay show={showFriends} close={() => setShowFriends(false)}>
-                <Friends addFriend={addFriend} friends={friends} showFriends={showFriends} />
+                <Friends showFriends={showFriends} />
             </Overlay>
 
             <div className="my-2 flex h-2 items-center justify-between font-light">

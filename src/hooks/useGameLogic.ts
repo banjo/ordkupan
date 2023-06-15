@@ -1,10 +1,10 @@
 import { uniq } from "@banjoanton/utils";
 import ky from "ky";
-import { Dispatch, SetStateAction, useMemo, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { PostFriendNameBody, PostFriendNameResponse } from "../app/api/friends/name/route";
 import { PostScoreExpectedBody } from "../app/api/score/route";
 import { PostUserResponse } from "../app/api/user/route";
+import { useGameStore } from "../stores/useGameStore";
 import { BasicComboWithWords } from "../types/types";
 import { useSaveState } from "./useSaveState";
 import { useSingletonInputFocus } from "./useSingletonInputFocus";
@@ -21,13 +21,11 @@ type Out = {
     isWrongGuess: boolean;
     streak: number;
     name: string;
-    friends: string[];
     id?: string;
     setFadeOut: Dispatch<SetStateAction<boolean>>;
     setOtherLetters: Dispatch<SetStateAction<string[]>>;
     setWord: Dispatch<SetStateAction<string>>;
     submitWord: () => Promise<boolean>;
-    addFriend: (friend: string) => Promise<string[]>;
     createUser: (name: string) => Promise<boolean>;
 };
 
@@ -51,6 +49,20 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         updateLocalStorage,
         value: localStorageValue,
     } = useSaveState({ setScore, setMatchedWords, words: combo.words, localStorageKey });
+
+    useEffect(() => {
+        useGameStore.setState({
+            friends: localStorageValue?.friends ?? [],
+        });
+    }, []);
+
+    useEffect(() => {
+        useGameStore.subscribe(state => {
+            updateLocalStorage({
+                friends: state.friends,
+            });
+        });
+    }, [updateLocalStorage]);
 
     const finished = useMemo(() => {
         return score === combo.maxScore;
@@ -169,36 +181,6 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         return true;
     };
 
-    const addFriend = async (friend: string) => {
-        try {
-            const body: PostFriendNameBody = {
-                name: friend,
-            };
-            const res: PostFriendNameResponse = await ky
-                .post(`/api/friends/name`, {
-                    body: JSON.stringify(body),
-                })
-                .json();
-
-            if (!res.publicIdentifier) {
-                toast.error("Kunde inte hitta användaren 😔");
-                return localStorageValue?.friends ?? [];
-            }
-
-            const newFriends = [...(localStorageValue?.friends ?? []), res.publicIdentifier];
-            updateLocalStorage({
-                friends: newFriends,
-            });
-
-            toast.success("Vän tillagd! 🧑‍🤝‍🧑");
-            return newFriends;
-        } catch (error) {
-            console.log(error);
-            toast.error("Kunde inte hitta användaren 😔");
-            return localStorageValue?.friends ?? [];
-        }
-    };
-
     const createUser = async (name: string): Promise<boolean> => {
         const body = {
             name,
@@ -234,14 +216,12 @@ export const useGameLogic = ({ combo, setShowConfetti, localStorageKey }: In): O
         showFinalCelebration,
         isWrongGuess,
         streak: localStorageValue?.streak ?? 0,
-        friends: localStorageValue?.friends ?? [],
         id: localStorageValue?.id,
         name: localStorageValue?.name ?? "",
         setFadeOut,
         setOtherLetters,
         setWord,
         submitWord,
-        addFriend,
         createUser,
     };
 };
