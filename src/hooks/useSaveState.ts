@@ -31,24 +31,38 @@ type In = {
 const nowAsString = () => formatDate(new Date());
 
 export const useSaveState = ({ combo, localStorageKey }: In): Out => {
+    const { date, friends, name, streak, id } = useSocialStore();
+    const { score, matchedWords } = useGameStore();
     const { words, otherLetters } = combo;
     const [localStorageValue, setLocalStorageValue] = useLocalStorage<LocalStorageState | null>(
         localStorageKey,
         null
     );
     const [isLoading, setIsLoading] = useState(true);
-    const { setScore, setMatchedWords, setOtherLetters } = useGameStore();
+    const { setOtherLetters } = useGameStore();
 
-    const updateLocalStorage = useCallback(
-        ({ score, matchedWords, streak, date, name, friends, id }: UpdateLocalStorageProps) => {
-            setLocalStorageValue({
-                date: date ?? localStorageValue?.date ?? nowAsString(),
-                streak: streak ?? localStorageValue?.streak ?? 0,
-                score: score ?? localStorageValue?.score ?? 0,
-                matchedWords: matchedWords ?? localStorageValue?.matchedWords ?? [],
-                friends: friends ?? localStorageValue?.friends ?? [],
-                name: name ?? localStorageValue?.name ?? "",
-                id: id ?? localStorageValue?.id,
+    const updateState = useCallback(
+        ({
+            score: scoreUpdate,
+            matchedWords: matchedWordsUpdate,
+            streak: streakUpdate,
+            date: dateUpdate,
+            name: nameUpdate,
+            friends: friendsUpdate,
+            id: idUpdate,
+        }: UpdateLocalStorageProps) => {
+            useSocialStore.setState({
+                date: dateUpdate ?? localStorageValue?.date ?? nowAsString(),
+                streak: streakUpdate ?? localStorageValue?.streak ?? 0,
+                friends: friendsUpdate ?? localStorageValue?.friends ?? [],
+                name: nameUpdate ?? localStorageValue?.name ?? "",
+                id: idUpdate ?? localStorageValue?.id,
+            });
+
+            useGameStore.setState({
+                score: scoreUpdate ?? localStorageValue?.score ?? 0,
+                matchedWords: matchedWordsUpdate ?? localStorageValue?.matchedWords ?? [],
+                otherLetters: otherLetters,
             });
         },
         [
@@ -59,26 +73,25 @@ export const useSaveState = ({ combo, localStorageKey }: In): Out => {
             localStorageValue?.name,
             localStorageValue?.score,
             localStorageValue?.streak,
-            setLocalStorageValue,
+            otherLetters,
         ]
     );
 
-    const resetLocalStorage = useCallback(() => {
-        setLocalStorageValue({
+    const resetState = useCallback(() => {
+        useSocialStore.setState({
             date: nowAsString(),
-            score: 0,
-            matchedWords: [],
             streak: 0,
             friends: localStorageValue?.friends ?? [],
             name: localStorageValue?.name ?? "",
             id: localStorageValue?.id,
         });
-    }, [
-        localStorageValue?.friends,
-        localStorageValue?.id,
-        localStorageValue?.name,
-        setLocalStorageValue,
-    ]);
+
+        useGameStore.setState({
+            score: 0,
+            matchedWords: [],
+            otherLetters: [],
+        });
+    }, [localStorageValue?.friends, localStorageValue?.id, localStorageValue?.name]);
 
     const validateWords = useCallback(() => {
         return validate({
@@ -89,49 +102,10 @@ export const useSaveState = ({ combo, localStorageKey }: In): Out => {
         });
     }, [localStorageValue?.matchedWords, localStorageValue?.score, words]);
 
-    // INIT
-    useEffect(() => {
-        setOtherLetters(otherLetters);
-    }, []);
-
-    // INIT STORES FROM LOCAL STORAGE
-    useEffect(() => {
-        useSocialStore.setState({
-            friends: localStorageValue?.friends ?? [],
-            id: localStorageValue?.id,
-            name: localStorageValue?.name ?? "",
-            streak: localStorageValue?.streak ?? 0,
-        });
-
-        useGameStore.setState({
-            score: localStorageValue?.score ?? 0,
-            matchedWords: localStorageValue?.matchedWords ?? [],
-        });
-    }, []);
-
-    // UPDATE LOCAL STORAGE FROM STORES
-    useEffect(() => {
-        useSocialStore.subscribe(state => {
-            updateLocalStorage({
-                friends: state.friends,
-                name: state.name,
-                id: state.id,
-                streak: state.streak,
-            });
-        });
-
-        useGameStore.subscribe(state => {
-            updateLocalStorage({
-                score: state.score,
-                matchedWords: state.matchedWords,
-            });
-        });
-    }, [updateLocalStorage]);
-
-    // INIT LOCAL STORAGE
+    // INIT LOCAL STORAGE ON START
     useEffect(() => {
         if (!localStorageValue) {
-            resetLocalStorage();
+            resetState();
             setIsLoading(false);
             return;
         }
@@ -144,7 +118,7 @@ export const useSaveState = ({ combo, localStorageKey }: In): Out => {
                 toast.error("Försök inte fuska!", {
                     icon: "🤬",
                 });
-                resetLocalStorage();
+                resetState();
                 setIsLoading(false);
                 return;
             }
@@ -153,8 +127,16 @@ export const useSaveState = ({ combo, localStorageKey }: In): Out => {
                 icon: "👋",
             });
 
-            setScore(localStorageValue.score);
-            setMatchedWords(localStorageValue.matchedWords);
+            updateState({
+                score: localStorageValue.score,
+                matchedWords: localStorageValue.matchedWords,
+                date: nowAsString(),
+                friends: localStorageValue.friends,
+                name: localStorageValue.name,
+                id: localStorageValue.id,
+                streak: localStorageValue.streak,
+            });
+
             setIsLoading(false);
             return;
         }
@@ -166,28 +148,49 @@ export const useSaveState = ({ combo, localStorageKey }: In): Out => {
         const hasScore = localStorageValue.score > 0;
 
         if (!isDayAfter || !hasScore) {
-            resetLocalStorage();
+            resetState();
             setIsLoading(false);
             return;
         }
 
-        const streak = localStorageValue.streak + 1;
+        const updatedStreak = localStorageValue.streak + 1;
 
-        updateLocalStorage({
-            streak,
+        updateState({
+            streak: updatedStreak,
             date: new Date().toLocaleDateString("sv-SE", {
                 timeZone: "Europe/Stockholm",
             }),
             matchedWords: [],
             score: 0,
+            friends: localStorageValue.friends,
+            name: localStorageValue.name,
+            id: localStorageValue.id,
         });
 
-        toast.success(`Din streak är nu ${streak} dag(ar)!`, {
+        toast.success(`Din streak är nu ${updatedStreak} dag${updatedStreak === 1 ? "" : "ar"}!`, {
             icon: "🔥",
         });
 
         setIsLoading(false);
     }, []);
+
+    // SET OTHER LETTERS TO STORE
+    useEffect(() => {
+        setOtherLetters(otherLetters);
+    }, []);
+
+    // UPDATE LOCAL STORAGE ON STORE CHANGE
+    useEffect(() => {
+        setLocalStorageValue({
+            date,
+            score,
+            matchedWords,
+            streak,
+            friends,
+            name,
+            id,
+        });
+    }, [date, friends, id, matchedWords, name, score, setLocalStorageValue, streak]);
 
     return {
         isLoading,

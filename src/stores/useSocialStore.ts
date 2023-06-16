@@ -6,6 +6,8 @@ import { PostFriendNameBody, PostFriendNameResponse } from "../app/api/friends/n
 import { PostUserResponse } from "../app/api/user/route";
 
 type SocialStore = {
+    date: string;
+    setDate: (date: string) => void;
     id?: string;
     setID: (id: string) => void;
     name: string;
@@ -21,6 +23,8 @@ export const useSocialStore = create<SocialStore>(set => ({
     name: "",
     streak: 0,
     id: undefined,
+    date: "",
+    setDate: (date: string) => set({ date }),
     setName: (name: string) => set({ name }),
     setStreak: (streak: number) => set({ streak }),
     setID: (id: string) => set({ id }),
