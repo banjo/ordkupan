@@ -54,6 +54,7 @@
     "devDependencies": {
         "@antfu/ni": "^0.21.4",
         "@banjoanton/utils": "^0.1.43",
+        "@testing-library/react-hooks": "^8.0.1",
         "@vitejs/plugin-react": "^4.0.0",
         "esno": "^0.16.3",
         "jsdom": "^22.0.0",
