@@ -30,3 +30,7 @@ body {
 body {
     touch-action: none; /* disable scroll and refresh */
 }
+
+::-webkit-scrollbar {
+    display: none;
+}

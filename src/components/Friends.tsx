@@ -7,6 +7,7 @@ import { useSocialStore } from "../stores/useSocialStore";
 import { readableDate } from "../utils/date";
 import { AddFriend } from "./AddFriend";
 import { ConfirmModal } from "./ConfirmModal";
+import { Spinner } from "./Spinner";
 
 type Props = {
     showFriends: boolean;
@@ -31,6 +32,7 @@ export const Friends: FC<Props> = ({ showFriends }) => {
     const [showModal, setShowModal] = useState<boolean>(false);
 
     // for score
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const canIncreaseDate = selectedDate.toDateString() !== new Date().toDateString();
 
@@ -48,25 +50,16 @@ export const Friends: FC<Props> = ({ showFriends }) => {
 
     useEffect(() => {
         const fetchFriendScores = async () => {
+            setIsLoading(true);
             const sorted = await fetchFriends(friends, selectedDate.toISOString());
             setFriendScore(sorted);
+            setIsLoading(false);
         };
 
         if (showFriends) {
             fetchFriendScores();
         }
     }, [friends, selectedDate, showFriends]);
-
-    useEffect(() => {
-        const fetchFriendScores = async () => {
-            const sorted = await fetchFriends(friends, selectedDate.toISOString());
-            setFriendScore(sorted);
-        };
-
-        if (friends.length > 0) {
-            fetchFriendScores();
-        }
-    }, [friends, selectedDate]);
 
     const removeFriendHandler = () => {
         if (friendToRemove) {
@@ -112,20 +105,30 @@ export const Friends: FC<Props> = ({ showFriends }) => {
                         onClick={canIncreaseDate ? increaseDateByOneDay : undefined}
                     />
                 </div>
-                <div className="flex flex-col items-center justify-betweem h-full mx-8 mt-4 overflow-y-scroll w-full px-4">
-                    {friendScore.map((friend, index) => (
-                        <div key={index} className="flex items-center justify-start w-full">
-                            <div className="text-xl font-semibold w-6">{index + 1}.</div>
-                            <div className="ml-2">{capitalize(friend.name)}</div>
-                            <div className="text-xl font-semibold ml-auto">{friend.score}</div>
-                            <LuUserX
-                                onClick={() => onRemoveFriendClick(friend)}
-                                className="ml-2 cursor-pointer"
-                            />
-                        </div>
-                    ))}
+                <div className="flex flex-col items-center justify-betweem h-full mx-4 mt-4 overflow-y-scroll w-full">
+                    {!isLoading &&
+                        friendScore.map((friend, index) => (
+                            <div
+                                key={index}
+                                className="flex items-center justify-start w-full px-4"
+                            >
+                                <div className="text-xl font-semibold w-6">{index + 1}.</div>
+                                <div className="ml-2">{capitalize(friend.name)}</div>
+                                <div className="text-xl font-semibold ml-auto">{friend.score}</div>
+                                <LuUserX
+                                    onClick={() => onRemoveFriendClick(friend)}
+                                    className="ml-2 cursor-pointer"
+                                />
+                            </div>
+                        ))}
 
-                    {friendScore.length === 0 && (
+                    {isLoading && (
+                        <div className="flex w-full h-full items-start justify-center mt-8">
+                            <Spinner size="medium" />
+                        </div>
+                    )}
+
+                    {friendScore.length === 0 && !isLoading && (
                         <div className="text-xl font-semibold">Inga vänner än 😢</div>
                     )}
                 </div>
