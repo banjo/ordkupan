@@ -29,7 +29,7 @@ export const ConfirmModal = ({
     return (
         <motion.div
             id="deleteModal"
-            className="overflow-y-auto h-full overflow-x-hidden fixed inset-0 z-50 bg-slate-800 opacity-75 flex justify-center items-center"
+            className="overflow-y-auto h-full overflow-x-hidden fixed inset-0 z-50 bg-slate-800 bg-opacity-40 flex justify-center items-center"
             tabIndex={-1}
             aria-hidden="true"
             onClick={onCancel}
