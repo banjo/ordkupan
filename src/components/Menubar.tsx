@@ -3,7 +3,7 @@
 import { FC, useState } from "react";
 import { useSocialStore } from "../stores/useSocialStore";
 import { BasicComboWithWords } from "../types/types";
-import { readableDate } from "../utils/date";
+import { dateNow, readableDate } from "../utils/date";
 import { Dropdown } from "./Dropdown";
 import { Friends } from "./Friends";
 import { Overlay } from "./Overlay";
@@ -19,7 +19,7 @@ export const Menubar: FC<Props> = ({ previous }) => {
     const [showRules, setShowRules] = useState(false);
     const [showFriends, setShowFriends] = useState(false);
     const { streak } = useSocialStore();
-    const today = readableDate(new Date());
+    const today = readableDate(new Date(dateNow()));
 
     return (
         <>

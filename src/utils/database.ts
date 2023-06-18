@@ -1,6 +1,7 @@
 import { Score, User } from "@prisma/client";
 import prisma from "../lib/prisma";
 import { BasicComboWithWords } from "../types/types";
+import { dateNow } from "./date";
 
 export const getUsers = (): Promise<User[]> => {
     return prisma.user.findMany();
@@ -41,7 +42,7 @@ export const getTodaysScore = (userId: number): Promise<Score | null> => {
     return prisma.score.findFirst({
         where: {
             userId,
-            date: { equals: new Date() },
+            date: { equals: new Date(dateNow()) },
         },
     });
 };
@@ -66,7 +67,7 @@ export const getTodaysScoreByUserIds = (userIds: number[]): Promise<ScoreWithUse
     return prisma.score.findMany({
         where: {
             userId: { in: userIds },
-            date: { equals: new Date() },
+            date: { equals: new Date(dateNow()) },
         },
         include: {
             user: true,

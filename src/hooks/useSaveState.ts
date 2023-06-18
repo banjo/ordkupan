@@ -1,10 +1,12 @@
 import { formatDate } from "@banjoanton/utils";
+import { Temporal } from "@js-temporal/polyfill";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useLocalStorage } from "react-use";
 import { useGameStore } from "../stores/useGameStore";
 import { useSocialStore } from "../stores/useSocialStore";
 import { BasicComboWithWords } from "../types/types";
+import { dateNow } from "../utils/date";
 import { validate } from "../utils/validation";
 
 type LocalStorageState = {
@@ -28,7 +30,7 @@ type In = {
     localStorageKey: string;
 };
 
-const nowAsString = () => formatDate(new Date());
+const nowAsString = () => formatDate(new Date(dateNow()));
 
 export const useSaveState = ({ combo, localStorageKey }: In): Out => {
     const { date, friends, name, streak, id } = useSocialStore();
@@ -141,10 +143,11 @@ export const useSaveState = ({ combo, localStorageKey }: In): Out => {
             return;
         }
 
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
+        const yesterday = Temporal.Now.plainDateISO("Europe/Stockholm")
+            .add({ days: -1 })
+            .toString();
 
-        const isDayAfter = localStorageValue.date === formatDate(yesterday);
+        const isDayAfter = localStorageValue.date === formatDate(new Date(yesterday));
         const hasScore = localStorageValue.score > 0;
 
         if (!isDayAfter || !hasScore) {
@@ -157,9 +160,7 @@ export const useSaveState = ({ combo, localStorageKey }: In): Out => {
 
         updateState({
             streak: updatedStreak,
-            date: new Date().toLocaleDateString("sv-SE", {
-                timeZone: "Europe/Stockholm",
-            }),
+            date: dateNow(),
             matchedWords: [],
             score: 0,
             friends: localStorageValue.friends,

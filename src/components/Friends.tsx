@@ -1,10 +1,11 @@
 import { capitalize } from "@banjoanton/utils";
+import { Temporal } from "@js-temporal/polyfill";
 import ky from "ky";
 import { FC, useEffect, useState } from "react";
 import { LuArrowLeft, LuArrowRight, LuTrash2, LuUserX } from "react-icons/lu";
 import { PostFriendResponse, PublicScore } from "../app/api/friends/route";
 import { useSocialStore } from "../stores/useSocialStore";
-import { readableDate } from "../utils/date";
+import { dateNow, readableDate } from "../utils/date";
 import { AddFriend } from "./AddFriend";
 import { ConfirmModal } from "./ConfirmModal";
 import { Spinner } from "./Spinner";
@@ -33,25 +34,23 @@ export const Friends: FC<Props> = ({ showFriends }) => {
 
     // for score
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-    const canIncreaseDate = selectedDate.toDateString() !== new Date().toDateString();
+    const [selectedDate, setSelectedDate] = useState<string>(dateNow());
+    const canIncreaseDate = selectedDate !== dateNow();
 
     const increaseDateByOneDay = () => {
-        const newDate = new Date(selectedDate);
-        newDate.setDate(newDate.getDate() + 1);
-        setSelectedDate(newDate);
+        const increasedDate = Temporal.PlainDate.from(selectedDate).add({ days: 1 });
+        setSelectedDate(increasedDate.toString());
     };
 
     const decreaseDateByOneDay = () => {
-        const newDate = new Date(selectedDate);
-        newDate.setDate(newDate.getDate() - 1);
-        setSelectedDate(newDate);
+        const decreasedDate = Temporal.PlainDate.from(selectedDate).add({ days: -1 });
+        setSelectedDate(decreasedDate.toString());
     };
 
     useEffect(() => {
         const fetchFriendScores = async () => {
             setIsLoading(true);
-            const sorted = await fetchFriends(friends, selectedDate.toISOString());
+            const sorted = await fetchFriends(friends, selectedDate);
             setFriendScore(sorted);
             setIsLoading(false);
         };
@@ -99,7 +98,7 @@ export const Friends: FC<Props> = ({ showFriends }) => {
                         className="h-5 w-5 cursor-pointer"
                         onClick={decreaseDateByOneDay}
                     />
-                    <div>{readableDate(selectedDate)}</div>
+                    <div>{readableDate(new Date(selectedDate))}</div>
                     <LuArrowRight
                         className={`h-5 w-5 ${canIncreaseDate ? "cursor-pointer" : "opacity-30"}`}
                         onClick={canIncreaseDate ? increaseDateByOneDay : undefined}

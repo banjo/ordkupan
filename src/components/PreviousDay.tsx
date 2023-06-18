@@ -1,3 +1,4 @@
+import { Temporal } from "@js-temporal/polyfill";
 import { FC, useMemo } from "react";
 import { BasicComboWithWords } from "../types/types";
 import { readableDate } from "../utils/date";
@@ -8,7 +9,7 @@ type Props = {
 };
 
 export const PreviousDay: FC<Props> = ({ previous }) => {
-    const yesterday = readableDate(new Date(Date.now() - 86_400_000));
+    const yesterday = Temporal.Now.plainDateISO("Europe/Stockholm").add({ days: -1 }).toString();
 
     const sortedWords = useMemo(() => {
         return previous.words.map(w => w.word).sort((a, b) => b.length - a.length);
@@ -29,7 +30,9 @@ export const PreviousDay: FC<Props> = ({ previous }) => {
         <>
             <div className="flex flex-col items-center">
                 <div className="text-2xl font-bold uppercase">Gårdagens ord</div>
-                <div className="font-semi text-xl text-gray-600">{yesterday}</div>
+                <div className="font-semi text-xl text-gray-600">
+                    {readableDate(new Date(yesterday))}
+                </div>
                 <div className="mt-2">{letters}</div>
             </div>
             <div className="flex items-center justify-center pb-4">
