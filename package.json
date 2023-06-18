@@ -18,6 +18,7 @@
         "db:local:seed": "esno prisma/seed.ts",
         "db:local:prepare": "npx prisma db push",
         "db:local:migrate": "npx prisma migrate dev",
+        "db:prod:migrate": "npx prisma migrate deploy",
         "postinstall": "prisma generate"
     },
     "prisma": {
