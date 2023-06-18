@@ -17,6 +17,7 @@
         "db:local:reset": "npx prisma migrate reset --skip-seed --skip-generate --force",
         "db:local:seed": "esno prisma/seed.ts",
         "db:local:prepare": "npx prisma db push",
+        "db:local:migrate": "npx prisma migrate dev",
         "postinstall": "prisma generate"
     },
     "prisma": {
