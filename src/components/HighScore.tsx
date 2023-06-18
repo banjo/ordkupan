@@ -27,6 +27,7 @@ export const HighScore: FC = () => {
                 emptyText="Hittar inga resultat 😔"
                 fetchFunction={fetchHighScore}
                 title="Topplista 🏆"
+                subTitle="Dagens bästa"
             />
         </>
     );

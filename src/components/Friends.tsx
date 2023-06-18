@@ -26,7 +26,7 @@ const fetchFriends = async (friends: string[], date: string) => {
 };
 
 export const Friends: FC<Props> = ({ showFriends }) => {
-    const { removeFriend, friends } = useSocialStore();
+    const { removeFriend, friends, name } = useSocialStore();
     const [friendToRemove, setFriendToRemove] = useState<PublicScore | null>(null);
     const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -76,6 +76,7 @@ export const Friends: FC<Props> = ({ showFriends }) => {
                     ),
                 ]}
                 emptyText="Du har inga vänner 😥"
+                subTitle={name}
                 fetchFunction={fetchFunction}
                 title="Vänner"
             />

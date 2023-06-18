@@ -2,21 +2,25 @@ import { capitalize } from "@banjoanton/utils";
 import { Temporal } from "@js-temporal/polyfill";
 import { FC, ReactNode, useEffect, useState } from "react";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
-import { useSocialStore } from "../stores/useSocialStore";
 import { PublicScore } from "../types/types";
 import { dateNow, readableDate } from "../utils/date";
 import { Spinner } from "./Spinner";
 
 type Props = {
     title: string;
+    subTitle?: string;
     emptyText: string;
     additionalEntries?: ((entry: PublicScore) => ReactNode)[];
     fetchFunction: (date: string) => Promise<PublicScore[]>;
 };
 
-export const ScoreList: FC<Props> = ({ title, emptyText, additionalEntries, fetchFunction }) => {
-    const { name } = useSocialStore();
-
+export const ScoreList: FC<Props> = ({
+    title,
+    emptyText,
+    additionalEntries,
+    fetchFunction,
+    subTitle,
+}) => {
     const [data, setData] = useState<PublicScore[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -47,7 +51,7 @@ export const ScoreList: FC<Props> = ({ title, emptyText, additionalEntries, fetc
     return (
         <div className="flex flex-col items-center flex-1 max-h-1/12">
             <div className="text-2xl font-bold uppercase">{title}</div>
-            <div className="uppercase text-gray-400 font-bold">{name}</div>
+            <div className="uppercase text-gray-400 font-bold">{subTitle}</div>
             <div className="flex gap-4 mt-4 items-center">
                 <LuArrowLeft className="h-5 w-5 cursor-pointer" onClick={decreaseDateByOneDay} />
                 <div>{readableDate(new Date(selectedDate))}</div>
