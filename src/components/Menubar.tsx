@@ -6,6 +6,7 @@ import { BasicComboWithWords } from "../types/types";
 import { dateNow, readableDate } from "../utils/date";
 import { Dropdown } from "./Dropdown";
 import { Friends } from "./Friends";
+import { HighScore } from "./HighScore";
 import { Overlay } from "./Overlay";
 import { PreviousDay } from "./PreviousDay";
 import { Rules } from "./Rules";
@@ -18,6 +19,7 @@ export const Menubar: FC<Props> = ({ previous }) => {
     const [showPrevious, setShowPrevious] = useState(false);
     const [showRules, setShowRules] = useState(false);
     const [showFriends, setShowFriends] = useState(false);
+    const [showHighscore, setShowHighscore] = useState(false);
     const { streak } = useSocialStore();
     const today = readableDate(new Date(dateNow()));
 
@@ -33,6 +35,10 @@ export const Menubar: FC<Props> = ({ previous }) => {
 
             <Overlay show={showFriends} close={() => setShowFriends(false)}>
                 <Friends showFriends={showFriends} />
+            </Overlay>
+
+            <Overlay show={showHighscore} close={() => setShowHighscore(false)}>
+                <HighScore />
             </Overlay>
 
             <div className="my-2 flex h-2 items-center justify-between font-light">
@@ -52,6 +58,10 @@ export const Menubar: FC<Props> = ({ previous }) => {
                         {
                             title: "Vänner",
                             onClick: () => setShowFriends(true),
+                        },
+                        {
+                            title: "Topplista",
+                            onClick: () => setShowHighscore(true),
                         },
                     ]}
                 />

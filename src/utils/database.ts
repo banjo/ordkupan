@@ -90,6 +90,21 @@ export const getScoreByUserIdsAndDate = (
     });
 };
 
+export const getHighScoresByDate = (date: Date): Promise<ScoreWithUser[]> => {
+    return prisma.score.findMany({
+        where: {
+            date: { equals: date },
+        },
+        include: {
+            user: true,
+        },
+        orderBy: {
+            score: "desc",
+        },
+        take: 3,
+    });
+};
+
 export const getUsersByPublicIdentifiers = (publicIdentifiers: string[]): Promise<User[]> => {
     return prisma.user.findMany({
         where: {

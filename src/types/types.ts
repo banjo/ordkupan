@@ -12,3 +12,9 @@ export type BasicComboWithWords = BasicCombo & {
 export type ComboWithWords = Combo & {
     words: BasicWord[];
 };
+
+export type PublicScore = {
+    score: number;
+    name: string;
+    publicIdentifier: string;
+};

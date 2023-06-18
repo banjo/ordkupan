@@ -1,5 +1,6 @@
 import { User } from "@prisma/client";
 import { NextResponse } from "next/server";
+import { PublicScore } from "../../../types/types";
 import {
     getScoreByUserIdsAndDate,
     getUsersByPublicIdentifiers,
@@ -11,12 +12,6 @@ export type PostFriendBody = {
     date: string;
 };
 
-export type PublicScore = {
-    score: number;
-    name: string;
-    publicIdentifier: string;
-};
-
 export type PostFriendResponse = {
     score: PublicScore[];
 };
@@ -26,8 +21,8 @@ export async function POST(req: Request) {
 
     const { friends, date } = body;
 
-    if (!friends) {
-        return NextResponse.json({ error: "Friends not provided" }, { status: 400 });
+    if (!friends || !date) {
+        return NextResponse.json({ error: "Friends or date not provided" }, { status: 400 });
     }
 
     let users: User[] | null;
