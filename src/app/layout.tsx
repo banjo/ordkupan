@@ -20,6 +20,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Assets />
 
             <Script
+                defer
+                data-domain="ordkupan.se"
+                src="http://analytics.deploy.banjoanton.com/js/script.js"
+            />
+
+            <Script
                 src="https://www.googletagmanager.com/gtag/js?id=G-PRBN0CL5K4"
                 strategy="afterInteractive"
             />
