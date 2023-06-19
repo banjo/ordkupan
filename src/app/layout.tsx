@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Script
                 defer
                 data-domain="ordkupan.se"
-                src="http://analytics.deploy.banjoanton.com/js/script.js"
+                src="https://analytics.deploy.banjoanton.com/js/script.js"
             />
 
             <Script
