@@ -67,6 +67,8 @@ function getScore(word: string) {
     }
 
     const isSevenLettersOrMore = word.length >= 7;
+
+    // TODO: fix bug here with words longer than 7 letters
     const isUnique = uniq([...word]).length === word.length;
 
     if (isSevenLettersOrMore && isUnique) {

@@ -60,7 +60,7 @@ export const ScoreList: FC<Props> = ({
                     onClick={canIncreaseDate ? increaseDateByOneDay : undefined}
                 />
             </div>
-            <div className="flex flex-col items-center justify-betweem h-full mx-4 mt-4 overflow-y-scroll w-full">
+            <div className="flex flex-col items-center justify-betweem h-80 mx-4 mt-4 overflow-y-scroll w-full">
                 {!isLoading &&
                     data.map((score, index) => (
                         <div key={index} className="flex items-center justify-start w-full px-4">
