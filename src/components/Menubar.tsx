@@ -19,7 +19,7 @@ export const Menubar: FC<Props> = ({ previous }) => {
     const [showPrevious, setShowPrevious] = useState(false);
     const [showRules, setShowRules] = useState(false);
     const [showFriends, setShowFriends] = useState(false);
-    const [showHighscore, setShowHighscore] = useState(false);
+    const [showHighScore, setShowHighScore] = useState(false);
     const { streak } = useSocialStore();
     const today = readableDate(new Date(dateNow()));
 
@@ -37,8 +37,8 @@ export const Menubar: FC<Props> = ({ previous }) => {
                 <Friends showFriends={showFriends} />
             </Overlay>
 
-            <Overlay show={showHighscore} close={() => setShowHighscore(false)}>
-                <HighScore />
+            <Overlay show={showHighScore} close={() => setShowHighScore(false)}>
+                <HighScore showHighScore={showHighScore} />
             </Overlay>
 
             <div className="my-2 flex h-2 items-center justify-between font-light">
@@ -61,7 +61,7 @@ export const Menubar: FC<Props> = ({ previous }) => {
                         },
                         {
                             title: "Topplista",
-                            onClick: () => setShowHighscore(true),
+                            onClick: () => setShowHighScore(true),
                         },
                     ]}
                 />

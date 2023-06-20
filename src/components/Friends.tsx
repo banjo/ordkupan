@@ -79,6 +79,7 @@ export const Friends: FC<Props> = ({ showFriends }) => {
                 subTitle={name}
                 fetchFunction={fetchFunction}
                 title="Vänner"
+                trigger={showFriends}
             />
 
             <div className="flex flex-col items-center justify-center mb-4">

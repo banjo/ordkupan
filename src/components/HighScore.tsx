@@ -20,7 +20,7 @@ const fetchHighScore = async (date: string) => {
     }
 };
 
-export const HighScore: FC = () => {
+export const HighScore: FC<{ showHighScore: boolean }> = ({ showHighScore }) => {
     return (
         <>
             <ScoreList
@@ -28,6 +28,7 @@ export const HighScore: FC = () => {
                 fetchFunction={fetchHighScore}
                 title="Topplista 🏆"
                 subTitle="Dagens bästa"
+                trigger={showHighScore}
             />
         </>
     );

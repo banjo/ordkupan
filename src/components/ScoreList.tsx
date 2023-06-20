@@ -1,4 +1,4 @@
-import { capitalize } from "@banjoanton/utils";
+import { capitalize, isDefined } from "@banjoanton/utils";
 import { Temporal } from "@js-temporal/polyfill";
 import { FC, ReactNode, useEffect, useState } from "react";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
@@ -12,6 +12,7 @@ type Props = {
     emptyText: string;
     additionalEntries?: ((entry: PublicScore) => ReactNode)[];
     fetchFunction: (date: string) => Promise<PublicScore[]>;
+    trigger?: boolean;
 };
 
 export const ScoreList: FC<Props> = ({
@@ -20,6 +21,7 @@ export const ScoreList: FC<Props> = ({
     additionalEntries,
     fetchFunction,
     subTitle,
+    trigger,
 }) => {
     const [data, setData] = useState<PublicScore[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -45,8 +47,12 @@ export const ScoreList: FC<Props> = ({
             setIsLoading(false);
         };
 
-        fetchData();
-    }, [fetchFunction, selectedDate]);
+        if (!isDefined(trigger)) {
+            fetchData();
+        } else if (trigger) {
+            fetchData();
+        }
+    }, [fetchFunction, selectedDate, trigger]);
 
     return (
         <div className="flex flex-col items-center flex-1 max-h-1/12">
