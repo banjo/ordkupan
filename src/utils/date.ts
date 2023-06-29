@@ -10,6 +10,6 @@ export const dateNow = () => {
         .toZonedDateTime({
             timeZone: "Europe/Stockholm",
         })
-        .toPlainDate()
-        .toString();
+        .toString()
+        .split("T")[0];
 };

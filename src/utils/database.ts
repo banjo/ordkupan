@@ -27,6 +27,7 @@ export const addScore = (userId: number, score: number, maxScore: number): Promi
             userId,
             score,
             maxScore,
+            date: new Date(dateNow()),
         },
     });
 };
