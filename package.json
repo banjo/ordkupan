@@ -13,6 +13,7 @@
         "create:combos": "esno words/createCombos.ts",
         "db:local:start": "docker compose up -d",
         "db:local:stop": "docker compose stop",
+        "db:local:generate": "npx prisma generate",
         "db:local:restart": "docker compose down --volumes && docker compose up -d",
         "db:local:reset": "npx prisma migrate reset --skip-seed --skip-generate --force",
         "db:local:seed": "esno prisma/seed.ts",
