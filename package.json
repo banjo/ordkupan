@@ -13,13 +13,13 @@
         "create:combos": "esno words/createCombos.ts",
         "db:local:start": "docker compose up -d",
         "db:local:stop": "docker compose stop",
-        "db:local:generate": "npx prisma generate",
+        "db:local:generate": "pnpm exec prisma generate",
         "db:local:restart": "docker compose down --volumes && docker compose up -d",
-        "db:local:reset": "npx prisma migrate reset --skip-seed --skip-generate --force",
+        "db:local:reset": "pnpm exec prisma migrate reset --skip-seed --skip-generate --force",
         "db:local:seed": "esno prisma/seed.ts",
-        "db:local:prepare": "npx prisma db push",
-        "db:local:migrate": "npx prisma migrate dev",
-        "db:prod:migrate": "npx prisma migrate deploy",
+        "db:local:prepare": "pnpm exec prisma db push",
+        "db:local:migrate": "pnpm exec prisma migrate dev",
+        "db:prod:migrate": "pnpm exec prisma migrate deploy",
         "postinstall": "prisma generate"
     },
     "prisma": {
