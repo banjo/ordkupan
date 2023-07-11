@@ -1,14 +1,14 @@
+import { PostScoreExpectedBody } from "@/app/api/score/route";
+import { useSaveState } from "@/hooks/useSaveState";
+import { useSingletonInputFocus } from "@/hooks/useSingletonInputFocus";
+import { useConfettiStore } from "@/stores/useConfettiStore";
+import { useGameStore } from "@/stores/useGameStore";
+import { useSocialStore } from "@/stores/useSocialStore";
+import { BasicComboWithWords } from "@/types/types";
 import { uniq } from "@banjoanton/utils";
 import ky from "ky";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { PostScoreExpectedBody } from "../app/api/score/route";
-import { useConfettiStore } from "../stores/useConfettiStore";
-import { useGameStore } from "../stores/useGameStore";
-import { useSocialStore } from "../stores/useSocialStore";
-import { BasicComboWithWords } from "../types/types";
-import { useSaveState } from "./useSaveState";
-import { useSingletonInputFocus } from "./useSingletonInputFocus";
 
 type Out = {
     isLoading: boolean;

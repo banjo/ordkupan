@@ -1,6 +1,6 @@
+import { BasicComboWithWords } from "@/types/types";
+import { getCombo } from "@/utils/database";
 import { Temporal } from "@js-temporal/polyfill";
-import { BasicComboWithWords } from "../types/types";
-import { getCombo } from "./database";
 
 export const getCombos = async (): Promise<[BasicComboWithWords, BasicComboWithWords, number]> => {
     const startDate = Temporal.ZonedDateTime.from({

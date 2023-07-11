@@ -1,6 +1,6 @@
+import { PublicScore } from "@/types/types";
+import { getHighScoresByDate, ScoreWithUser } from "@/utils/database";
 import { NextResponse } from "next/server";
-import { PublicScore } from "../../../types/types";
-import { getHighScoresByDate, ScoreWithUser } from "../../../utils/database";
 
 export type PostHighScoreBody = {
     date: string;

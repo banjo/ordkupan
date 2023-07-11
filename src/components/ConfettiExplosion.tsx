@@ -1,6 +1,6 @@
+import { Confetti } from "@/components/Confetti";
 import { range } from "@banjoanton/utils";
 import { FC, useEffect, useState } from "react";
-import { Confetti } from "./Confetti";
 
 type Props = {
     show: boolean;

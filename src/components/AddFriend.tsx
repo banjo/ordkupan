@@ -1,7 +1,7 @@
+import { PrimaryButton } from "@/components/PrimaryButton";
+import { useSocialStore } from "@/stores/useSocialStore";
 import { isEmpty } from "@banjoanton/utils";
 import { FC, useState } from "react";
-import { useSocialStore } from "../stores/useSocialStore";
-import { PrimaryButton } from "./PrimaryButton";
 
 export const AddFriend: FC = () => {
     const [name, setName] = useState("");

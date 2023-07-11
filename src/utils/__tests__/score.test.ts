@@ -1,5 +1,5 @@
+import { calculateStep } from "@/utils/score";
 import { describe, expect, it } from "vitest";
-import { calculateStep } from "../score";
 
 describe("score", () => {
     describe("calculateStep", () => {

@@ -1,6 +1,6 @@
+import { addUser } from "@/utils/database";
 import { User } from "@prisma/client";
 import { NextResponse } from "next/server";
-import { addUser } from "../../../utils/database";
 
 export type PostUserResponse = {
     uniqueIdentifier: string;

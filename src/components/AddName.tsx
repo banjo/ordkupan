@@ -1,12 +1,12 @@
 "use client";
 
+import { Overlay } from "@/components/Overlay";
+import { PrimaryButton } from "@/components/PrimaryButton";
+import { useSingletonInputFocus } from "@/hooks/useSingletonInputFocus";
+import { useSocialStore } from "@/stores/useSocialStore";
 import { isEmpty } from "@banjoanton/utils";
 import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
-import { useSocialStore } from "../stores/useSocialStore";
-import { Overlay } from "./Overlay";
-import { PrimaryButton } from "./PrimaryButton";
 
 export const AddName: FC = () => {
     const { createUser, id } = useSocialStore();

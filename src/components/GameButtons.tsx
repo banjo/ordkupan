@@ -1,8 +1,8 @@
+import { Button } from "@/components/Button";
+import { useSingletonInputFocus } from "@/hooks/useSingletonInputFocus";
+import { useGameStore } from "@/stores/useGameStore";
 import { Dispatch, FC, SetStateAction } from "react";
 import { FiRefreshCw } from "react-icons/fi";
-import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
-import { useGameStore } from "../stores/useGameStore";
-import { Button } from "./Button";
 
 type Props = {
     setFadeOut: Dispatch<SetStateAction<boolean>>;

@@ -1,5 +1,5 @@
+import { BasicComboWithWords } from "@/types/types";
 import { sample, shuffle, uniq } from "@banjoanton/utils";
-import { BasicComboWithWords } from "../src/types/types";
 import { exportJsonFile, importJsonFile } from "./helpers";
 
 const main = () => {

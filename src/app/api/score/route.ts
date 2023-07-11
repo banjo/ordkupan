@@ -1,12 +1,7 @@
+import { getCombos } from "@/utils/combo";
+import { addScore, getTodaysScore, getUserByUniqueIdentifier, setScore } from "@/utils/database";
+import { validate } from "@/utils/validation";
 import { NextResponse } from "next/server";
-import { getCombos } from "../../../utils/combo";
-import {
-    addScore,
-    getTodaysScore,
-    getUserByUniqueIdentifier,
-    setScore,
-} from "../../../utils/database";
-import { validate } from "../../../utils/validation";
 
 export type PostScoreExpectedBody = {
     userUniqueIdentifier: string;

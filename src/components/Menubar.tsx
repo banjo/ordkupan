@@ -1,15 +1,15 @@
 // eslint-disable-next-line import/no-duplicates
 
+import { Dropdown } from "@/components/Dropdown";
+import { Friends } from "@/components/Friends";
+import { HighScore } from "@/components/HighScore";
+import { Overlay } from "@/components/Overlay";
+import { PreviousDay } from "@/components/PreviousDay";
+import { Rules } from "@/components/Rules";
+import { useSocialStore } from "@/stores/useSocialStore";
+import { BasicComboWithWords } from "@/types/types";
+import { dateNow, readableDate } from "@/utils/date";
 import { FC, useState } from "react";
-import { useSocialStore } from "../stores/useSocialStore";
-import { BasicComboWithWords } from "../types/types";
-import { dateNow, readableDate } from "../utils/date";
-import { Dropdown } from "./Dropdown";
-import { Friends } from "./Friends";
-import { HighScore } from "./HighScore";
-import { Overlay } from "./Overlay";
-import { PreviousDay } from "./PreviousDay";
-import { Rules } from "./Rules";
 
 type Props = {
     previous: BasicComboWithWords;

@@ -1,8 +1,8 @@
+import { WordDisplay } from "@/components/WordDisplay";
+import { useSingletonInputFocus } from "@/hooks/useSingletonInputFocus";
 import { capitalize } from "@banjoanton/utils";
 import { FC, useMemo, useState } from "react";
 import { FiChevronDown } from "react-icons/fi";
-import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
-import { WordDisplay } from "./WordDisplay";
 
 type Props = {
     words: string[];

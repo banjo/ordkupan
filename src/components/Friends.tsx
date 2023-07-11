@@ -1,13 +1,13 @@
+import { PostFriendResponse } from "@/app/api/friends/route";
+import { AddFriend } from "@/components/AddFriend";
+import { ConfirmModal } from "@/components/ConfirmModal";
+import { ScoreList } from "@/components/ScoreList";
+import { useSocialStore } from "@/stores/useSocialStore";
+import { PublicScore } from "@/types/types";
 import { capitalize } from "@banjoanton/utils";
 import ky from "ky";
 import { FC, useState } from "react";
 import { LuTrash2, LuUserX } from "react-icons/lu";
-import { PostFriendResponse } from "../app/api/friends/route";
-import { useSocialStore } from "../stores/useSocialStore";
-import { PublicScore } from "../types/types";
-import { AddFriend } from "./AddFriend";
-import { ConfirmModal } from "./ConfirmModal";
-import { ScoreList } from "./ScoreList";
 
 type Props = {
     showFriends: boolean;

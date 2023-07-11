@@ -1,9 +1,9 @@
+import { PostFriendNameBody, PostFriendNameResponse } from "@/app/api/friends/name/route";
+import { PostUserResponse } from "@/app/api/user/route";
 import { uniq } from "@banjoanton/utils";
 import ky from "ky";
 import toast from "react-hot-toast";
 import { create } from "zustand";
-import { PostFriendNameBody, PostFriendNameResponse } from "../app/api/friends/name/route";
-import { PostUserResponse } from "../app/api/user/route";
 
 type SocialStore = {
     date: string;

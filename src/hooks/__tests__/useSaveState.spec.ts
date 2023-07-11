@@ -1,8 +1,8 @@
+import { useSaveState } from "@/hooks/useSaveState";
+import { BasicComboWithWords } from "@/types/types";
 import { formatDate } from "@banjoanton/utils";
 import { renderHook } from "@testing-library/react-hooks";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { BasicComboWithWords } from "../../types/types";
-import { useSaveState } from "../useSaveState";
 
 describe("useSaveState", () => {
     let combo: BasicComboWithWords;

@@ -1,10 +1,10 @@
+import { Spinner } from "@/components/Spinner";
+import { PublicScore } from "@/types/types";
+import { dateNow, readableDate } from "@/utils/date";
 import { capitalize, isDefined } from "@banjoanton/utils";
 import { Temporal } from "@js-temporal/polyfill";
 import { FC, ReactNode, useEffect, useState } from "react";
 import { LuArrowLeft, LuArrowRight } from "react-icons/lu";
-import { PublicScore } from "../types/types";
-import { dateNow, readableDate } from "../utils/date";
-import { Spinner } from "./Spinner";
 
 type Props = {
     title: string;

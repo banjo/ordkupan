@@ -1,13 +1,13 @@
+import { useGameStore } from "@/stores/useGameStore";
+import { useSocialStore } from "@/stores/useSocialStore";
+import { BasicComboWithWords } from "@/types/types";
+import { dateNow } from "@/utils/date";
+import { validate } from "@/utils/validation";
 import { formatDate } from "@banjoanton/utils";
 import { Temporal } from "@js-temporal/polyfill";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useLocalStorage } from "react-use";
-import { useGameStore } from "../stores/useGameStore";
-import { useSocialStore } from "../stores/useSocialStore";
-import { BasicComboWithWords } from "../types/types";
-import { dateNow } from "../utils/date";
-import { validate } from "../utils/validation";
 
 type LocalStorageState = {
     date: string;
@@ -173,11 +173,13 @@ export const useSaveState = ({ combo, localStorageKey }: In): Out => {
         });
 
         setIsLoading(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // SET OTHER LETTERS TO STORE
     useEffect(() => {
         setOtherLetters(otherLetters);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // UPDATE LOCAL STORAGE ON STORE CHANGE

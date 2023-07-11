@@ -1,7 +1,7 @@
+import { useSingletonInputFocus } from "@/hooks/useSingletonInputFocus";
+import { useGameStore } from "@/stores/useGameStore";
 import { motion } from "framer-motion";
 import React from "react";
-import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
-import { useGameStore } from "../stores/useGameStore";
 
 type Props = {
     submitWord: () => Promise<boolean>;

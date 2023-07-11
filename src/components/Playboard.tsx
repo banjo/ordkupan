@@ -1,23 +1,23 @@
 "use client";
 
+import { AddName } from "@/components/AddName";
+import { Confetti } from "@/components/Confetti";
+import { ConfettiExplosion } from "@/components/ConfettiExplosion";
+import { FinishedCard } from "@/components/FinishedCard";
+import { GameButtons } from "@/components/GameButtons";
+import { Hexgrid } from "@/components/HexGrid";
+import { InputField } from "@/components/InputField";
+import { Menubar } from "@/components/Menubar";
+import { ScoreBoard } from "@/components/ScoreBoard";
+import { Toggle } from "@/components/Toggle";
+import { useGameLogic } from "@/hooks/useGameLogic";
+import { useLanguage } from "@/hooks/useLanguage";
+import { useSingletonInputFocus } from "@/hooks/useSingletonInputFocus";
+import { useConfettiStore } from "@/stores/useConfettiStore";
+import { useGameStore } from "@/stores/useGameStore";
+import { BasicComboWithWords } from "@/types/types";
 import { motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
-import { useGameLogic } from "../hooks/useGameLogic";
-import { useLanguage } from "../hooks/useLanguage";
-import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
-import { useConfettiStore } from "../stores/useConfettiStore";
-import { useGameStore } from "../stores/useGameStore";
-import { BasicComboWithWords } from "../types/types";
-import { AddName } from "./AddName";
-import { Confetti } from "./Confetti";
-import { ConfettiExplosion } from "./ConfettiExplosion";
-import { FinishedCard } from "./FinishedCard";
-import { GameButtons } from "./GameButtons";
-import { Hexgrid } from "./HexGrid";
-import { InputField } from "./InputField";
-import { Menubar } from "./Menubar";
-import { ScoreBoard } from "./ScoreBoard";
-import { Toggle } from "./Toggle";
 
 const CONFETTI_TIME = 1700;
 

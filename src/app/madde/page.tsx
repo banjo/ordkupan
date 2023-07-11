@@ -1,9 +1,9 @@
+import { Main } from "@/components/Main";
+import { Playboard } from "@/components/Playboard";
+import { BasicComboWithWords } from "@/types/types";
+import { getCombos } from "@/utils/combo";
 import { shuffle } from "@banjoanton/utils";
 import combos from "../../../words/data/combos.json" assert { type: "json" };
-import { Main } from "../../components/Main";
-import { Playboard } from "../../components/Playboard";
-import { BasicComboWithWords } from "../../types/types";
-import { getCombos } from "../../utils/combo";
 
 export const revalidate = 0;
 

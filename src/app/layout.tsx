@@ -1,6 +1,6 @@
+import { Assets } from "@/components/Assets";
 import { Inter } from "next/font/google";
 import Script from "next/script";
-import { Assets } from "../components/Assets";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });

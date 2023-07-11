@@ -1,4 +1,4 @@
-import { BasicWord } from "../types/types";
+import { BasicWord } from "@/types/types";
 
 export const validate = ({
     matchedWords,

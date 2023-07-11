@@ -1,7 +1,7 @@
+import { useSingletonInputFocus } from "@/hooks/useSingletonInputFocus";
 import { motion } from "framer-motion";
 import { FC, ReactNode, useEffect } from "react";
 import { FiX } from "react-icons/fi";
-import { useSingletonInputFocus } from "../hooks/useSingletonInputFocus";
 
 type Props = {
     show: boolean;

@@ -1,8 +1,8 @@
+import { WordDisplay } from "@/components/WordDisplay";
+import { BasicComboWithWords } from "@/types/types";
+import { readableDate } from "@/utils/date";
 import { Temporal } from "@js-temporal/polyfill";
 import { FC, useMemo } from "react";
-import { BasicComboWithWords } from "../types/types";
-import { readableDate } from "../utils/date";
-import { WordDisplay } from "./WordDisplay";
 
 type Props = {
     previous: BasicComboWithWords;

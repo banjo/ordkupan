@@ -1,6 +1,6 @@
+import { getUserByName } from "@/utils/database";
 import { User } from "@prisma/client";
 import { NextResponse } from "next/server";
-import { getUserByName } from "../../../../utils/database";
 
 export type PostFriendNameBody = {
     name: string;

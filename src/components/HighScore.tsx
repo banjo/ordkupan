@@ -1,7 +1,7 @@
+import { PostHighScoreResponse } from "@/app/api/highscore/route";
+import { ScoreList } from "@/components/ScoreList";
 import ky from "ky";
 import { FC } from "react";
-import { PostHighScoreResponse } from "../app/api/highscore/route";
-import { ScoreList } from "./ScoreList";
 
 const fetchHighScore = async (date: string) => {
     try {

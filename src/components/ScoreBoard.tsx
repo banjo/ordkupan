@@ -1,8 +1,8 @@
+import { Stepper } from "@/components/Stepper";
+import { WordField } from "@/components/WordField";
+import { useGameStore } from "@/stores/useGameStore";
+import { calculateStep } from "@/utils/score";
 import { FC } from "react";
-import { useGameStore } from "../stores/useGameStore";
-import { calculateStep } from "../utils/score";
-import { Stepper } from "./Stepper";
-import { WordField } from "./WordField";
 
 type Props = {
     maxScore: number;

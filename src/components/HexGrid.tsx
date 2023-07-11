@@ -1,7 +1,7 @@
+import { Hexagon } from "@/components/Hexagon";
+import { useGameStore } from "@/stores/useGameStore";
+import { getCustomColors } from "@/utils/tailwind";
 import { FC } from "react";
-import { useGameStore } from "../stores/useGameStore";
-import { getCustomColors } from "../utils/tailwind";
-import { Hexagon } from "./Hexagon";
 
 type Props = {
     mainLetter: string;

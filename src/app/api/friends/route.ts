@@ -1,11 +1,11 @@
-import { User } from "@prisma/client";
-import { NextResponse } from "next/server";
-import { PublicScore } from "../../../types/types";
+import { PublicScore } from "@/types/types";
 import {
     getScoreByUserIdsAndDate,
     getUsersByPublicIdentifiers,
     ScoreWithUser,
-} from "../../../utils/database";
+} from "@/utils/database";
+import { User } from "@prisma/client";
+import { NextResponse } from "next/server";
 
 export type PostFriendBody = {
     friends: string[];
