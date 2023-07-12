@@ -35,20 +35,15 @@ export const validate = ({
         return false;
     }
 
-    // temporary just to mention maxScore
-    if (maxScore) {
-        return true;
+    const totalScorePossible = allWords.reduce((acc, word) => acc + word.score, 0);
+
+    if (maxScore !== totalScorePossible) {
+        return false;
     }
 
-    // const totalScorePossible = allWords.reduce((acc, word) => acc + word.score, 0);
-
-    // if (maxScore !== totalScorePossible) {
-    //     return false;
-    // }
-
-    // if (score > maxScore) {
-    //     return false;
-    // }
+    if (score > maxScore) {
+        return false;
+    }
 
     return true;
 };
