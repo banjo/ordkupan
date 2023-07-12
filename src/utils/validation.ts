@@ -11,6 +11,7 @@ export const validate = ({
     score: number;
     maxScore: number;
 }) => {
+    debugger;
     const uniqueMatchedWords = [...new Set(matchedWords)];
 
     if (uniqueMatchedWords.length !== matchedWords.length) {
@@ -35,15 +36,15 @@ export const validate = ({
         return false;
     }
 
-    const totalScorePossible = allWords.reduce((acc, word) => acc + word.score, 0);
+    // const totalScorePossible = allWords.reduce((acc, word) => acc + word.score, 0);
 
-    if (maxScore !== totalScorePossible) {
-        return false;
-    }
+    // if (maxScore !== totalScorePossible) {
+    //     return false;
+    // }
 
-    if (score > maxScore) {
-        return false;
-    }
+    // if (score > maxScore) {
+    //     return false;
+    // }
 
     return true;
 };
