@@ -11,7 +11,6 @@ export const validate = ({
     score: number;
     maxScore: number;
 }) => {
-    debugger;
     const uniqueMatchedWords = [...new Set(matchedWords)];
 
     if (uniqueMatchedWords.length !== matchedWords.length) {
@@ -34,6 +33,11 @@ export const validate = ({
 
     if (score !== scoreForAllWords) {
         return false;
+    }
+
+    // temporary just to mention maxScore
+    if (maxScore) {
+        return true;
     }
 
     // const totalScorePossible = allWords.reduce((acc, word) => acc + word.score, 0);
