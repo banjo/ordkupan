@@ -129,10 +129,15 @@ export const getHighScoresByDate = (date: Date): Promise<ScoreWithUser[]> => {
         include: {
             user: true,
         },
-        orderBy: {
-            score: "desc",
-        },
-        take: 3,
+        orderBy: [
+            {
+                score: "desc",
+            },
+            {
+                updatedAt: "asc",
+            },
+        ],
+        take: 5,
     });
 };
 
