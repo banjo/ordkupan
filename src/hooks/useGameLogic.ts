@@ -1,3 +1,4 @@
+import { GuessExpectedBody } from "@/app/api/guess/route";
 import { PostScoreExpectedBody } from "@/app/api/score/route";
 import { useSaveState } from "@/hooks/useSaveState";
 import { useSingletonInputFocus } from "@/hooks/useSingletonInputFocus";
@@ -25,6 +26,16 @@ type In = {
 const postScore = async (body: PostScoreExpectedBody) => {
     await ky
         .post("/api/score", {
+            body: JSON.stringify(body),
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+const postGuess = async (body: GuessExpectedBody) => {
+    await ky
+        .post("/api/guess", {
             body: JSON.stringify(body),
         })
         .catch(error => {
@@ -78,6 +89,7 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
         }, 500);
     };
 
+    // eslint-disable-next-line require-await
     const submitWord = async () => {
         const submittedWord = combo.words.find(w => w.word === word);
         focus();
@@ -85,6 +97,12 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
         if (word.length === 0) {
             triggerWrongGuess();
             return false;
+        }
+
+        if (id) {
+            setTimeout(async () => {
+                await postGuess({ word, userUniqueIdentifier: id });
+            }, 0);
         }
 
         if (word.length < 4) {
@@ -150,7 +168,9 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
                 userUniqueIdentifier: id,
             };
 
-            await postScore(body);
+            setTimeout(async () => {
+                await postScore(body);
+            }, 0);
         }
 
         toast.success(`+${submittedWord.score}`, {

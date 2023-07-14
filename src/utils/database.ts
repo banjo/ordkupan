@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { BasicComboWithWords } from "@/types/types";
 import { dateNow } from "@/utils/date";
-import { Score, User } from "@prisma/client";
+import { Guess, Score, User } from "@prisma/client";
 
 export const getUsers = (): Promise<User[]> => {
     return prisma.user.findMany();
@@ -44,6 +44,36 @@ export const getTodaysScore = (userId: number): Promise<Score | null> => {
         where: {
             userId,
             date: { equals: new Date(dateNow()) },
+        },
+    });
+};
+
+export const getTodaysGuess = (userId: number): Promise<Guess | null> => {
+    return prisma.guess.findFirst({
+        where: {
+            userId,
+            date: { equals: new Date(dateNow()) },
+        },
+    });
+};
+
+export const createNewGuess = (userId: number, word: string): Promise<Guess> => {
+    return prisma.guess.create({
+        data: {
+            userId,
+            words: [word],
+            guesses: 1,
+            date: new Date(dateNow()),
+        },
+    });
+};
+
+export const addToGuess = (id: number, word: string): Promise<Guess | null> => {
+    return prisma.guess.update({
+        where: { id },
+        data: {
+            words: { push: word },
+            guesses: { increment: 1 },
         },
     });
 };
