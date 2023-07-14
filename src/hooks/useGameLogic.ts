@@ -22,6 +22,16 @@ type In = {
     localStorageKey: string;
 };
 
+const postScore = async (body: PostScoreExpectedBody) => {
+    await ky
+        .post("/api/score", {
+            body: JSON.stringify(body),
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
 export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
     const { focus } = useSingletonInputFocus();
     const {
@@ -44,6 +54,21 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
             setIsFinished(true);
         }
     }, [combo.maxScore, score, setIsFinished]);
+
+    useEffect(() => {
+        if (!id || matchedWords.length === 0) return;
+
+        const post = async () => {
+            await postScore({
+                matchedWords,
+                score,
+                maxScore: combo.maxScore,
+                userUniqueIdentifier: id,
+            });
+        };
+
+        post();
+    }, [combo.maxScore, id, matchedWords, score]);
 
     const triggerWrongGuess = () => {
         setIsWrongGuess(true);
@@ -125,13 +150,7 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
                 userUniqueIdentifier: id,
             };
 
-            await ky
-                .post("/api/score", {
-                    body: JSON.stringify(body),
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+            await postScore(body);
         }
 
         toast.success(`+${submittedWord.score}`, {
