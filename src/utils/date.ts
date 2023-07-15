@@ -6,10 +6,16 @@ export const readableDate = (date: Date) => {
 };
 
 export const dateNow = () => {
-    return Temporal.Now.plainDateISO("Europe/Stockholm")
+    const now = Temporal.Now.plainDateISO("Europe/Stockholm")
         .toZonedDateTime({
             timeZone: "Europe/Stockholm",
         })
         .toString()
         .split("T")[0];
+
+    if (!now) {
+        throw new Error("Could not get date");
+    }
+
+    return now;
 };

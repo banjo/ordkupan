@@ -13,6 +13,9 @@ export default async function Home() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_, previousCombo, daysSinceStart] = await getCombos();
     const combo = COMBOS[daysSinceStart + 1000];
+
+    if (!combo) throw new Error("No combo found");
+
     combo.otherLetters = shuffle(combo.otherLetters);
 
     return (
