@@ -66,6 +66,7 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
         }
     }, [combo.maxScore, score, setIsFinished]);
 
+    // update score on mount
     useEffect(() => {
         if (!id || matchedWords.length === 0) return;
 
@@ -79,7 +80,8 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
         };
 
         post();
-    }, [combo.maxScore, id, matchedWords, score]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const triggerWrongGuess = () => {
         setIsWrongGuess(true);
