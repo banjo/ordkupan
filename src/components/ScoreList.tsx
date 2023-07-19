@@ -1,5 +1,5 @@
 import { Spinner } from "@/components/Spinner";
-import { PublicScore } from "@/types/types";
+import { FetchScoreResponse, PublicScore } from "@/types/types";
 import { dateNow, readableDate } from "@/utils/date";
 import { capitalize, isDefined } from "@banjoanton/utils";
 import { Temporal } from "@js-temporal/polyfill";
@@ -11,7 +11,7 @@ type Props = {
     subTitle?: string;
     emptyText: string;
     additionalEntries?: ((entry: PublicScore) => ReactNode)[];
-    fetchFunction: (date: string) => Promise<PublicScore[]>;
+    fetchFunction: (date: string) => Promise<FetchScoreResponse>;
     trigger?: boolean;
 };
 
@@ -24,10 +24,15 @@ export const ScoreList: FC<Props> = ({
     trigger,
 }) => {
     const [data, setData] = useState<PublicScore[]>([]);
+    const [maxScore, setMaxScore] = useState<number>(0);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [selectedDate, setSelectedDate] = useState<string>(dateNow());
     const canIncreaseDate = selectedDate !== dateNow();
+
+    const hasFullScore = (score: number) => {
+        return score === maxScore;
+    };
 
     const increaseDateByOneDay = () => {
         const increasedDate = Temporal.PlainDate.from(selectedDate).add({ days: 1 });
@@ -43,7 +48,8 @@ export const ScoreList: FC<Props> = ({
         const fetchData = async () => {
             setIsLoading(true);
             const sorted = await fetchFunction(selectedDate);
-            setData(sorted);
+            setData(sorted.score);
+            setMaxScore(sorted.maxScore);
             setIsLoading(false);
         };
 
@@ -72,7 +78,12 @@ export const ScoreList: FC<Props> = ({
                         <div key={index} className="flex items-center justify-start w-full px-4">
                             <div className="text-xl font-semibold w-6">{index + 1}.</div>
                             <div className="ml-2">{capitalize(score.name)}</div>
-                            <div className="text-xl font-semibold ml-auto">{score.score}</div>
+
+                            <div className="ml-auto flex items-center">
+                                {hasFullScore(score.score) && <div className="mr-2">💯</div>}
+                                <div className="text-xl font-semibold">{score.score}</div>
+                            </div>
+
                             {additionalEntries?.map(entry => entry(score))}
                         </div>
                     ))}

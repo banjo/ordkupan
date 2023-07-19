@@ -14,6 +14,7 @@ export type PostFriendBody = {
 
 export type PostFriendResponse = {
     score: PublicScore[];
+    maxScore: number;
 };
 
 export async function POST(req: Request) {
@@ -65,5 +66,5 @@ export async function POST(req: Request) {
         };
     });
 
-    return NextResponse.json({ score: publicScores });
+    return NextResponse.json({ score: publicScores, maxScore: scores[0]?.maxScore });
 }

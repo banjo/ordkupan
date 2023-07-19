@@ -3,7 +3,7 @@ import { AddFriend } from "@/components/AddFriend";
 import { ConfirmModal } from "@/components/ConfirmModal";
 import { ScoreList } from "@/components/ScoreList";
 import { useSocialStore } from "@/stores/useSocialStore";
-import { PublicScore } from "@/types/types";
+import { FetchScoreResponse, PublicScore } from "@/types/types";
 import { capitalize } from "@banjoanton/utils";
 import ky from "ky";
 import { FC, useState } from "react";
@@ -13,7 +13,7 @@ type Props = {
     showFriends: boolean;
 };
 
-const fetchFriends = async (friends: string[], date: string) => {
+const fetchFriends = async (friends: string[], date: string): Promise<FetchScoreResponse> => {
     const friendsScore: PostFriendResponse = await ky
         .post("/api/friends", {
             body: JSON.stringify({ friends, date }),
@@ -22,7 +22,10 @@ const fetchFriends = async (friends: string[], date: string) => {
 
     const sorted = [...friendsScore.score].sort((a, b) => b.score - a.score);
 
-    return sorted;
+    return {
+        score: sorted,
+        maxScore: friendsScore.maxScore,
+    };
 };
 
 export const Friends: FC<Props> = ({ showFriends }) => {
@@ -48,8 +51,12 @@ export const Friends: FC<Props> = ({ showFriends }) => {
         setShowModal(true);
     };
 
-    const fetchFunction = async (date: string) => {
-        if (!showFriends) return [];
+    const fetchFunction = async (date: string): Promise<FetchScoreResponse> => {
+        if (!showFriends)
+            return {
+                score: [],
+                maxScore: 0,
+            };
         return await fetchFriends(friends, date);
     };
 

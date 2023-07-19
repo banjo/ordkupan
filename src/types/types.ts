@@ -18,3 +18,8 @@ export type PublicScore = {
     name: string;
     publicIdentifier: string;
 };
+
+export type FetchScoreResponse = {
+    score: PublicScore[];
+    maxScore: number;
+};

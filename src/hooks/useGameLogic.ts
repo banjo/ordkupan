@@ -2,6 +2,7 @@ import { GuessExpectedBody } from "@/app/api/guess/route";
 import { PostScoreExpectedBody } from "@/app/api/score/route";
 import { useSaveState } from "@/hooks/useSaveState";
 import { useSingletonInputFocus } from "@/hooks/useSingletonInputFocus";
+import { useComboStore } from "@/stores/useComboStore";
 import { useConfettiStore } from "@/stores/useConfettiStore";
 import { useGameStore } from "@/stores/useGameStore";
 import { useSocialStore } from "@/stores/useSocialStore";
@@ -55,6 +56,7 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
         setIsWrongGuess,
         setIsFinished,
     } = useGameStore();
+    const { setCombo } = useComboStore();
     const { setShowConfetti } = useConfettiStore();
     const { id } = useSocialStore();
     const [fadeOut, setFadeOut] = useState(false);
@@ -65,6 +67,10 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
             setIsFinished(true);
         }
     }, [combo.maxScore, score, setIsFinished]);
+
+    useEffect(() => {
+        setCombo(combo);
+    }, [combo, setCombo]);
 
     // update score on mount
     useEffect(() => {

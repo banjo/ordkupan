@@ -8,6 +8,7 @@ export type PostHighScoreBody = {
 
 export type PostHighScoreResponse = {
     score: PublicScore[];
+    maxScore: number;
 };
 
 export async function POST(req: Request) {
@@ -45,5 +46,5 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "No scores found" }, { status: 404 });
     }
 
-    return NextResponse.json({ score: publicScores });
+    return NextResponse.json({ score: publicScores, maxScore: scores[0]?.maxScore });
 }
