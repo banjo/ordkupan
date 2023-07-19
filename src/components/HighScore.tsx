@@ -4,6 +4,7 @@ import { ScoreList } from "@/components/ScoreList";
 import { useGameStore } from "@/stores/useGameStore";
 import { useSocialStore } from "@/stores/useSocialStore";
 import { FetchScoreResponse } from "@/types/types";
+import { dateNow } from "@/utils/date";
 import { Maybe } from "@banjoanton/utils";
 import ky from "ky";
 import { FC } from "react";
@@ -58,7 +59,7 @@ export const HighScore: FC<{ showHighScore: boolean }> = ({ showHighScore }) => 
                 title="Topplista 🏆"
                 subTitle="Dagens bästa"
                 trigger={showHighScore}
-                fetchRankFunction={() => getUserRank(id, score, new Date())}
+                fetchRankFunction={() => getUserRank(id, score, new Date(dateNow()))}
             />
         </>
     );
