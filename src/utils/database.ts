@@ -141,6 +141,18 @@ export const getHighScoresByDate = (date: Date): Promise<ScoreWithUser[]> => {
     });
 };
 
+export const getScoreAmountBetterThanScore = (
+    score: number,
+    date: Date
+): Promise<number | null> => {
+    return prisma.score.count({
+        where: {
+            score: { gt: score },
+            date: { equals: date },
+        },
+    });
+};
+
 export const getUsersByPublicIdentifiers = (publicIdentifiers: string[]): Promise<User[]> => {
     return prisma.user.findMany({
         where: {
