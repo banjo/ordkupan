@@ -19,6 +19,7 @@
         "db:local:seed": "zx scripts/dev-db.mjs esno prisma/seed.ts",
         "db:local:prepare": "zx scripts/dev-db.mjs pnpm exec prisma db push",
         "db:local:migrate": "zx scripts/dev-db.mjs pnpm exec prisma migrate deploy",
+        "db:local:mock": "zx scripts/mock-prod-db.mjs",
         "db:prod:migrate": "pnpm exec prisma migrate deploy",
         "postinstall": "prisma generate"
     },
