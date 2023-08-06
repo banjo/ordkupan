@@ -6,6 +6,7 @@ import { HighScore } from "@/components/HighScore";
 import { Overlay } from "@/components/Overlay";
 import { PreviousDay } from "@/components/PreviousDay";
 import { Rules } from "@/components/Rules";
+import { Stats } from "@/components/Stats";
 import { useSocialStore } from "@/stores/useSocialStore";
 import { BasicComboWithWords } from "@/types/types";
 import { dateNow, readableDate } from "@/utils/date";
@@ -20,6 +21,7 @@ export const Menubar: FC<Props> = ({ previous }) => {
     const [showRules, setShowRules] = useState(false);
     const [showFriends, setShowFriends] = useState(false);
     const [showHighScore, setShowHighScore] = useState(false);
+    const [showStats, setShowStats] = useState(false);
     const { streak } = useSocialStore();
     const today = readableDate(new Date(dateNow()));
 
@@ -39,6 +41,10 @@ export const Menubar: FC<Props> = ({ previous }) => {
 
             <Overlay show={showHighScore} close={() => setShowHighScore(false)}>
                 <HighScore showHighScore={showHighScore} />
+            </Overlay>
+
+            <Overlay show={showStats} close={() => setShowStats(false)}>
+                <Stats showStats={showStats} />
             </Overlay>
 
             <div className="my-2 flex h-2 items-center justify-between font-light">
@@ -62,6 +68,10 @@ export const Menubar: FC<Props> = ({ previous }) => {
                         {
                             title: "Topplista",
                             onClick: () => setShowHighScore(true),
+                        },
+                        {
+                            title: "Statistik",
+                            onClick: () => setShowStats(true),
                         },
                     ]}
                 />

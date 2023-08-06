@@ -180,3 +180,73 @@ export const getCombo = async (id: number): Promise<BasicComboWithWords | null> 
         otherLetters,
     };
 };
+
+// stats
+
+export const getDaysPlayed = async (userId: number) => {
+    return await prisma.score.count({
+        where: {
+            userId,
+        },
+    });
+};
+
+export const getTotalWins = async (userId: number) => {
+    const userScores = await prisma.score.findMany({
+        where: {
+            userId: userId,
+        },
+        select: {
+            date: true,
+            score: true,
+        },
+        orderBy: {
+            date: "asc",
+        },
+    });
+
+    let wins = 0;
+
+    for (const userScore of userScores) {
+        const topScore = await prisma.score.findFirst({
+            where: {
+                date: userScore.date,
+            },
+            orderBy: {
+                score: "desc",
+            },
+            select: {
+                score: true,
+            },
+        });
+
+        if (!topScore) {
+            continue;
+        }
+
+        if (topScore.score === userScore.score) {
+            wins++;
+        }
+    }
+
+    return wins;
+};
+
+export const getTotalGuesses = async (userId: number) => {
+    const guesses = await prisma.guess.findMany({
+        where: {
+            userId,
+        },
+        select: {
+            guesses: true,
+        },
+    });
+
+    let totalGuesses = 0;
+
+    for (const guess of guesses) {
+        totalGuesses += guess.guesses;
+    }
+
+    return totalGuesses;
+};
