@@ -1,17 +1,10 @@
+import { BasicWord } from "@/types/types";
 import { PrismaClient } from "@prisma/client";
 import fs from "node:fs";
 const prisma = new PrismaClient();
 
 const main = async () => {
     const combos = await prisma.combo.findMany({
-        include: {
-            words: {
-                select: {
-                    score: true,
-                    word: true,
-                },
-            },
-        },
         orderBy: {
             id: "asc",
         },
@@ -19,11 +12,13 @@ const main = async () => {
     });
 
     const parsed = combos.map(combo => {
+        const allWords = combo.allWords as BasicWord[];
+
         return {
             ...combo,
             words: undefined,
             otherLetters: JSON.parse(combo.otherLetters as string),
-            allWords: JSON.parse(JSON.stringify(combo.words)),
+            allWords: allWords,
         };
     });
 

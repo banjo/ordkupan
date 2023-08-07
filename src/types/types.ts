@@ -1,6 +1,10 @@
-import { Combo, Word } from "@prisma/client";
+import { Combo } from "@prisma/client";
 
-export type BasicWord = Omit<Word, "id" | "comboId">;
+export type BasicWord = {
+    word: string;
+    score: number;
+};
+
 export type BasicCombo = Omit<Combo, "id" | "otherLetters" | "allWords"> & {
     otherLetters: string[];
     allWords: BasicWord[];

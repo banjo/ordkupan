@@ -1,17 +1,10 @@
+import { BasicWord } from "@/types/types";
 import { PrismaClient } from "@prisma/client";
 import fs from "node:fs";
 const prisma = new PrismaClient();
 
 const main = async () => {
     const combos = await prisma.combo.findMany({
-        include: {
-            words: {
-                select: {
-                    score: true,
-                    word: true,
-                },
-            },
-        },
         orderBy: {
             id: "asc",
         },
@@ -29,8 +22,10 @@ const main = async () => {
     for await (const combo of parsed) {
         console.log(`updating combo ${index++} out of ${parsed.length}`);
 
+        const allWords = combo.allWords as BasicWord[];
+
         output += `UPDATE public."Combo" SET "allWords"='${JSON.stringify(
-            combo.words.map(word => {
+            allWords.map(word => {
                 return {
                     score: word.score,
                     word: word.word,
