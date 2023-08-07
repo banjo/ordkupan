@@ -22,6 +22,7 @@ model Score {
   id        Int      @id @default(autoincrement())
   userId    Int
   score     Int?
+  words     String[]
   maxScore  Int?
   date      DateTime @default(now()) @db.Date
   createdAt DateTime @default(now())

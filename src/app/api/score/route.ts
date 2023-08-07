@@ -1,5 +1,10 @@
 import { getCombos } from "@/utils/combo";
-import { addScore, getTodaysScore, getUserByUniqueIdentifier, setScore } from "@/utils/database";
+import {
+    addScore,
+    getTodaysScore,
+    getUserByUniqueIdentifier,
+    setScoreAndWords,
+} from "@/utils/database";
 import { validate } from "@/utils/validation";
 import { NextResponse } from "next/server";
 
@@ -61,11 +66,11 @@ export async function POST(req: Request) {
 
         if (!scoreEntity) {
             console.log("Score not found, creating");
-            await addScore(user.id, score, maxScore);
+            await addScore({ userId: user.id, score, maxScore, matchedWords });
             return NextResponse.json({ success: true });
         }
 
-        await setScore(scoreEntity.id, score);
+        await setScoreAndWords(scoreEntity.id, score, matchedWords);
         return NextResponse.json({ success: true });
     } catch (error) {
         console.log(error);

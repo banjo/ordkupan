@@ -21,21 +21,36 @@ export const getUserByName = (name: string): Promise<User | null> => {
     });
 };
 
-export const addScore = (userId: number, score: number, maxScore: number): Promise<Score> => {
+export const addScore = ({
+    userId,
+    score,
+    maxScore,
+    matchedWords,
+}: {
+    userId: number;
+    score: number;
+    maxScore: number;
+    matchedWords: string[];
+}): Promise<Score> => {
     return prisma.score.create({
         data: {
             userId,
             score,
             maxScore,
+            words: matchedWords,
             date: new Date(dateNow()),
         },
     });
 };
 
-export const setScore = (id: number, score: number): Promise<Score | null> => {
+export const setScoreAndWords = (
+    id: number,
+    score: number,
+    words: string[]
+): Promise<Score | null> => {
     return prisma.score.update({
         where: { id },
-        data: { score },
+        data: { score, words },
     });
 };
 
