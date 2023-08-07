@@ -80,8 +80,12 @@ export const ScoreList: FC<Props> = ({
             setIsLoadingRank(false);
         };
 
-        fetchRank();
-    }, [fetchRankFunction]);
+        if (!isDefined(trigger)) {
+            fetchRank();
+        } else if (trigger) {
+            fetchRank();
+        }
+    }, [fetchRankFunction, trigger]);
 
     const shouldShowRank = useMemo(() => {
         return (
