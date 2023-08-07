@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { BasicComboWithWords } from "@/types/types";
+import { BasicCombo, BasicWord } from "@/types/types";
 import { dateNow } from "@/utils/date";
 import { Guess, Score, User } from "@prisma/client";
 
@@ -176,23 +176,23 @@ export const getUsersByPublicIdentifiers = (publicIdentifiers: string[]): Promis
     });
 };
 
-export const getCombo = async (id: number): Promise<BasicComboWithWords | null> => {
+export const getCombo = async (id: number): Promise<BasicCombo | null> => {
     const combo = await prisma.combo.findUnique({
         where: { id },
-        include: {
-            words: true,
-        },
     });
 
     if (!combo) {
         return null;
     }
 
+    // TODO: change otherLetters from string to correct json type
     const otherLetters = JSON.parse(combo.otherLetters as string) as string[];
+    const allWords = combo.allWords as BasicWord[];
 
     return {
         ...combo,
         otherLetters,
+        allWords,
     };
 };
 

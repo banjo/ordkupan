@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     const { userUniqueIdentifier, score, maxScore, matchedWords } = body;
 
     const [combo] = await getCombos();
-    const allWords = combo.words;
+    const allWords = combo.allWords;
 
     const mappedWords = matchedWords.map(word => {
         const res = allWords.find(w => w.word === word);

@@ -8,12 +8,12 @@ import { PreviousDay } from "@/components/PreviousDay";
 import { Rules } from "@/components/Rules";
 import { Stats } from "@/components/Stats";
 import { useSocialStore } from "@/stores/useSocialStore";
-import { BasicComboWithWords } from "@/types/types";
+import { BasicCombo } from "@/types/types";
 import { dateNow, readableDate } from "@/utils/date";
 import { FC, useState } from "react";
 
 type Props = {
-    previous: BasicComboWithWords;
+    previous: BasicCombo;
 };
 
 export const Menubar: FC<Props> = ({ previous }) => {

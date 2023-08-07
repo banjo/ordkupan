@@ -21,7 +21,9 @@ const main = async () => {
     const parsed = combos.map(combo => {
         return {
             ...combo,
+            words: undefined,
             otherLetters: JSON.parse(combo.otherLetters as string),
+            allWords: JSON.parse(JSON.stringify(combo.words)),
         };
     });
 

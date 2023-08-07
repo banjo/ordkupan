@@ -1,18 +1,18 @@
 import { WordDisplay } from "@/components/WordDisplay";
-import { BasicComboWithWords } from "@/types/types";
+import { BasicCombo } from "@/types/types";
 import { readableDate } from "@/utils/date";
 import { Temporal } from "@js-temporal/polyfill";
 import { FC, useMemo } from "react";
 
 type Props = {
-    previous: BasicComboWithWords;
+    previous: BasicCombo;
 };
 
 export const PreviousDay: FC<Props> = ({ previous }) => {
     const yesterday = Temporal.Now.plainDateISO("Europe/Stockholm").add({ days: -1 }).toString();
 
     const sortedWords = useMemo(() => {
-        return previous.words.map(w => w.word).sort((a, b) => b.length - a.length);
+        return previous.allWords.map(w => w.word).sort((a, b) => b.length - a.length);
     }, [previous]);
 
     const letters = useMemo(() => {

@@ -6,7 +6,7 @@ import { useComboStore } from "@/stores/useComboStore";
 import { useConfettiStore } from "@/stores/useConfettiStore";
 import { useGameStore } from "@/stores/useGameStore";
 import { useSocialStore } from "@/stores/useSocialStore";
-import { BasicComboWithWords } from "@/types/types";
+import { BasicCombo } from "@/types/types";
 import { uniq } from "@banjoanton/utils";
 import ky from "ky";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -20,7 +20,7 @@ type Out = {
 };
 
 type In = {
-    combo: BasicComboWithWords;
+    combo: BasicCombo;
     localStorageKey: string;
 };
 
@@ -99,7 +99,7 @@ export const useGameLogic = ({ combo, localStorageKey }: In): Out => {
 
     // eslint-disable-next-line require-await
     const submitWord = async () => {
-        const submittedWord = combo.words.find(w => w.word === word);
+        const submittedWord = combo.allWords.find(w => w.word === word);
         focus();
 
         if (word.length === 0) {

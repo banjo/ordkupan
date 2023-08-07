@@ -15,15 +15,15 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { useSingletonInputFocus } from "@/hooks/useSingletonInputFocus";
 import { useConfettiStore } from "@/stores/useConfettiStore";
 import { useGameStore } from "@/stores/useGameStore";
-import { BasicComboWithWords } from "@/types/types";
+import { BasicCombo } from "@/types/types";
 import { motion } from "framer-motion";
 import { Toaster } from "react-hot-toast";
 
 const CONFETTI_TIME = 1700;
 
 type Props = {
-    combo: BasicComboWithWords;
-    previous: BasicComboWithWords;
+    combo: BasicCombo;
+    previous: BasicCombo;
     localStorageKey: string;
 };
 

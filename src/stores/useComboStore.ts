@@ -1,17 +1,16 @@
-import { BasicComboWithWords } from "@/types/types";
+import { BasicCombo } from "@/types/types";
 import { create } from "zustand";
 
 type ComboStore = {
-    combo: BasicComboWithWords;
-    setCombo: (combo: BasicComboWithWords) => void;
+    combo: BasicCombo;
+    setCombo: (combo: BasicCombo) => void;
 };
 export const useComboStore = create<ComboStore>(set => ({
     combo: {
-        letters: [],
         otherLetters: [],
-        words: [],
+        allWords: [],
         mainLetter: "",
         maxScore: 0,
     },
-    setCombo: (combo: BasicComboWithWords) => set({ combo }),
+    setCombo: (combo: BasicCombo) => set({ combo }),
 }));

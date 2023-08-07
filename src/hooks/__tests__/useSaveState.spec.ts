@@ -1,11 +1,11 @@
 import { useSaveState } from "@/hooks/useSaveState";
-import { BasicComboWithWords } from "@/types/types";
+import { BasicCombo } from "@/types/types";
 import { formatDate } from "@banjoanton/utils";
 import { renderHook } from "@testing-library/react-hooks";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 describe("useSaveState", () => {
-    let combo: BasicComboWithWords;
+    let combo: BasicCombo;
     const localStorageKey = "testLocalStorage";
     const now = formatDate(new Date());
     const word = {
@@ -19,7 +19,7 @@ describe("useSaveState", () => {
 
     beforeEach(() => {
         combo = {
-            words: [word, secondWord],
+            allWords: [word, secondWord],
             otherLetters: [],
             mainLetter: "a",
             maxScore: 7,

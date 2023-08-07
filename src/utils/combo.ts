@@ -1,8 +1,8 @@
-import { BasicComboWithWords } from "@/types/types";
+import { BasicCombo } from "@/types/types";
 import { getCombo } from "@/utils/database";
 import { Temporal } from "@js-temporal/polyfill";
 
-export const getCombos = async (): Promise<[BasicComboWithWords, BasicComboWithWords, number]> => {
+export const getCombos = async (): Promise<[BasicCombo, BasicCombo, number]> => {
     const startDate = Temporal.ZonedDateTime.from({
         timeZone: "Europe/Stockholm",
         year: 2023,

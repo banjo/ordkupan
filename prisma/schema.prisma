@@ -54,5 +54,6 @@ model Combo {
   mainLetter   String
   otherLetters Json   @db.Json
   words        Word[]
+  allWords     Json?   @db.Json
   maxScore     Int
 }
