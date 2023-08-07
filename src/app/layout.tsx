@@ -5,15 +5,19 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-    title: "Ordkupan",
-    description: "Det svenska Spelling Bee-spelet",
-};
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" className="h-full">
             <link rel="manifest" href="/site.webmanifest" />
+            <title>Ordkupan</title>
+            <meta name="description" content="Det svenska Spelling Bee-spelet"></meta>
+
+            <meta name="og:title" content="Ordkupan" />
+            <meta name="og:description" content="Det svenska Spelling Bee-spelet" />
+            <meta name="og:image" content="/manifest-icon-512.maskable.png" />
+            <meta name="og:url" content="https://ordkupan.se" />
+            <meta name="og:site_name" content="Ordkupan" />
+
             <meta name="viewport" content="initial-scale=1, viewport-fit=cover" />
             <meta name="apple-mobile-web-app-status-bar-style" content="white-translucent" />
 
