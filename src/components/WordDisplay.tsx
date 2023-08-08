@@ -1,44 +1,18 @@
-import { PostSaulResponse } from "@/app/api/saul/route";
-import { useSimpleFetch } from "@/hooks/useSimpleFetch";
 import { useThesaurusModalStore } from "@/stores/useThesarusModalStore";
 import { capitalize } from "@banjoanton/utils";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 
 type Props = {
     words: string[];
 };
 
 export const WordDisplay: FC<Props> = ({ words }) => {
-    const { setShow, setWord, setData, setOnClose, setIsLoading, word } = useThesaurusModalStore();
-    const { isLoading, clear } = useSimpleFetch<PostSaulResponse>({
-        url: "/api/saul",
-        method: "POST",
-        body: { word: word },
-        dependsOn: [word],
-        onSuccess: data => {
-            setData(data);
-        },
-    });
+    const { setShow, setWord } = useThesaurusModalStore();
 
     const onClick = (word: string) => {
         setWord(word);
         setShow(true);
     };
-
-    const onClose = () => {
-        setWord(null);
-        setShow(false);
-        clear();
-    };
-
-    useEffect(() => {
-        setOnClose(onClose);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        setIsLoading(isLoading);
-    }, [isLoading, setIsLoading]);
 
     return (
         <>

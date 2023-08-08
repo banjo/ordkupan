@@ -1,6 +1,7 @@
 import { PostSaulResponse } from "@/app/api/saul/route";
 import { Spinner } from "@/components/Spinner";
 import { ThesaurusModal } from "@/components/ThesarusModal";
+import { useSimpleFetch } from "@/hooks/useSimpleFetch";
 import { useThesaurusModalStore } from "@/stores/useThesarusModalStore";
 import { FC } from "react";
 
@@ -46,7 +47,21 @@ const ThesaurusNode = (saul: PostSaulResponse | null, isLoading: boolean) => {
 };
 
 export const ThesarusContainer: FC = () => {
-    const { data, show, word, isLoading, onClose } = useThesaurusModalStore();
+    const { show, word, setWord, setShow } = useThesaurusModalStore();
+
+    const { data, isLoading, clear } = useSimpleFetch<PostSaulResponse>({
+        url: "/api/saul",
+        method: "POST",
+        body: { word },
+        dependsOn: [word],
+    });
+
+    const onClose = () => {
+        setWord(null);
+        setShow(false);
+        clear();
+    };
+
     return (
         <div>
             <ThesaurusModal

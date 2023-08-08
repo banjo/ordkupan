@@ -53,6 +53,7 @@ export const useSimpleFetch = <T>(props: In<T>): Out<T> => {
     const fetchData = useCallback(
         async ({ signal }: FetchProps) => {
             try {
+                setIsLoading(true);
                 const response = await fetch(url, {
                     signal,
                     headers: memoizedHeaders,
