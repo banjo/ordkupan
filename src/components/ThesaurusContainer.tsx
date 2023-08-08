@@ -1,12 +1,12 @@
-import { PostSaulResponse } from "@/app/api/saul/route";
+import { PostSaolResponse } from "@/app/api/saol/route";
 import { Spinner } from "@/components/Spinner";
 import { ThesaurusModal } from "@/components/ThesarusModal";
 import { useSimpleFetch } from "@/hooks/useSimpleFetch";
 import { useThesaurusModalStore } from "@/stores/useThesarusModalStore";
 import { FC } from "react";
 
-const ThesaurusNode = (saul: PostSaulResponse | null, isLoading: boolean) => {
-    const first = saul?.[0];
+const ThesaurusNode = (saol: PostSaolResponse | null, isLoading: boolean) => {
+    const first = saol?.[0];
 
     if (isLoading) {
         return (
@@ -49,8 +49,8 @@ const ThesaurusNode = (saul: PostSaulResponse | null, isLoading: boolean) => {
 export const ThesarusContainer: FC = () => {
     const { show, word, setWord, setShow } = useThesaurusModalStore();
 
-    const { data, isLoading, clear } = useSimpleFetch<PostSaulResponse>({
-        url: "/api/saul",
+    const { data, isLoading, clear } = useSimpleFetch<PostSaolResponse>({
+        url: "/api/saol",
         method: "POST",
         body: { word },
         dependsOn: [word],

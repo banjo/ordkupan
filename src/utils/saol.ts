@@ -2,7 +2,7 @@ import { isDefined } from "@banjoanton/utils";
 import jsdom from "jsdom";
 const { JSDOM } = jsdom;
 
-export type SaulResponse = {
+export type saolResponse = {
     grundform: string;
     ordklass: string;
     bojning: string;
@@ -40,7 +40,7 @@ const parseElement = (element: Element) => {
     };
 };
 
-export const getWord = async (word: string): Promise<SaulResponse | null> => {
+export const getWord = async (word: string): Promise<saolResponse | null> => {
     const url = getUrl(word);
 
     const text = await fetchUrl(url);
