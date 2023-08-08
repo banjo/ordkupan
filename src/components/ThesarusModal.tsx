@@ -46,7 +46,7 @@ export const ThesaurusModal = ({ show, onCancel, reactNode, word }: Props) => {
                         rel="noreferrer"
                         className="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 cursor-pointer"
                     >
-                        Besök saul
+                        Besök SAOL
                     </a>
 
                     <button

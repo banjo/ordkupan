@@ -2,7 +2,7 @@
 
 ![Ordkupan](.github/assets/ordkupan.png)
 
-Spelling bee på svenska, skapad för skojs skull. Orden härstammar från SAULs ordlista. Ett nytt spel är tillgängligt varje dag. Progress, använda ord, namn, ID och streak sparas i localStorage. Alla ordkombos sparas i en Postgres-databas, även score och grundläggande användardata baserat på ID:t i localStorage sparas. Detta för att kunna visa statistik och vänner. 
+Spelling bee på svenska, skapad för skojs skull. Orden härstammar från SAOLs ordlista. Ett nytt spel är tillgängligt varje dag. Progress, använda ord, namn, ID och streak sparas i localStorage. Alla ordkombos sparas i en Postgres-databas, även score och grundläggande användardata baserat på ID:t i localStorage sparas. Detta för att kunna visa statistik och vänner. 
 
 Finns tillgänglig [här](https://ordkupan.se).
 
