@@ -15,7 +15,11 @@ export const WordDisplay: FC<Props> = ({ words }) => {
     };
 
     return (
-        <>
+        <div className="flex flex-col mt-2">
+            <p className="text-xs text-gray-600 text-center">
+                Klicka på ordet för att läsa definitionen
+            </p>
+
             <div className="mt-4 grid grid-cols-2 gap-2 text-xl">
                 {[...words].reverse().map((word, index) => (
                     <div
@@ -27,6 +31,6 @@ export const WordDisplay: FC<Props> = ({ words }) => {
                     </div>
                 ))}
             </div>
-        </>
+        </div>
     );
 };
