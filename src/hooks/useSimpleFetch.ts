@@ -10,24 +10,34 @@ type Out<T> = {
     errorStatus: number | null;
     data: T | null;
     refetch: (signal?: AbortSignal) => void;
+    clear: () => void;
 };
 
-type In = {
+type In<T> = {
     url: string;
     method?: "GET" | "POST" | "PUT" | "DELETE";
     headers?: HeadersInit;
     parseAsText?: boolean;
     dependsOn?: any[];
     body?: any;
+    onSuccess?: (data: T) => void;
 };
 
-export const useSimpleFetch = <T>(props: In): Out<T> => {
-    const { url, method = "GET", headers, parseAsText, dependsOn = [], body = {} } = props;
+export const useSimpleFetch = <T>(props: In<T>): Out<T> => {
+    const {
+        url,
+        method = "GET",
+        headers,
+        parseAsText,
+        dependsOn = [],
+        body = {},
+        onSuccess,
+    } = props;
 
     const memoizedBody = useMemo(() => JSON.stringify(body), [body]);
     const memoizedHeaders = useMemo(() => headers, [headers]);
 
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [errorStatus, setErrorStatus] = useState<number | null>(null);
     const [data, setData] = useState<T | null>(null);
@@ -56,6 +66,9 @@ export const useSimpleFetch = <T>(props: In): Out<T> => {
 
                 const parsedData = parseAsText ? await response.text() : await response.json();
                 setData(parsedData);
+                if (onSuccess) {
+                    onSuccess(parsedData);
+                }
             } catch (error_) {
                 if (error_ instanceof DOMException && error_.name === "AbortError") {
                     setError("Request aborted");
@@ -71,7 +84,7 @@ export const useSimpleFetch = <T>(props: In): Out<T> => {
                 setIsLoading(false);
             }
         },
-        [url, memoizedHeaders, method, memoizedBody, parseAsText]
+        [url, memoizedHeaders, method, memoizedBody, parseAsText, onSuccess]
     );
 
     useEffect(() => {
@@ -98,11 +111,19 @@ export const useSimpleFetch = <T>(props: In): Out<T> => {
         await fetchData({ signal });
     };
 
+    const clear = () => {
+        setData(null);
+        setError(null);
+        setErrorStatus(null);
+        setIsLoading(false);
+    };
+
     return {
         isLoading,
         error,
         errorStatus,
         data,
         refetch,
+        clear,
     };
 };

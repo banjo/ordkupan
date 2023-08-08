@@ -9,6 +9,7 @@ import { Hexgrid } from "@/components/HexGrid";
 import { InputField } from "@/components/InputField";
 import { Menubar } from "@/components/Menubar";
 import { ScoreBoard } from "@/components/ScoreBoard";
+import { ThesarusContainer } from "@/components/ThesaurusContainer";
 import { Toggle } from "@/components/Toggle";
 import { useGameLogic } from "@/hooks/useGameLogic";
 import { useLanguage } from "@/hooks/useLanguage";
@@ -58,6 +59,8 @@ export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
                 className="top-[25%]"
             />
             <ConfettiExplosion show={isFinished} duration={CONFETTI_TIME} />
+
+            <ThesarusContainer />
 
             <motion.div
                 variants={variantsMain}
