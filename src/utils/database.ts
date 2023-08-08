@@ -72,6 +72,22 @@ export const getTodaysGuess = (userId: number): Promise<Guess | null> => {
     });
 };
 
+export const getUsersWordsByDate = async (userId: number, date: string): Promise<string[]> => {
+    const res = await prisma.score.findFirst({
+        where: {
+            userId,
+            date: { equals: new Date(date) },
+        },
+    });
+
+    if (!res) {
+        console.error("No words found for user", userId, "and date", date);
+        return [];
+    }
+
+    return res.words;
+};
+
 export const createNewGuess = (userId: number, word: string): Promise<Guess> => {
     return prisma.guess.create({
         data: {

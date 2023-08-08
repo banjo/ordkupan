@@ -2,8 +2,21 @@ import { useThesaurusModalStore } from "@/stores/useThesarusModalStore";
 import { capitalize } from "@banjoanton/utils";
 import { FC } from "react";
 
+export type WordColor = "red" | "green" | "neutral";
+
+export type Word = {
+    word: string;
+    color: WordColor;
+};
+
 type Props = {
-    words: string[];
+    words: Word[];
+};
+
+const mapColors = {
+    red: "text-red-600",
+    green: "text-green-600",
+    neutral: "",
 };
 
 export const WordDisplay: FC<Props> = ({ words }) => {
@@ -23,11 +36,13 @@ export const WordDisplay: FC<Props> = ({ words }) => {
             <div className="mt-4 grid grid-cols-2 gap-2 text-xl">
                 {[...words].reverse().map((word, index) => (
                     <div
-                        className="mr-2d ml-2 w-10/12 border-b border-black cursor-pointer hover:opacity-50"
+                        className={`mr-2d ml-2 w-10/12 border-b 
+                        border-black cursor-pointer hover:opacity-50
+                        ${mapColors[word.color]}`}
                         key={index}
-                        onClick={() => onClick(word)}
+                        onClick={() => onClick(word.word)}
                     >
-                        {capitalize(word)}
+                        {capitalize(word.word)}
                     </div>
                 ))}
             </div>

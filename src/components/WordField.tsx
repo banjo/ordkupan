@@ -1,4 +1,4 @@
-import { WordDisplay } from "@/components/WordDisplay";
+import { Word, WordDisplay } from "@/components/WordDisplay";
 import { useSingletonInputFocus } from "@/hooks/useSingletonInputFocus";
 import { capitalize } from "@banjoanton/utils";
 import { FC, useMemo, useState } from "react";
@@ -46,6 +46,10 @@ export const WordField: FC<Props> = ({ words }) => {
         return <Words words={words} />;
     }, [active, hasWords, words]);
 
+    const wordToDisplay = useMemo<Word[]>(() => {
+        return words.map(w => ({ word: w, color: "neutral" }));
+    }, [words]);
+
     return (
         <div className="relative">
             <div
@@ -78,7 +82,7 @@ export const WordField: FC<Props> = ({ words }) => {
                     ${lowerClasses}
                     bg-white duration-200 ease-in-out`}
             >
-                {active && <WordDisplay words={words} />}
+                {active && <WordDisplay words={wordToDisplay} />}
             </div>
         </div>
     );
