@@ -1,3 +1,4 @@
+import { BasicWord } from "@/types/types";
 import { shuffle } from "@banjoanton/utils";
 import { create } from "zustand";
 
@@ -16,6 +17,8 @@ type GameStore = {
     word: string;
     setWord: (word: string) => void;
     appendLetter: (letter: string) => void;
+    allWords: BasicWord[];
+    setAllWords: (words: BasicWord[]) => void;
 };
 export const useGameStore = create<GameStore>(set => ({
     isWrongGuess: false,
@@ -33,4 +36,6 @@ export const useGameStore = create<GameStore>(set => ({
     setWord: (word: string) => set({ word }),
     appendLetter: (letter: string) =>
         set(state => ({ word: `${state.word}${letter}`.toLowerCase() })),
+    allWords: [],
+    setAllWords: (words: BasicWord[]) => set({ allWords: words }),
 }));

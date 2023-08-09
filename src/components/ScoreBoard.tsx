@@ -23,7 +23,7 @@ const labels = [
 const STEPS = 9;
 
 export const ScoreBoard: FC<Props> = ({ maxScore }) => {
-    const { matchedWords, score } = useGameStore();
+    const { matchedWords, score, allWords } = useGameStore();
     const step = calculateStep(score, maxScore, STEPS);
 
     return (
@@ -32,7 +32,7 @@ export const ScoreBoard: FC<Props> = ({ maxScore }) => {
                 <Stepper steps={STEPS} active={step} display={score} maxScore={maxScore} />
                 <div>{labels[step - 1]}</div>
             </div>
-            <WordField words={matchedWords} />
+            <WordField words={matchedWords} totalLength={allWords.length} />
         </div>
     );
 };

@@ -18,6 +18,7 @@ import { useConfettiStore } from "@/stores/useConfettiStore";
 import { useGameStore } from "@/stores/useGameStore";
 import { BasicCombo } from "@/types/types";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 
 const CONFETTI_TIME = 1700;
@@ -36,13 +37,18 @@ const variantsMain = {
 export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
     useLanguage();
     const { focus } = useSingletonInputFocus();
-    const { appendLetter, isFinished, isWrongGuess } = useGameStore();
+    const { appendLetter, isFinished, isWrongGuess, setAllWords } = useGameStore();
     const { setShowConfetti, showConfetti } = useConfettiStore();
 
     const { fadeOut, isLoading, setFadeOut, submitWord } = useGameLogic({
         combo,
         localStorageKey,
     });
+
+    useEffect(() => {
+        setAllWords(combo.allWords);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleLetterClick = (char: string) => {
         appendLetter(char);

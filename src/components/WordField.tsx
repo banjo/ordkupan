@@ -6,9 +6,10 @@ import { FiChevronDown } from "react-icons/fi";
 
 type Props = {
     words: string[];
+    totalLength: number;
 };
 
-const Words = ({ words }: Props) => {
+const Words = ({ words }: Omit<Props, "totalLength">) => {
     const str = [...words]
         .reverse()
         .map(w => capitalize(w))
@@ -16,7 +17,7 @@ const Words = ({ words }: Props) => {
     return <div className="overflow-hidden text-ellipsis whitespace-nowrap">{str}</div>;
 };
 
-export const WordField: FC<Props> = ({ words }) => {
+export const WordField: FC<Props> = ({ words, totalLength }) => {
     const { focus } = useSingletonInputFocus();
     const [active, setActive] = useState(false);
     const [upperClasses, setUpperClasses] = useState("border rounded");
@@ -41,10 +42,10 @@ export const WordField: FC<Props> = ({ words }) => {
 
         if (!hasWords) return "Dina ord...";
 
-        if (active) return `Du har hittat ${words.length} ord`;
+        if (active) return `Du har hittat ${words.length} av ${totalLength} ord`;
 
         return <Words words={words} />;
-    }, [active, hasWords, words]);
+    }, [active, hasWords, totalLength, words]);
 
     const wordToDisplay = useMemo<Word[]>(() => {
         return words.map(w => ({ word: w, color: "neutral" }));
