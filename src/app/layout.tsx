@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Script
                 async
                 src="https://analytics.host.banjoanton.com/script.js"
-                data-website-id="3399f571-46c1-416a-a8d6-938ecf4cd59d"
+                data-website-id="2b351c97-0f6c-4df0-abd9-8e06c3449192"
             ></Script>
 
             <body className={`${inter.className} h-full`}>{children}</body>
