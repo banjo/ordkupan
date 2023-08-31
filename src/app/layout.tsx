@@ -24,12 +24,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Assets />
 
             <Script
-                defer
-                data-domain="ordkupan.se"
-                src="https://analytics.deploy.banjoanton.com/js/script.js"
-            />
-
-            <Script
                 src="https://www.googletagmanager.com/gtag/js?id=G-PRBN0CL5K4"
                 strategy="afterInteractive"
             />
@@ -42,6 +36,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     gtag('config', 'G-PRBN0CL5K4');
                 `}
             </Script>
+
+            <Script
+                async
+                src="https://analytics.host.banjoanton.com/script.js"
+                data-website-id="3399f571-46c1-416a-a8d6-938ecf4cd59d"
+            ></Script>
 
             <body className={`${inter.className} h-full`}>{children}</body>
         </html>
