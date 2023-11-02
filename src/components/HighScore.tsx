@@ -30,7 +30,9 @@ const getUserRank = async (
     }
 };
 
-const bannedUsers = new Set(["jag fuskar och vinner!"]);
+const bannedUsers = new Set(
+    ["amFnIGZ1c2thciBvY2ggdmlubmVyIQ=="].map(s => Buffer.from(s, "base64").toString())
+);
 
 export const HighScore: FC<{ showHighScore: boolean }> = ({ showHighScore }) => {
     const { id, name } = useSocialStore();
