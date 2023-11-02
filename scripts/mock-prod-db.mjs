@@ -3,11 +3,12 @@
 /* eslint-disable */
 import "zx/globals";
 $.verbose = true;
+const PROD_IP = "128.140.50.73";
 
 const currentDate = new Date().toISOString().split("T")[0];
 
 echo`Copying database from server...`;
-await $`scp root@91.107.197.143:/root/db-backups/ordkupan_backup_${currentDate}.sql .`;
+await $`scp root@${PROD_IP}:/root/db-backups/ordkupan_backup_${currentDate}.sql .`;
 
 echo`Restoring database...`;
 await $`nr db:local:reset`;

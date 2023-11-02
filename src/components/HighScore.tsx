@@ -9,23 +9,6 @@ import { Maybe } from "@banjoanton/utils";
 import ky from "ky";
 import { FC } from "react";
 
-const fetchHighScore = async (date: string): Promise<FetchScoreResponse> => {
-    try {
-        const highscore: PostHighScoreResponse = await ky
-            .post("/api/highscore", {
-                body: JSON.stringify({ date }),
-            })
-            .json();
-
-        const sorted = [...highscore.score].sort((a, b) => b.score - a.score);
-
-        return { score: sorted, maxScore: highscore.maxScore };
-    } catch (error) {
-        console.log(error);
-        return { maxScore: 0, score: [] };
-    }
-};
-
 const getUserRank = async (
     internalUserId: Maybe<string>,
     score: number,
@@ -47,9 +30,32 @@ const getUserRank = async (
     }
 };
 
+const bannedUsers = new Set(["jag fuskar och vinner!"]);
+
 export const HighScore: FC<{ showHighScore: boolean }> = ({ showHighScore }) => {
-    const { id } = useSocialStore();
+    const { id, name } = useSocialStore();
     const { score } = useGameStore();
+
+    const fetchHighScore = async (date: string): Promise<FetchScoreResponse> => {
+        try {
+            const highscore: PostHighScoreResponse = await ky
+                .post("/api/highscore", {
+                    body: JSON.stringify({ date }),
+                })
+                .json();
+
+            let sorted = [...highscore.score].sort((a, b) => b.score - a.score);
+
+            if (!bannedUsers.has(name)) {
+                sorted = sorted.filter(s => !bannedUsers.has(s.name));
+            }
+
+            return { score: sorted.slice(0, 5), maxScore: highscore.maxScore };
+        } catch (error) {
+            console.log(error);
+            return { maxScore: 0, score: [] };
+        }
+    };
 
     return (
         <>

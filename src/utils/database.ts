@@ -168,7 +168,7 @@ export const getHighScoresByDate = (date: Date): Promise<ScoreWithUser[]> => {
                 updatedAt: "asc",
             },
         ],
-        take: 5,
+        take: 10,
     });
 };
 
