@@ -17,10 +17,15 @@ export default async function Home() {
     if (!combo) throw new Error("No combo found");
 
     combo.otherLetters = shuffle(combo.otherLetters);
+    const comboAsBase64 = Buffer.from(JSON.stringify(combo)).toString("base64");
 
     return (
         <Main>
-            <Playboard combo={combo} previous={previousCombo} localStorageKey="maddekupan" />
+            <Playboard
+                combo64={comboAsBase64}
+                previous={previousCombo}
+                localStorageKey="maddekupan"
+            />
         </Main>
     );
 }
