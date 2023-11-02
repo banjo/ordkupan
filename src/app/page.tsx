@@ -9,9 +9,15 @@ export default async function Home() {
     const [combo, previousCombo] = await getCombos();
     combo.otherLetters = shuffle(combo.otherLetters);
 
+    const comboAsBase64 = Buffer.from(JSON.stringify(combo)).toString("base64");
+
     return (
         <Main>
-            <Playboard combo={combo} previous={previousCombo} localStorageKey="ordkupan" />
+            <Playboard
+                combo64={comboAsBase64}
+                previous={previousCombo}
+                localStorageKey="ordkupan"
+            />
         </Main>
     );
 }

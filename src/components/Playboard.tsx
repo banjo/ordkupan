@@ -18,13 +18,13 @@ import { useConfettiStore } from "@/stores/useConfettiStore";
 import { useGameStore } from "@/stores/useGameStore";
 import { BasicCombo } from "@/types/types";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Toaster } from "react-hot-toast";
 
 const CONFETTI_TIME = 1700;
 
 type Props = {
-    combo: BasicCombo;
+    combo64: string;
     previous: BasicCombo;
     localStorageKey: string;
 };
@@ -34,14 +34,19 @@ const variantsMain = {
     visible: { opacity: 1, y: 0 },
 };
 
-export const Playboard = ({ combo, previous, localStorageKey }: Props) => {
+export const Playboard = ({ combo64, previous, localStorageKey }: Props) => {
     useLanguage();
     const { focus } = useSingletonInputFocus();
     const { appendLetter, isFinished, isWrongGuess, setAllWords } = useGameStore();
     const { setShowConfetti, showConfetti } = useConfettiStore();
 
+    const combo = useMemo<BasicCombo>(() => {
+        const comboAsString = Buffer.from(combo64, "base64").toString();
+        return JSON.parse(comboAsString);
+    }, [combo64]);
+
     const { fadeOut, isLoading, setFadeOut, submitWord } = useGameLogic({
-        combo,
+        combo: combo,
         localStorageKey,
     });
 
