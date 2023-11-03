@@ -34,11 +34,8 @@ const bannedUsers = new Set(
     ["amFnIGZ1c2thciBvY2ggdmlubmVyIQ=="].map(s => Buffer.from(s, "base64").toString())
 );
 
-export const HighScore: FC<{ showHighScore: boolean }> = ({ showHighScore }) => {
-    const { id, name } = useSocialStore();
-    const { score } = useGameStore();
-
-    const fetchHighScore = async (date: string): Promise<FetchScoreResponse> => {
+const fetchHighScore = (name: string) => {
+    return async (date: string): Promise<FetchScoreResponse> => {
         try {
             const highscore: PostHighScoreResponse = await ky
                 .post("/api/highscore", {
@@ -58,12 +55,17 @@ export const HighScore: FC<{ showHighScore: boolean }> = ({ showHighScore }) => 
             return { maxScore: 0, score: [] };
         }
     };
+};
+
+export const HighScore: FC<{ showHighScore: boolean }> = ({ showHighScore }) => {
+    const { id, name } = useSocialStore();
+    const { score } = useGameStore();
 
     return (
         <>
             <ScoreList
                 emptyText="Hittar inga resultat 😔"
-                fetchFunction={fetchHighScore}
+                fetchFunction={fetchHighScore(name)}
                 title="Topplista 🏆"
                 subTitle="Dagens bästa"
                 trigger={showHighScore}
