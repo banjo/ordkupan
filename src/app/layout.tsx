@@ -38,10 +38,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Script>
 
             <Script
-                async
-                src="https://analytics.host.banjoanton.com/tracker.js"
-                data-ackee-server="https://analytics.host.banjoanton.com"
-                data-ackee-domain-id="1225b57d-c96f-4585-8189-affb2abfeadb"
+                defer
+                data-domain="ordkupan.se"
+                src="http://analytics.caprover.banjoanton.com/js/script.js"
             ></Script>
 
             <body className={`${inter.className} h-full`}>{children}</body>
