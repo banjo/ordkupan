@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Script
                 defer
                 data-domain="ordkupan.se"
-                src="http://analytics.caprover.banjoanton.com/js/script.js"
+                src="https://analytics.caprover.banjoanton.com/js/script.js"
             ></Script>
 
             <body className={`${inter.className} h-full`}>{children}</body>
