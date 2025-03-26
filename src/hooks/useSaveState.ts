@@ -3,7 +3,7 @@ import { useSocialStore } from "@/stores/useSocialStore";
 import { BasicCombo } from "@/types/types";
 import { dateNow } from "@/utils/date";
 import { validate } from "@/utils/validation";
-import { formatDate } from "@banjoanton/utils";
+import { toIsoDateString } from "@banjoanton/utils";
 import { Temporal } from "@js-temporal/polyfill";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -30,7 +30,7 @@ type In = {
     localStorageKey: string;
 };
 
-const nowAsString = () => formatDate(new Date(dateNow()));
+const nowAsString = () => toIsoDateString(new Date(dateNow()));
 
 export const useSaveState = ({ combo, localStorageKey }: In): Out => {
     const { date, friends, name, streak, id } = useSocialStore();
@@ -147,7 +147,7 @@ export const useSaveState = ({ combo, localStorageKey }: In): Out => {
             .add({ days: -1 })
             .toString();
 
-        const isDayAfter = localStorageValue.date === formatDate(new Date(yesterday));
+        const isDayAfter = localStorageValue.date === toIsoDateString(new Date(yesterday));
         const hasScore = localStorageValue.score > 0;
 
         if (!isDayAfter || !hasScore) {

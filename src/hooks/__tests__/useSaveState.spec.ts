@@ -1,13 +1,13 @@
 import { useSaveState } from "@/hooks/useSaveState";
 import { BasicCombo } from "@/types/types";
-import { formatDate } from "@banjoanton/utils";
+import { toIsoDateString } from "@banjoanton/utils";
 import { renderHook } from "@testing-library/react-hooks";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
 describe("useSaveState", () => {
     let combo: BasicCombo;
     const localStorageKey = "testLocalStorage";
-    const now = formatDate(new Date());
+    const now = toIsoDateString(new Date());
     const word = {
         score: 5,
         word: "a",
@@ -66,7 +66,7 @@ describe("useSaveState", () => {
     });
 
     it("should be next day with score to increase streak", () => {
-        const yesterday = formatDate(new Date(Date.now() - 24 * 60 * 60 * 1000));
+        const yesterday = toIsoDateString(new Date(Date.now() - 24 * 60 * 60 * 1000));
         const localStorageData = {
             date: yesterday,
             score: word.score,
@@ -95,7 +95,7 @@ describe("useSaveState", () => {
     });
 
     it("should reset streak if missed a day", () => {
-        const twoDaysAgo = formatDate(new Date(Date.now() - 2 * 24 * 60 * 60 * 1000));
+        const twoDaysAgo = toIsoDateString(new Date(Date.now() - 2 * 24 * 60 * 60 * 1000));
         const localStorageData = {
             date: twoDaysAgo,
             score: word.score,
