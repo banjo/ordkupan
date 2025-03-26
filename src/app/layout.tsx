@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Script
                 defer
                 src="https://analytics.banjoanton.com/script.js"
-                data-website-id="e16b333f-d3f6-4fc3-85e2-c5c0c701f509"
+                data-website-id="c86866c7-2577-4ec9-8a0d-c79a4d5647c7"
             ></Script>
 
             <Script
