@@ -4,30 +4,50 @@ import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Ordkupan",
+    description: "Det svenska Spelling Bee-spelet",
+    keywords: "ordspel, svenska, spelling bee, ordkupan",
+    openGraph: {
+        title: "Ordkupan",
+        description: "Det svenska Spelling Bee-spelet",
+        url: "https://ordkupan.se",
+        siteName: "Ordkupan",
+        images: [
+            {
+                url: "/manifest-icon-512.maskable.png",
+                width: 512,
+                height: 512,
+            },
+        ],
+    },
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en" className="h-full">
             <head>
                 <link rel="manifest" href="/site.webmanifest" />
-                <title>Ordkupan</title>
-                <meta name="description" content="Det svenska Spelling Bee-spelet"></meta>
-
-                <meta name="og:title" content="Ordkupan" />
-                <meta name="keywords" content="ordspel, svenska, spelling bee, ordkupan" />
-                <meta name="og:description" content="Det svenska Spelling Bee-spelet" />
-                <meta name="og:image" content="/manifest-icon-512.maskable.png" />
-                <meta name="og:url" content="https://ordkupan.se" />
-                <meta name="og:site_name" content="Ordkupan" />
-
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="Ordkupan" />
-                <meta name="twitter:description" content="Det svenska Spelling Bee-spelet" />
-                <meta
-                    name="twitter:image"
-                    content="https://ordkupan.se/manifest-icon-512.maskable.png"
-                />
-
+                {/* <title>Ordkupan</title> */}
+                {/* <meta name="description" content="Det svenska Spelling Bee-spelet"></meta> */}
+                {/**/}
+                {/* <meta name="og:title" content="Ordkupan" /> */}
+                {/* <meta name="keywords" content="ordspel, svenska, spelling bee, ordkupan" /> */}
+                {/* <meta name="og:description" content="Det svenska Spelling Bee-spelet" /> */}
+                {/* <meta name="og:image" content="/manifest-icon-512.maskable.png" /> */}
+                {/* <meta name="og:url" content="https://ordkupan.se" /> */}
+                {/* <meta name="og:site_name" content="Ordkupan" /> */}
+                {/**/}
+                {/* <meta name="twitter:card" content="summary_large_image" /> */}
+                {/* <meta name="twitter:title" content="Ordkupan" /> */}
+                {/* <meta name="twitter:description" content="Det svenska Spelling Bee-spelet" /> */}
+                {/* <meta */}
+                {/*     name="twitter:image" */}
+                {/*     content="https://ordkupan.se/manifest-icon-512.maskable.png" */}
+                {/* /> */}
+                {/**/}
                 <meta name="viewport" content="initial-scale=1, viewport-fit=cover" />
                 <meta name="apple-mobile-web-app-status-bar-style" content="white-translucent" />
 
