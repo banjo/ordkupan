@@ -4,9 +4,6 @@ export default defineConfig({
     installOnLockChange: true,
     commitMessage: false,
     preCommit: [],
-    staged: {
-        "*": ["prettier --write"],
-    },
     preventCommit: false,
     syncBeforePush: false,
     enforceConventionalCommits: true,
