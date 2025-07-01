@@ -1,6 +1,5 @@
 #!/usr/bin/env zx
-/* eslint-disable unicorn/no-abusive-eslint-disable */
-/* eslint-disable */
+import { $ } from "zx";
 import "dotenv/config";
 import "zx/globals";
 
