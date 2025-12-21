@@ -27,14 +27,20 @@ export async function POST(req: Request) {
 
     try {
         const user = await getUserByUniqueIdentifier(userUniqueIdentifier);
-        logger.debug("Fetched user by unique identifier", { userUniqueIdentifier, user });
+        logger.debug("Fetched user by unique identifier", {
+            userUniqueIdentifier,
+            userId: user?.id,
+        });
         if (!user) {
             logger.error("User not found", { userUniqueIdentifier });
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
         const guessEntity = await getTodaysGuess(user.id);
-        logger.debug("Fetched today's guess entity", { userId: user.id, guessEntity });
+        logger.debug("Fetched today's guess entity", {
+            userId: user.id,
+            guessEntityId: guessEntity?.id,
+        });
         if (!guessEntity) {
             logger.info("Guess not found, creating new guess", { userId: user.id });
             await createNewGuess(user.id, word);

@@ -45,7 +45,7 @@ export async function POST(req: Request) {
 
 async function getStats(uniqueIdentifier: string): Promise<PostUserStatsResponse | null> {
     const user = await getUserByUniqueIdentifier(uniqueIdentifier);
-    logger.debug("Fetched user by unique identifier", { uniqueIdentifier, user });
+    logger.debug("Fetched user by unique identifier", { uniqueIdentifier, userId: user?.id });
     if (!user) {
         logger.error("User not found", { uniqueIdentifier });
         return null;

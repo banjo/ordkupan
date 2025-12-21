@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     let scores: ScoreWithUser[] = [];
     try {
         scores = await getHighScoresByDate(new Date(date));
-        logger.debug("Fetched high scores by date", { date, scores });
+        logger.debug("Fetched high scores by date", { date, scoresCount: scores.length });
     } catch (error) {
         logger.error("Error fetching scores", { error });
         return NextResponse.json({ error: "Error fetching scores" }, { status: 500 });
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
                 };
             })
             .filter(score => score.score > 0);
-        logger.debug("Mapped public scores", { publicScores });
+        logger.debug("Mapped public scores", { publicScoresCount: publicScores.length });
     } catch (error) {
         logger.error("Error mapping public scores", { error });
         return NextResponse.json({ error: "Error mapping public scores" }, { status: 500 });
@@ -59,6 +59,9 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "No scores found" }, { status: 404 });
     }
 
-    logger.info("Returning high scores", { publicScores, maxScore: scores[0]?.maxScore });
+    logger.info("Returning high scores", {
+        publicScoresCount: publicScores.length,
+        maxScore: scores[0]?.maxScore,
+    });
     return NextResponse.json({ score: publicScores, maxScore: scores[0]?.maxScore });
 }

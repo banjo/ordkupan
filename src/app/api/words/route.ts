@@ -41,13 +41,13 @@ export async function POST(req: Request) {
     let words: string[] = [];
     try {
         words = await getUsersWordsByDate(userId, date);
-        logger.debug("Fetched words for user and date", { userId, date, words });
+        logger.debug("Fetched words for user and date", { userId, date, wordsCount: words.length });
     } catch (error) {
         logger.error("Error fetching words", { error });
         return NextResponse.json({ error: "Error fetching words" }, { status: 500 });
     }
 
-    logger.info("Returning words for user", { internalIdentifier, date, words });
+    logger.info("Returning words for user", { internalIdentifier, date, wordsCount: words.length });
     return NextResponse.json({
         words,
     });

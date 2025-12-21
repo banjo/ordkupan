@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     let user: User | null;
     try {
         user = await getUserByName(name);
-        logger.debug("Fetched user by name", { name, user });
+        logger.debug("Fetched user by name", { name, userId: user?.id });
     } catch (error: any) {
         logger.error("Error fetching user by name", { error });
         return NextResponse.json({ error: "Error fetching user by name" }, { status: 500 });

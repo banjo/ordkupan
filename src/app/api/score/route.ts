@@ -43,7 +43,7 @@ export async function POST(req: Request) {
     });
 
     if (mappedWords.includes(null)) {
-        logger.error("Invalid words in matchedWords", { matchedWords });
+        logger.error("Invalid words in matchedWords", { matchedWordsCount: matchedWords.length });
         return NextResponse.json({ error: "Invalid words" }, { status: 400 });
     }
 
@@ -55,20 +55,26 @@ export async function POST(req: Request) {
     });
 
     if (!isValid) {
-        logger.error("Invalid score", { score, maxScore, matchedWords });
+        logger.error("Invalid score", { score, maxScore, matchedWordsCount: matchedWords.length });
         return NextResponse.json({ error: "Invalid score" }, { status: 400 });
     }
 
     try {
         const user = await getUserByUniqueIdentifier(userUniqueIdentifier);
-        logger.debug("Fetched user by unique identifier", { userUniqueIdentifier, user });
+        logger.debug("Fetched user by unique identifier", {
+            userUniqueIdentifier,
+            userId: user?.id,
+        });
         if (!user) {
             logger.error("User not found", { userUniqueIdentifier });
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
         const scoreEntity = await getTodaysScore(user.id);
-        logger.debug("Fetched today's score entity", { userId: user.id, scoreEntity });
+        logger.debug("Fetched today's score entity", {
+            userId: user.id,
+            scoreEntityId: scoreEntity?.id,
+        });
         if (!scoreEntity) {
             logger.info("Score not found, creating new score", { userId: user.id });
             await addScore({ userId: user.id, score, maxScore, matchedWords });
@@ -76,7 +82,11 @@ export async function POST(req: Request) {
         }
 
         await setScoreAndWords(scoreEntity.id, score, matchedWords);
-        logger.info("Updated score and words for user", { userId: user.id, score, matchedWords });
+        logger.info("Updated score and words for user", {
+            userId: user.id,
+            score,
+            matchedWordsCount: matchedWords.length,
+        });
         return NextResponse.json({ success: true });
     } catch (error) {
         logger.error("Error updating score", { error });

@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     let users: User[] | null;
     try {
         users = await getUsersByPublicIdentifiers(friends);
-        logger.debug("Fetched users by public identifiers", { friends, users });
+        logger.debug("Fetched users by public identifiers", { friends, usersCount: users.length });
     } catch (error: any) {
         logger.error("Error fetching friends", { error });
         return NextResponse.json({ error: "Error fetching friends" }, { status: 500 });
@@ -50,7 +50,11 @@ export async function POST(req: Request) {
     let scores: ScoreWithUser[] = [];
     try {
         scores = await getScoreByUserIdsAndDate(userIds, new Date(date));
-        logger.debug("Fetched scores for users and date", { userIds, date, scores });
+        logger.debug("Fetched scores for users and date", {
+            userIds,
+            date,
+            scoresCount: scores.length,
+        });
     } catch (error) {
         logger.error("Error fetching scores", { error });
         return NextResponse.json({ error: "Error fetching scores" }, { status: 500 });
@@ -74,6 +78,9 @@ export async function POST(req: Request) {
         };
     });
 
-    logger.info("Returning scores for friends", { publicScores, maxScore: scores[0]?.maxScore });
+    logger.info("Returning scores for friends", {
+        publicScoresCount: publicScores.length,
+        maxScore: scores[0]?.maxScore,
+    });
     return NextResponse.json({ score: publicScores, maxScore: scores[0]?.maxScore });
 }

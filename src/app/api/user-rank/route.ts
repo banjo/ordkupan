@@ -42,7 +42,7 @@ export async function POST(req: Request) {
     let scores: ScoreWithUser[] = [];
     try {
         scores = await getHighScoresByDate(new Date(date));
-        logger.debug("Fetched high scores by date", { date, scores });
+        logger.debug("Fetched high scores by date", { date, scoresCount: scores.length });
     } catch (error) {
         logger.error("Error fetching scores", { error });
         return NextResponse.json({ error: "Error fetching scores" }, { status: 500 });
