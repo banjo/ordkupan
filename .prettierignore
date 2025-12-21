@@ -1,0 +1,7 @@
+.next
+.netlify
+node_modules
+dist
+build
+words/data/**
+public
