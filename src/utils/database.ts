@@ -3,6 +3,16 @@ import { BasicCombo, BasicWord } from "@/types/types";
 import { dateNow } from "@/utils/date";
 import { Guess, Score, User } from "@prisma/client";
 
+export const isDatabaseHealthy = async (): Promise<boolean> => {
+    try {
+        await prisma.user.count();
+        return true;
+    } catch (error) {
+        console.error("Database health check failed:", error);
+        return false;
+    }
+};
+
 export const getUsers = (): Promise<User[]> => {
     return prisma.user.findMany();
 };
