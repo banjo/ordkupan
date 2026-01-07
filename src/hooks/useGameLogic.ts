@@ -28,9 +28,10 @@ const postScore = async (body: PostScoreExpectedBody) => {
     await ky
         .post("/api/score", {
             body: JSON.stringify(body),
+            timeout: 10000,
         })
         .catch(error => {
-            console.log(error);
+            console.error("postScore error:", error);
         });
 };
 
@@ -38,9 +39,10 @@ const postGuess = async (body: GuessExpectedBody) => {
     await ky
         .post("/api/guess", {
             body: JSON.stringify(body),
+            timeout: 10000,
         })
         .catch(error => {
-            console.log(error);
+            console.error("postGuess error:", error);
         });
 };
 

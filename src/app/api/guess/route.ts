@@ -43,13 +43,23 @@ export async function POST(req: Request) {
         });
         if (!guessEntity) {
             logger.info("Guess not found, creating new guess", { userId: user.id });
-            await createNewGuess(user.id, word);
-            return NextResponse.json({ success: true });
+            try {
+                await createNewGuess(user.id, word);
+                return NextResponse.json({ success: true });
+            } catch (error) {
+                logger.error("Failed to create guess", { error, userId: user.id, word });
+                return NextResponse.json({ error: "Database error" }, { status: 500 });
+            }
         }
 
-        await addToGuess(guessEntity.id, word);
-        logger.info("Added word to existing guess", { guessId: guessEntity.id, word });
-        return NextResponse.json({ success: true });
+        try {
+            await addToGuess(guessEntity.id, word);
+            logger.info("Added word to existing guess", { guessId: guessEntity.id, word });
+            return NextResponse.json({ success: true });
+        } catch (error) {
+            logger.error("Failed to add word", { error, guessId: guessEntity.id, word });
+            return NextResponse.json({ error: "Database error" }, { status: 500 });
+        }
     } catch (error) {
         logger.error("Error updating guess", { error });
         return NextResponse.json({ error: "Error updating guess" }, { status: 500 });
